@@ -68,12 +68,11 @@ watch(isOrganizer, (value) => {
                 <div class="grid gap-2">
                     <Label for="organizer">Register as an organizer</Label>
                     <Checkbox id="organizer" name="organizer" v-model="organizer" />
-                    <InputError :message="errors.organizer" />
                 </div>
 
                 <div class="grid gap-2" v-show="isOrganizer">
                     <Label for="organizer_name">organizer Name</Label>
-                    <Input id="organizer_name" required autocomplete="organizer_name" name="organizer_name" placeholder="organizer name" />
+                    <Input id="organizer_name" autocomplete="organizer_name" name="organizer_name" placeholder="organizer name" />
                     <InputError :message="errors.organizer_name" />
                 </div>
 
