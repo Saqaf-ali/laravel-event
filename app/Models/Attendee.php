@@ -6,18 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Organizer extends Model
+class Attendee extends Model
 {
-    /** @use HasFactory<\Database\Factories\OrganizerFactory> */
+    /** @use HasFactory<\Database\Factories\AttendeeFactory> */
     use HasFactory;
-
-    protected $fillable = ['name', 'user_id'];
+    protected $fillable = ['user_id'];
     protected $hidden = [];
 
     /**
-     *  Get the users associated with the organizer.
+     *  Get the users associated with the attendee.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User, Organizer>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User, Attendee>
      */
     public function user(): BelongsTo
     {

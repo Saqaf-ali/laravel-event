@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrganizerRequest;
+use App\Models\Attendee;
+use App\Models\Organizer;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -43,16 +45,22 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        
+        Attendee::create([
+            'user_id' => $user->id,
+        ]);
+
         if ($request->filled('organizer_name')) {
-            echo $request->organizer_name;
+            Organizer::create([
+                'name' => $request->organizer_name,
+                'user_id' => $user->id,
+            ]);
         }
 
-        die();
+        event(new Registered($user));
 
-        // event(new Registered($user));
+        Auth::login($user);
 
-        // Auth::login($user);
-
-        // return to_route('dashboard');
+        return to_route('dashboard');
     }
 }
