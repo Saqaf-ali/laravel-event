@@ -17,7 +17,8 @@ class OrganizerFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->company(),
+            'user_id' => \App\Models\User::factory(),
         ];
     }
 }
