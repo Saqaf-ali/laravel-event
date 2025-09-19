@@ -36,6 +36,8 @@
         "clsx": "^2.1.1",
         "laravel-vite-plugin": "^2.0.0",
         "lucide-vue-next": "^0.468.0",
+        "primeicons": "^7.0.0",
+        "primevue": "^4.3.9",
         "reka-ui": "^2.4.1",
         "tailwind-merge": "^3.2.0",
         "tailwindcss": "^4.1.1",
