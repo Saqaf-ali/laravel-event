@@ -12,7 +12,6 @@ class Organizer extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'user_id'];
-    protected $hidden = [];
 
     /**
      *  Get the users associated with the organizer.
