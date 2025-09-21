@@ -18,10 +18,11 @@ Route::get('dashboard', function () {
 Route::get('test', function () {
     return Inertia::render('Test');
 })->name('test');
-
-Route::resource('rasg', OrganizerController::class);
-Route::resource('users', UserController::class);
-// RootRoute::resource('attendees', AttendeeController::class);
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('rasg', OrganizerController::class);
+    Route::resource('users', UserController::class);
+    // RootRoute::resource('attendees', AttendeeController::class);
+});
 
 Route::get('test', function () {
     return dd('saqaf');

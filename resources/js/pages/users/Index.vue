@@ -142,9 +142,9 @@ const table = useVueTable({
             <div class="flex items-center py-4">
                 <Input
                     class="max-w-sm"
-                    placeholder="Filter emails..."
-                    :model-value="table.getColumn('email')?.getFilterValue() as string"
-                    @update:model-value="table.getColumn('email')?.setFilterValue($event)"
+                    placeholder="Filter name..."
+                    :model-value="table.getColumn('name')?.getFilterValue() as string"
+                    @update:model-value="table.getColumn('name')?.setFilterValue($event)"
                 />
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
