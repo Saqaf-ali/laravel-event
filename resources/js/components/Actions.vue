@@ -13,8 +13,6 @@ import DropdownMenuTrigger from './ui/dropdown-menu/DropdownMenuTrigger.vue';
                 <MoreHorizontal class="h-4 w-4" />
             </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-            <slot />
-        </DropdownMenuContent>
+        <DropdownMenuContent align="end"> <slot /> </DropdownMenuContent>
     </DropdownMenu>
 </template>

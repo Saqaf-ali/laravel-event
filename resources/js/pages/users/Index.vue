@@ -11,15 +11,13 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { valueUpdater } from '@/components/ui/table/utils';
 import AppLayout from '@/layouts/AppLayout.vue';
-
 import { type BreadcrumbItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
+
+import ActionUser from '@/components/ActionUser.vue';
 // eslint-disable-next-line vue/no-dupe-keys
 import users from '@/routes/users';
 
-
 const props = defineProps(['users']);
-
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'users',
@@ -90,6 +88,17 @@ const columns: ColumnDef<User>[] = [
         },
         cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('email')),
     },
+    {
+        id: 'actions',
+        enableHiding: false,
+        cell: ({ row }) => {
+            return h(ActionUser, {
+                id: row.original.id,
+                editRoute: users.edit(row.original.id).url,
+                deleteRoute: users.destroy(row.original.id).url,
+            });
+        },
+    },
 ];
 
 const sorting = ref<SortingState>([]);
@@ -128,6 +137,8 @@ const table = useVueTable({
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="w-full">
+            <!-- Alert message -->
+
             <div class="flex items-center py-4">
                 <Input
                     class="max-w-sm"
@@ -192,6 +203,5 @@ const table = useVueTable({
                 </div>
             </div>
         </div>
-        <Link :href="users.index().url"> <Button variant="outline" class="mt-4" size="sm"> New User </Button> </Link>
     </AppLayout>
 </template>
