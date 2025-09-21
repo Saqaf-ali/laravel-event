@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import type { ColumnDef, ColumnFiltersState, SortingState, VisibilityState } from '@tanstack/vue-table';
 import { FlexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table';
-import { ArrowUpDown, ChevronDown } from 'lucide-vue-next';
+import { ArrowUpDown, ChevronDown, UserRoundPlus } from 'lucide-vue-next';
 import { h, ref } from 'vue';
 
 import { Input } from '@/components/ui/input';
@@ -15,13 +14,15 @@ import { type BreadcrumbItem } from '@/types';
 
 import ActionUser from '@/components/ActionUser.vue';
 // eslint-disable-next-line vue/no-dupe-keys
+import Button from '@/components/ui/button/Button.vue';
 import users from '@/routes/users';
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps(['users']);
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'users',
-        href: 'users',
+        title: 'Users',
+        href: users.index().url,
     },
 ];
 
@@ -146,26 +147,30 @@ const table = useVueTable({
                     :model-value="table.getColumn('name')?.getFilterValue() as string"
                     @update:model-value="table.getColumn('name')?.setFilterValue($event)"
                 />
-                <DropdownMenu>
-                    <DropdownMenuTrigger as-child>
-                        <Button variant="outline" class="ml-auto"> Columns <ChevronDown class="ml-2 h-4 w-4" /> </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuCheckboxItem
-                            v-for="column in table.getAllColumns().filter((column) => column.getCanHide())"
-                            :key="column.id"
-                            class="capitalize"
-                            :model-value="column.getIsVisible()"
-                            @update:model-value="
-                                (value) => {
-                                    column.toggleVisibility(!!value);
-                                }
-                            "
-                        >
-                            {{ column.id === 'name' ? 'Name' : column.id === 'email' ? 'Email' : column.id }}
-                        </DropdownMenuCheckboxItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div class="ml-auto flex items-center space-x-2">
+                    <Link title="Add New User" :href="users.create().url" class=""><UserRoundPlus /></Link>
+
+                    <DropdownMenu>
+                        <DropdownMenuTrigger as-child>
+                            <Button variant="outline" class=""> Columns <ChevronDown class="ml-2 h-4 w-4" /> </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuCheckboxItem
+                                v-for="column in table.getAllColumns().filter((column) => column.getCanHide())"
+                                :key="column.id"
+                                class="capitalize"
+                                :model-value="column.getIsVisible()"
+                                @update:model-value="
+                                    (value) => {
+                                        column.toggleVisibility(!!value);
+                                    }
+                                "
+                            >
+                                {{ column.id === 'name' ? 'Name' : column.id === 'email' ? 'Email' : column.id }}
+                            </DropdownMenuCheckboxItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
             </div>
 
             <div class="rounded-md border">
