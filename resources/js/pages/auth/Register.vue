@@ -29,6 +29,7 @@ watch(isOrganizer, (value) => {
         <Form
             v-bind="RegisteredUserController.store.form()"
             :reset-on-success="['password', 'password_confirmation']"
+            enctype="multipart/form-data"
             v-slot="{ errors, processing }"
             class="flex flex-col gap-6"
         >
