@@ -1,17 +1,18 @@
 <script setup lang="ts">
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import type { ColumnDef, ColumnFiltersState, SortingState, VisibilityState } from '@tanstack/vue-table';
 import { FlexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table';
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next';
 import { h, ref } from 'vue';
 
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { valueUpdater } from '@/components/ui/table/utils';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps(['users']);
 
@@ -187,5 +188,6 @@ const table = useVueTable({
                 </div>
             </div>
         </div>
+        <Link :href="users.index().url"> <Button variant="outline" class="mt-4" size="sm"> New User </Button> </Link>
     </AppLayout>
 </template>

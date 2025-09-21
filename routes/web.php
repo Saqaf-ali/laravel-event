@@ -4,7 +4,6 @@ use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Phiki\Phast\Root;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -20,9 +19,13 @@ Route::get('test', function () {
     return Inertia::render('Test');
 })->name('test');
 
-Route::resource('organizers', OrganizerController::class);
+Route::resource('rasg', OrganizerController::class);
 Route::resource('users', UserController::class);
 // RootRoute::resource('attendees', AttendeeController::class);
+
+Route::get('test', function () {
+    return dd('saqaf');
+})->name('saqaf');
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

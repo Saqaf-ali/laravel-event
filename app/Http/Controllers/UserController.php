@@ -10,6 +10,7 @@ class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @route '/users'
      */
     public function index()
     {

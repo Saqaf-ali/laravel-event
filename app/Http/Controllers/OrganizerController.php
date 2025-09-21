@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Organizer;
 use App\Http\Requests\StoreOrganizerRequest;
 use App\Http\Requests\UpdateOrganizerRequest;
-use Inertia\Inertia;
+use Inertia\Inertia; // This line is already present and correct.
 
 class OrganizerController extends Controller
 {
