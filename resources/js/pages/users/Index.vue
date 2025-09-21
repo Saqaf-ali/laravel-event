@@ -11,8 +11,12 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { valueUpdater } from '@/components/ui/table/utils';
 import AppLayout from '@/layouts/AppLayout.vue';
+
 import { type BreadcrumbItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
+// eslint-disable-next-line vue/no-dupe-keys
+import users from '@/routes/users';
+
 
 const props = defineProps(['users']);
 
