@@ -15,6 +15,7 @@ import { type BreadcrumbItem } from '@/types';
 import ActionUser from '@/components/ActionUser.vue';
 // eslint-disable-next-line vue/no-dupe-keys
 import Button from '@/components/ui/button/Button.vue';
+// eslint-disable-next-line vue/no-dupe-keys
 import users from '@/routes/users';
 import { Link } from '@inertiajs/vue3';
 
