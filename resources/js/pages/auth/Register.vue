@@ -64,6 +64,11 @@ watch(isOrganizer, (value) => {
                     />
                     <InputError :message="errors.password_confirmation" />
                 </div>
+                <div class="grid gap-2">
+                    <Label for="image">Image</Label>
+                    <Input id="image" type="file" required :tabindex="4" name="image" placeholder="Your image " />
+                    <InputError :message="errors.password_confirmation" />
+                </div>
 
                 <div class="grid gap-2">
                     <Label for="organizer">Register as an organizer</Label>
