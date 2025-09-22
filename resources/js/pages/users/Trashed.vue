@@ -25,6 +25,10 @@ const breadcrumbs: BreadcrumbItem[] = [
         title: 'Users',
         href: users.index().url,
     },
+    {
+        title: 'Trashed',
+        href: users.trashed().url,
+    },
 ];
 
 export interface User {
@@ -108,8 +112,8 @@ const deleteSusses = (id: number) => {
         <div class="w-full">
             <div class="flex items-center py-4">
                 <div class="ml-auto flex items-center space-x-2">
-                    <Link title="Trash users" :href="users.trashed().url">
-                        <Button variant="outline" class="h-8 w-8 p-0">
+                    <Link title="Trash users" :href="users.create().url">
+                        <Button variant="outline" class="w- 8 h-8 p-0">
                             <FolderX class="h-4 w-4 text-primary" />
                         </Button>
                     </Link>
