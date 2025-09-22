@@ -16,6 +16,7 @@ import ActionUser from '@/components/ActionUser.vue';
 // eslint-disable-next-line vue/no-dupe-keys
 import Button from '@/components/ui/button/Button.vue';
 // eslint-disable-next-line vue/no-dupe-keys
+import SmartAvatar from '@/components/SmartAvatar.vue';
 import users from '@/routes/users';
 import { Link } from '@inertiajs/vue3';
 
@@ -31,12 +32,14 @@ export interface User {
     id: number;
     name: string;
     email: string;
+    image: string;
 }
 
 const data: User[] = props.users.map((user: any, index: number) => ({
     id: user.id || index + 1,
     name: user.name,
     email: user.email,
+    image: user.image,
 }));
 
 const columns: ColumnDef<User>[] = [
@@ -90,6 +93,20 @@ const columns: ColumnDef<User>[] = [
         },
         cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('email')),
     },
+    {
+        accessorKey: 'image',
+        header: 'Image',
+        cell: ({ row }) => {
+            return h('div', { class: 'flex justify-center' }, [
+                h(SmartAvatar, {
+                    src: row.getValue('image'),
+                    alt: row.getValue('name'),
+                    name: row.getValue('name'),
+                }),
+            ]);
+        },
+    },
+
     {
         id: 'actions',
         enableHiding: false,
