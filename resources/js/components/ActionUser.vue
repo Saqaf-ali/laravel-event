@@ -14,7 +14,7 @@ import { ref } from 'vue';
 import Actions from './Actions.vue';
 import DropdownMenuItem from './ui/dropdown-menu/DropdownMenuItem.vue';
 const props = defineProps(['id', 'editRoute', 'deleteRoute']);
-
+const emit = defineEmits(['deleteSusses']);
 const isAlertOpen = ref(false);
 
 const openAlert = () => {
@@ -26,8 +26,12 @@ const closeAlert = () => {
 };
 const form = useForm({});
 const deleteItem = () => {
-    console.log('item deleted', props.deleteRoute);
-    form.delete(props.deleteRoute);
+    form.delete(props.deleteRoute, {
+        onSuccess: () => {
+            emit('deleteSusses', props.id);
+        },
+    });
+
     closeAlert();
 };
 </script>

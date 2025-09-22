@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'organizer_name' => 'nullable|string|max:255',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:3072',
         ]);
 
         if ($request->hasFile('image')) {

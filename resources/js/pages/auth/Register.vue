@@ -68,7 +68,7 @@ watch(isOrganizer, (value) => {
                 <div class="grid gap-2">
                     <Label for="image">Image</Label>
                     <Input id="image" type="file" required :tabindex="4" name="image" placeholder="Your image " />
-                    <InputError :message="errors.password_confirmation" />
+                    <InputError :message="errors.image" />
                 </div>
 
                 <div class="grid gap-2">

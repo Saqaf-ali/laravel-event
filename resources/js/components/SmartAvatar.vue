@@ -10,7 +10,7 @@ const props = defineProps({
         default: '',
     },
 });
-const letterName = computed(() => {
+const partName = computed(() => {
     if (!props.name) return '';
     const partName = props.name[0];
     return partName.toUpperCase();
@@ -19,7 +19,8 @@ const letterName = computed(() => {
 
 <template>
     <Avatar>
-        <AvatarImage :src="'storage/' + src" :alt="alt" />
-        <AvatarFallback>{{ letterName }}</AvatarFallback>
+        <!-- <AvatarImage :src="'storage/' + src" :alt="alt" /> -->
+        <AvatarImage :src="src ?? ''" :alt="alt" />
+        <AvatarFallback>{{ partName }}</AvatarFallback>
     </Avatar>
 </template>
