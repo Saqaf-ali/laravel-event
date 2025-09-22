@@ -10,7 +10,7 @@ import users from '@/routes/users';
 import { type BreadcrumbItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import type { ColumnDef } from '@tanstack/vue-table';
-import { UserRoundPlus } from 'lucide-vue-next';
+import { FolderX, UserRoundPlus } from 'lucide-vue-next';
 import { computed, h, PropType } from 'vue';
 
 const props = defineProps({
@@ -108,6 +108,11 @@ const deleteSusses = (id: number) => {
         <div class="w-full">
             <div class="flex items-center py-4">
                 <div class="ml-auto flex items-center space-x-2">
+                    <Link title="Trash users" :href="users.create().url">
+                        <Button variant="outline" class="h-8 w-8 p-0">
+                            <FolderX class="h-4 w-4 text-primary" />
+                        </Button>
+                    </Link>
                     <Link title="Add New User" :href="users.create().url">
                         <Button variant="outline" class="h-8 w-8 p-0">
                             <UserRoundPlus class="h-4 w-4 text-primary" />
