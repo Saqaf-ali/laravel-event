@@ -63,4 +63,10 @@ class UserController extends Controller
         $user->delete();
         session()->flash('success', 'User deleted successfully.');
     }
+
+    public function trashed(){
+        $users = User::onlyTrashed()->get();
+        return Inertia::render('users/Trashed', ['users' => $users]);
+        
+    }
 }

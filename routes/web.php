@@ -20,6 +20,7 @@ Route::get('test', function () {
 })->name('test');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/users/trashed', [UserController::class, 'trashed'])->name('users.trashed');
     Route::resource('organizers', OrganizerController::class);
     Route::resource('users', UserController::class);
     // RootRoute::resource('attendees', AttendeeController::class);
