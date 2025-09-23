@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import ActionUser from '@/components/ActionUser.vue';
-import DataTable from '@/components/DataTable.vue'; 
-import SmartAvatar from '@/components/SmartAvatar.vue';
+import DataTable from '@/components/DataTable.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
+import organizers from '@/routes/organizers';
 // eslint-disable-next-line vue/no-dupe-keys
-import users from '@/routes/users';
 import { type BreadcrumbItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import type { ColumnDef } from '@tanstack/vue-table';
-import { FolderX, UserRoundPlus } from 'lucide-vue-next';
-import { computed, h, PropType } from 'vue';
+import { UserRoundPlus } from 'lucide-vue-next';
+import { computed, h } from 'vue';
 
 const props = defineProps({
-    users: {
-        type: Array as PropType<User[]>,
+    organizers: {
+        type: Array,
         required: true,
     },
 });
@@ -27,28 +26,28 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: dashboard().url,
     },
     {
-        title: 'Users',
-        href: users.index().url,
+        title: 'Organizers',
+        href: organizers.index().url,
     },
 ];
 
-export interface User {
+export interface Organizers {
     id: number;
     name: string;
-    email: string;
-    image: string;
+    created_at: string;
+    userName: string;
 }
 
-const data = computed<User[]>(() => {
-    return props.users.map((user: any) => ({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        image: user.image,
+const data = computed<Organizers[]>(() => {
+    return props.organizers.map((organizer: any) => ({
+        id: organizer.id,
+        name: organizer.name,
+        created_at: organizer.created_at,
+        userName: organizer.user?.name || 'N/A', 
     }));
 });
 
-const userColumns: ColumnDef<User>[] = [
+const userColumns: ColumnDef<Organizers>[] = [
     {
         id: 'select',
         header: ({ table }) =>
@@ -73,30 +72,28 @@ const userColumns: ColumnDef<User>[] = [
     },
     {
         accessorKey: 'name',
-        header: 'Name',
+        header: 'Organizer Name',
         cell: ({ row }) => h('div', row.getValue('name')),
     },
     {
-        accessorKey: 'email',
-        header: 'Email',
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('email')),
+        accessorKey: 'userName',
+        header: 'User Name',
+        cell: ({ row }) => h('div', row.getValue('userName')),
     },
     {
-        accessorKey: 'image',
-        header: 'Image',
-        cell: ({ row }) =>
-            h('div', { class: 'flex justify-center' }, [
-                h(SmartAvatar, { src: row.getValue('image') as string, alt: row.getValue('name') as string, name: row.getValue('name') as string }),
-            ]),
+        accessorKey: 'created_at',
+        header: 'Created At',
+        cell: ({ row }) => h('div', new Date(row.getValue('created_at')).toLocaleDateString()),
     },
+
     {
         id: 'actions',
         enableHiding: false,
         cell: ({ row }) =>
             h(ActionUser, {
                 id: row.original.id,
-                editRoute: users.edit(row.original.id).url,
-                deleteRoute: users.destroy(row.original.id).url,
+                editRoute: organizers.edit(row.original.id).url,
+                deleteRoute: organizers.destroy(row.original.id).url,
             }),
     },
 ];
@@ -104,7 +101,7 @@ const userColumns: ColumnDef<User>[] = [
 // --- DELETE LOGIC ---
 const deleteSusses = (id: number) => {
     // eslint-disable-next-line vue/no-mutating-props
-    props.users.value = props.users.value.filter((user) => user.id !== id);
+    props.organizers.value = props.organizers.value.filter((organizer: { id: number }) => organizer.id !== id);
 };
 </script>
 
@@ -113,12 +110,12 @@ const deleteSusses = (id: number) => {
         <div class="w-full">
             <div class="flex items-center py-4">
                 <div class="ml-auto flex items-center space-x-2">
-                    <Link title="Trash users" :href="users.trashed().url">
+                    <!-- <Link title="Trash users" :href="organizers.trashed().url">
                         <Button variant="outline" class="h-8 w-8 p-0">
                             <FolderX class="h-4 w-4 text-primary" />
                         </Button>
-                    </Link>
-                    <Link title="Add New User" :href="users.create().url">
+                    </Link> -->
+                    <Link title="Add New organizer" :href="organizers.create().url">
                         <Button variant="outline" class="h-8 w-8 p-0">
                             <UserRoundPlus class="h-4 w-4 text-primary" />
                         </Button>

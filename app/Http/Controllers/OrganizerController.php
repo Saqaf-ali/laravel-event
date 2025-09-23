@@ -14,9 +14,9 @@ class OrganizerController extends Controller
      */
     public function index()
     {
-        $organizers = Organizer::all();
-
-        return Inertia::render('Test', ['organizers' => $organizers]);
+        $organizers = Organizer::with('user')->get();
+        // return dd($organizers);
+        return Inertia::render('organizers/Index', ['organizers' => $organizers]);
     }
 
     /**

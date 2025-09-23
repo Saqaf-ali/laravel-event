@@ -20,6 +20,11 @@ const mainNavItems: NavItem[] = [
         href: 'users',
         icon: Users,
     },
+    {
+        title: 'Organizers',
+        href: 'organizers',
+        icon: Users,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
