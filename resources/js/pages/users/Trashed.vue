@@ -5,6 +5,7 @@ import TrashedAction from '@/components/TrashedAction.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { dashboard } from '@/routes';
 // eslint-disable-next-line vue/no-dupe-keys
 import users from '@/routes/users';
 import { type BreadcrumbItem } from '@/types';
@@ -21,6 +22,10 @@ const props = defineProps({
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: dashboard().url,
+    },
     {
         title: 'Users',
         href: users.index().url,
