@@ -131,6 +131,7 @@ const deleteSusses = (id: number) => {
                             <FolderX class="h-4 w-4 text-primary" />
                         </Button>
                     </Link>
+
                     <Link title="Add New organizer" :href="organizers.create().url">
                         <Button variant="outline" class="h-8 w-8 p-0">
                             <UserRoundPlus class="h-4 w-4 text-primary" />

@@ -2,16 +2,15 @@
 import DataTable from '@/components/DataTable.vue';
 import SmartAvatar from '@/components/SmartAvatar.vue';
 import TrashedAction from '@/components/TrashedAction.vue';
-import { Button } from '@/components/ui/button';
+import Button from '@/components/ui/button/Button.vue';
 import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import organizers from '@/routes/organizers';
 // eslint-disable-next-line vue/no-dupe-keys
 import { type BreadcrumbItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
 import type { ColumnDef } from '@tanstack/vue-table';
-import { UserRoundPlus } from 'lucide-vue-next';
+import { Link, UserRoundPlus } from 'lucide-vue-next';
 import { computed, h } from 'vue';
 
 const props = defineProps({
