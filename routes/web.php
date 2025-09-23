@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -37,6 +38,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     Route::resource('organizers', OrganizerController::class);
     // RootRoute::resource('attendees', AttendeeController::class);
+
+    // event routes
+    Route::resource('events', EventController::class);
 });
 
 Route::get('test', function () {

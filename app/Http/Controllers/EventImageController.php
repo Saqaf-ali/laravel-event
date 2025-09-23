@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
-use App\Http\Requests\StoreEventRequest;
-use App\Http\Requests\UpdateEventRequest;
+use App\Models\EventImage;
+use App\Http\Requests\StoreEventImageRequest;
+use App\Http\Requests\UpdateEventImageRequest;
 
-class EventController extends Controller
+class EventImageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
+        //
     }
 
     /**
@@ -27,7 +27,7 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventRequest $request)
+    public function store(StoreEventImageRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show(EventImage $eventImage)
     {
         //
     }
@@ -43,7 +43,7 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Event $event)
+    public function edit(EventImage $eventImage)
     {
         //
     }
@@ -51,7 +51,7 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEventRequest $request, Event $event)
+    public function update(UpdateEventImageRequest $request, EventImage $eventImage)
     {
         //
     }
@@ -59,7 +59,7 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function destroy(EventImage $eventImage)
     {
         //
     }
