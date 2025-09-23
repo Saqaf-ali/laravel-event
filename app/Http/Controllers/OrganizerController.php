@@ -64,6 +64,33 @@ class OrganizerController extends Controller
      */
     public function destroy(Organizer $organizer)
     {
-        //
+        $organizer->delete();
+        session()->flash('success', 'Organizer deleted successfully.');
+    }
+
+    /**
+     * Display a listing of the trashed resources.
+     */
+    public function trashed()
+    {
+        $organizers = Organizer::onlyTrashed()->latest('updated_at')->get();
+        return Inertia::render('organizers/Trashed', ['organizers' => $organizers]);
+    }
+    /**
+     * Restore the specified resource.
+     */
+    public function restore(Organizer $organizer)
+    {
+        $organizer->restore();
+        session()->flash('success', 'Organizer restored successfully.');
+    }
+    /**
+     * Delete the specified resource.
+     */
+    public function delete(Organizer $organizer)
+    {
+        $organizer->forceDelete();
+
+        session()->flash('success', 'Organizer deleted permanently.');
     }
 }

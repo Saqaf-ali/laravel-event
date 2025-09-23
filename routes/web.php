@@ -21,14 +21,21 @@ Route::get('test', function () {
 })->name('test');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    // users routes
     Route::controller(UserController::class)->group(function () {
         Route::get('/users/trashed', 'trashed')->name('users.trashed');
         Route::put('/users/{user}/restore', 'restore')->name('users.restore')->withTrashed();
         Route::delete('/users/{user}/delete', 'delete')->name('users.delete')->withTrashed();
     });
-
-    Route::resource('organizers', OrganizerController::class);
     Route::resource('users', UserController::class);
+
+    // organizer routes
+    Route::controller(OrganizerController::class)->group(function () {
+        Route::get('/organizers/trashed', 'trashed')->name('organizers.trashed');
+        Route::put('/organizers/{organizer}/restore', 'restore')->name('organizers.restore')->withTrashed();
+        Route::delete('/organizers/{organizer}/delete', 'delete')->name('organizers.delete')->withTrashed();
+    });
+    Route::resource('organizers', OrganizerController::class);
     // RootRoute::resource('attendees', AttendeeController::class);
 });
 

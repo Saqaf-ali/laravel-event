@@ -11,7 +11,7 @@ import organizers from '@/routes/organizers';
 import { type BreadcrumbItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import type { ColumnDef } from '@tanstack/vue-table';
-import { FolderX, UserRoundPlus } from 'lucide-vue-next';
+import { UserRoundPlus } from 'lucide-vue-next';
 import { computed, h } from 'vue';
 
 const props = defineProps({
@@ -29,6 +29,10 @@ const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Organizers',
         href: organizers.index().url,
+    },
+    {
+        title: 'Trashed Organizers',
+        href: organizers.trashed().url,
     },
 ];
 
@@ -103,8 +107,10 @@ const userColumns: ColumnDef<Organizers>[] = [
         cell: ({ row }) =>
             h(ActionUser, {
                 id: row.original.id,
-                editRoute: organizers.edit(row.original.id).url,
-                deleteRoute: organizers.destroy(row.original.id).url,
+                restoreRoute: organizers.restore(row.original.id).url,
+                deleteRoute: organizers.delete(row.original.id).url,
+                showRestore: true,
+                showForceDelete: true,
             }),
     },
 ];
@@ -121,12 +127,7 @@ const deleteSusses = (id: number) => {
         <div class="w-full">
             <div class="flex items-center py-4">
                 <div class="ml-auto flex items-center space-x-2">
-                    <Link title="Trash organizers" :href="organizers.trashed().url">
-                        <Button variant="outline" class="h-8 w-8 p-0">
-                            <FolderX class="h-4 w-4 text-primary" />
-                        </Button>
-                    </Link>
-                    <Link title="Add New organizer" :href="organizers.create().url">
+                    <Link title="Organizers" :href="organizers.index().url">
                         <Button variant="outline" class="h-8 w-8 p-0">
                             <UserRoundPlus class="h-4 w-4 text-primary" />
                         </Button>

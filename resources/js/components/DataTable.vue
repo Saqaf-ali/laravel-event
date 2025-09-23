@@ -7,6 +7,7 @@ import type { ColumnDef, ColumnFiltersState, SortingState, VisibilityState } fro
 import { FlexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table';
 import { ChevronDown } from 'lucide-vue-next';
 import { ref } from 'vue';
+import NoData from './message/NoData.vue';
 import { valueUpdater } from './ui/table/utils';
 
 // الخصائص التي يستقبلها المكون
@@ -22,6 +23,7 @@ const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
 
 // إعداد محرك TanStack Table
+
 const table = useVueTable({
     get data() {
         return props.data;
@@ -53,7 +55,7 @@ const table = useVueTable({
 </script>
 
 <template>
-    <div class="w-full">
+    <div class="w-full" v-if="props.data.length">
         <div class="flex items-center py-4">
             <Input
                 class="max-w-sm"
@@ -117,5 +119,8 @@ const table = useVueTable({
                 <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()"> Next </Button>
             </div>
         </div>
+    </div>
+    <div class="w-full" v-else>
+        <NoData />
     </div>
 </template>
