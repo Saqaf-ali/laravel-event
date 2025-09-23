@@ -13,7 +13,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        
+        $events = Event::latest('updated_at')->get();
+        return Inertia('events/Index', ['events' => $events]);
     }
 
     /**
@@ -21,7 +22,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

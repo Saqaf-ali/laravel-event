@@ -26,7 +26,7 @@ defineProps({
 <template>
     <TooltipProvider>
         <Tooltip>
-            <TooltipTrigger >
+            <TooltipTrigger>
                 <Link title="Organizers" :href="href">
                     <Button variant="outline" class="h-8 w-8 p-0">
                         <FolderX :class="`h-4 w-4 ${iconClasses}`" />
