@@ -14,7 +14,7 @@ class OrganizerController extends Controller
      */
     public function index()
     {
-        $organizers = Organizer::with('user')->get();
+        $organizers = Organizer::with('user')->latest('updated_at')->get();
         // return dd($organizers);
         return Inertia::render('organizers/Index', ['organizers' => $organizers]);
     }
@@ -73,7 +73,8 @@ class OrganizerController extends Controller
      */
     public function trashed()
     {
-        $organizers = Organizer::onlyTrashed()->latest('updated_at')->get();
+        $organizers = Organizer::with('user')->onlyTrashed()->latest('updated_at')->get();
+
         return Inertia::render('organizers/Trashed', ['organizers' => $organizers]);
     }
     /**

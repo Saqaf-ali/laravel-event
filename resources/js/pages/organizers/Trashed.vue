@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import ActionUser from '@/components/ActionUser.vue';
 import DataTable from '@/components/DataTable.vue';
 import SmartAvatar from '@/components/SmartAvatar.vue';
+import TrashedAction from '@/components/TrashedAction.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -26,12 +26,13 @@ const breadcrumbs: BreadcrumbItem[] = [
         title: 'Dashboard',
         href: dashboard().url,
     },
+
     {
         title: 'Organizers',
         href: organizers.index().url,
     },
     {
-        title: 'Trashed Organizers',
+        title: 'Trashed',
         href: organizers.trashed().url,
     },
 ];
@@ -105,7 +106,7 @@ const userColumns: ColumnDef<Organizers>[] = [
         id: 'actions',
         enableHiding: false,
         cell: ({ row }) =>
-            h(ActionUser, {
+            h(TrashedAction, {
                 id: row.original.id,
                 restoreRoute: organizers.restore(row.original.id).url,
                 deleteRoute: organizers.delete(row.original.id).url,

@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import organizers from '@/routes/organizers';
+import users from '@/routes/users';
 // eslint-disable-next-line vue/no-dupe-keys
 import { type BreadcrumbItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
@@ -25,6 +26,10 @@ const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
         href: dashboard().url,
+    },
+    {
+        title: 'Users',
+        href: users.index().url,
     },
     {
         title: 'Organizers',
