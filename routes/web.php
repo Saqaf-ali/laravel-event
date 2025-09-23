@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,7 +21,12 @@ Route::get('test', function () {
 })->name('test');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/users/trashed', [UserController::class, 'trashed'])->name('users.trashed');
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/users/trashed', 'trashed')->name('users.trashed');
+        Route::put('/users/{user}/restore', 'restore')->name('users.restore')->withTrashed();
+        Route::delete('/users/{user}/delete', 'delete')->name('users.delete')->withTrashed();
+    });
+
     Route::resource('organizers', OrganizerController::class);
     Route::resource('users', UserController::class);
     // RootRoute::resource('attendees', AttendeeController::class);

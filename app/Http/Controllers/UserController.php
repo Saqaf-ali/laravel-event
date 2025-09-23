@@ -64,9 +64,30 @@ class UserController extends Controller
         session()->flash('success', 'User deleted successfully.');
     }
 
-    public function trashed(){
+    /**
+     * Display a listing of the trashed resources.
+     */
+    public function trashed()
+    {
         $users = User::onlyTrashed()->get();
         return Inertia::render('users/Trashed', ['users' => $users]);
-        
+    }
+    /**
+     * Restore the specified resource.
+     */
+    public function restore(User $user)
+    {
+        $user->restore();
+        session()->flash('success', 'User restored successfully.');
+    }
+    /**
+     * Delete the specified resource.
+     */
+    public function delete(User $user)
+    {
+        //  return dd('saqaf'. $user);
+        $user->forceDelete();
+
+        session()->flash('success', 'User deleted permanently.');
     }
 }

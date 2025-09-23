@@ -39,11 +39,11 @@ watch(
 </script>
 
 <template>
-    <Alert v-if="(flash as { success: string | null })?.success" class="mb-4 bg-blue-600 text-white">
-        <Rocket class="h-4 w-4" />
-        <AlertTitle>Success!</AlertTitle>
+    <Alert v-if="(flash as { success: string | null })?.success" class="mb-4">
+        <Rocket class="h-4 w-4 fill-primary" />
+        <AlertTitle class="text-primary">Success!</AlertTitle>
 
-        <AlertDescription> {{ flash.success }} </AlertDescription>
+        <AlertDescription class=" "> {{ flash.success }} </AlertDescription>
     </Alert>
     <Alert variant="destructive" v-if="(flash as { error: string | null })?.error" class="mb-4">
         <AlertCircle class="h-4 w-4" />

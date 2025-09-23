@@ -26,6 +26,8 @@ const closeAlert = () => {
 };
 const form = useForm({});
 const deleteItem = () => {
+    console.log(props.deleteRoute);
+
     form.delete(props.deleteRoute, {
         onSuccess: () => {
             emit('deleteSusses', props.id);
@@ -36,7 +38,7 @@ const deleteItem = () => {
 };
 
 const restoreItem = () => {
-    form.post(props.restoreRoute, {
+    form.put(props.restoreRoute, {
         onSuccess: () => {
             emit('restoreSusses', props.id);
         },

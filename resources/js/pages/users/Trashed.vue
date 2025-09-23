@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import ActionUser from '@/components/ActionUser.vue';
 import DataTable from '@/components/DataTable.vue'; // استيراد المكون
 import SmartAvatar from '@/components/SmartAvatar.vue';
+import TrashedAction from '@/components/TrashedAction.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -92,10 +92,10 @@ const userColumns: ColumnDef<User>[] = [
         id: 'actions',
         enableHiding: false,
         cell: ({ row }) =>
-            h(ActionUser, {
+            h(TrashedAction, {
                 id: row.original.id,
-                editRoute: users.edit(row.original.id).url,
-                deleteRoute: users.destroy(row.original.id).url,
+                restoreRoute: users.restore(row.original.id).url,
+                deleteRoute: users.delete(row.original.id).url,
             }),
     },
 ];
