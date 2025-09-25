@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EventImage extends Model
 {
-    protected $fillable = ['event_id', 'image'];
+    protected $fillable = ['event_id', 'url'];
     protected $hidden = [];
 
     /** @use HasFactory<\Database\Factories\EventImageFactory> */

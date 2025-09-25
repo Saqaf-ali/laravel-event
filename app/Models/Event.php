@@ -12,7 +12,7 @@ class Event extends Model
     use SoftDeletes;
     /** @use HasFactory<\Database\Factories\EventFactory> */
     use HasFactory;
-    protected $fillable = ['name', 'description', 'location', 'start_date', 'end_date'];
+    protected $fillable = ['title', 'description', 'location', 'start_date', 'end_date'];
     protected $hidden = [];
 
     public function organizer(): BelongsTo
@@ -20,7 +20,7 @@ class Event extends Model
         return $this->belongsTo(Organizer::class);
     }
 
-    public function events()
+    public function eventImages()
     {
         return $this->hasMany(EventImage::class);
     }

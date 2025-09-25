@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Models\EventImage;
 
 class EventController extends Controller
 {
@@ -13,17 +14,16 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::latest('updated_at')->get();
+        $events = Event::with('eventImages')->latest('updated_at')->get();
+        //  echo $events->eventImages()->get()->first()->url;
+        //    die;
         return Inertia('events/Index', ['events' => $events]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
