@@ -24,6 +24,7 @@ const openAlert = () => {
 const closeAlert = () => {
     isAlertOpen.value = false;
 };
+
 const form = useForm({});
 const deleteItem = () => {
     form.delete(props.deleteRoute, {

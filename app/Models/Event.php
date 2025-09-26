@@ -12,7 +12,7 @@ class Event extends Model
     use SoftDeletes;
     /** @use HasFactory<\Database\Factories\EventFactory> */
     use HasFactory;
-    protected $fillable = ['title', 'description', 'location', 'start_date', 'end_date'];
+    protected $fillable = ['title', 'description', 'location', 'start_date', 'end_date', 'organizer_id'];
     protected $hidden = [];
 
     public function organizer(): BelongsTo

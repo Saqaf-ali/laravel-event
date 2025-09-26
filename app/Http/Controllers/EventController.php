@@ -6,6 +6,9 @@ use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\EventImage;
+use App\Models\Organizer;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -23,14 +26,31 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {}
+    public function create()
+    {
+        return Inertia('events/Create');
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreEventRequest $request)
     {
-        //
+        $event = Event::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'location' => $request->input('location'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+            'organizer_id' => Auth::user()->organizer->id,
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('event_images', 'public');
+            EventImage::create([
+                'event_id' => $event->id,
+                'url' => $imagePath,
+            ]);
+        }
+
+        return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }
 
     /**

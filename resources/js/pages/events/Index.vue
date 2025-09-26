@@ -7,7 +7,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import events from '@/routes/events';
-import users from '@/routes/users';
 // eslint-disable-next-line vue/no-dupe-keys
 import { type BreadcrumbItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
@@ -29,17 +28,12 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: dashboard().url,
     },
     {
-        title: 'Users',
-        href: users.index().url,
-    },
-    {
         title: 'Events',
         href: events.index().url,
     },
 ];
 
 export interface Events {
-
     id: number;
     title: string;
     url: string;
@@ -94,7 +88,8 @@ const userColumns: ColumnDef<Events>[] = [
                 { class: 'flex items-center gap-2' },
                 h(SmartAvatar, {
                     name: row.getValue('title'),
-                    src: row.original.url[0]        }),
+                    src: row.original.url[0],
+                }),
             ),
     },
 
@@ -115,36 +110,28 @@ const userColumns: ColumnDef<Events>[] = [
         },
     },
 ];
-console.log('ddddd',props.events)
+console.log('ddddd', props.events);
 </script>
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <DataTable :data="data" :columns="userColumns">
-            <template #header>
-                <Link :href="events.create().url">
-                    <Button variant="default" size="sm" class="gap-2">
-                        <UserRoundPlus />
-                        Add New Event
-                    </Button>
-                </Link>
-            </template>
-            <template #empty>
-                <div class="flex items-center justify-center gap-2 p-4">
-                    <FolderX class="h-16 w-16 text-gray-400" />
-                    <p class="text-xl text-gray-400">No events found.</p>
+        <div class="w-full">
+            <div class="flex items-center py-4">
+                <div class="ml-auto flex items-center space-x-2">
+                    <Link title="Trash organizers">
+                        <Button variant="outline" class="h-8 w-8 p-0">
+                            <FolderX class="h-4 w-4 text-primary" />
+                        </Button>
+                    </Link>
+
+                    <Link title="Add New organizer" :href="events.create().url">
+                        <Button variant="outline" class="h-8 w-8 p-0">
+                            <UserRoundPlus class="h-4 w-4 text-primary" />
+                        </Button>
+                    </Link>
                 </div>
-            </template>
-        </DataTable>
+            </div>
+            <DataTable :data="data" :columns="userColumns" @deleteSusses="deleteSusses" />
+        </div>
     </AppLayout>
 </template>
-<!-- <script lang="ts" setup>
-const props = defineProps({
-    events: {
-        type: Array,
-        required: true,
-    },
-});
-
-console.log((props.events[0] as any).event_images[0].url);
-</script> -->
