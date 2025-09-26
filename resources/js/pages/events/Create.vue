@@ -27,6 +27,10 @@ const breadcrumbs: BreadcrumbItem[] = [
         title: 'Events',
         href: events.index().url,
     },
+    {
+        title: 'Create',
+        href: events.create().url,
+    },
 ];
 
 const inertiaForm = useInertiaForm({

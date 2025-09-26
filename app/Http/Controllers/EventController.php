@@ -66,7 +66,8 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        return Inertia('events/Edit', ['event' => $event]);
+        
     }
 
     /**

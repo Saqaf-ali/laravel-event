@@ -104,7 +104,9 @@ const userColumns: ColumnDef<Events>[] = [
                 'div',
                 { class: 'relative' },
                 h(ActionUser, {
-                    event: event,
+                    id: row.original.id,
+                    editRoute: events.edit(row.original.id).url,
+                    deleteRoute: events.destroy(row.original.id).url,
                 }),
             );
         },
