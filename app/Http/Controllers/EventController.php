@@ -86,7 +86,26 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
+        $event->load('eventImages');
+        return dd($request->file('image'));
+        die();
         $event->update($request->validated());
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            return dd($event->eventImages()->get());
+            die();
+            if ($event->eventImages()->exists()) {
+                Storage::disk('public')->delete($event->eventImages->first()->url);
+                $event->eventImages()->delete();
+            }
+
+            $imagePath = $request->file('image')->store('event_images', 'public');
+            EventImage::create([
+                'event_id' => $event->id,
+                'url' => $imagePath,
+            ]);
+        }
+
         session()->flash('success', 'Event updated successfully.');
         return redirect()->route('events.index');
     }

@@ -27,10 +27,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         title: 'Events',
         href: events.index().url,
     },
-    {
-        title: 'Create',
-        href: events.create().url,
-    },
 ];
 
 const props = defineProps({
@@ -46,6 +42,7 @@ const inertiaForm = useInertiaForm({
     end_date: props.event.end_date,
     start_date: props.event.start_date,
     image: undefined,
+    _method: 'put',
 });
 
 const eventSchemas = toTypedSchema(EventSchema);
@@ -63,7 +60,9 @@ const onSubmit = handleSubmit((values) => {
     inertiaForm.start_date = values.start_date;
     inertiaForm.image = values.image;
 
-    inertiaForm.put(events.update(props.event.id).url, {
+    console.log(inertiaForm.image);
+
+    inertiaForm.post(events.update(props.event.id).url, {
         onError: (errors) => {
             console.log(errors);
             setErrors(errors);
