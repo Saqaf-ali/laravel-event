@@ -14,6 +14,10 @@ class Event extends Model
     use HasFactory;
     protected $fillable = ['title', 'description', 'location', 'start_date', 'end_date', 'organizer_id'];
     protected $hidden = [];
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
 
     public function organizer(): BelongsTo
     {

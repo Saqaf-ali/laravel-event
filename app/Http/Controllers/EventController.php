@@ -9,6 +9,7 @@ use App\Models\EventImage;
 use App\Models\Organizer;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -66,8 +67,18 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        return Inertia('events/Edit', ['event' => $event]);
-        
+        $event->load('eventImages');
+
+        return Inertia('events/Edit', [
+            'event' => [
+                'id' => $event->id,
+                'title' => $event->title,
+                'description' => $event->description,
+                'location' => $event->location,
+                'start_date' => $event->start_date->format('Y-m-d'),
+                'end_date' => $event->end_date->format('Y-m-d'),
+            ],
+        ]);
     }
 
     /**
@@ -75,7 +86,9 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        $event->update($request->validated());
+        session()->flash('success', 'Event updated successfully.');
+        return redirect()->route('events.index');
     }
 
     /**

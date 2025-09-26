@@ -6,6 +6,6 @@ export const EventSchema = z.object({
     // end_date: z.string().min(1, 'Date is required'),
     // start_date: z.string().min(1, 'Date is required'),
     location: z.string().min(2, 'Too short').max(100, 'Too long'),
-    image: FileSchema,
+    image: FileSchema.optional(),
 });
 export type Event = z.infer<typeof EventSchema>;
