@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import ActionUser from '@/components/ActionUser.vue';
 import DataTable from '@/components/DataTable.vue';
 import SmartAvatar from '@/components/SmartAvatar.vue';
-import { Button } from '@/components/ui/button';
+import TrashedAction from '@/components/TrashedAction.vue';
+import Button from '@/components/ui/button/Button.vue';
 import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import events from '@/routes/events';
 // eslint-disable-next-line vue/no-dupe-keys
 import { type BreadcrumbItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
 import type { ColumnDef } from '@tanstack/vue-table';
-
-import { FolderX, UserRoundPlus } from 'lucide-vue-next';
+import { Link, UserRoundPlus } from 'lucide-vue-next';
 import { computed, h } from 'vue';
 
 const props = defineProps({
@@ -27,43 +25,48 @@ const breadcrumbs: BreadcrumbItem[] = [
         title: 'Dashboard',
         href: dashboard().url,
     },
+
     {
-        title: 'Events',
+        title: 'events',
         href: events.index().url,
+    },
+    {
+        title: 'Trashed',
+        href: events.trashed().url,
     },
 ];
 
-export interface Events {
+export interface events {
     id: number;
     title: string;
+    created_at: string;
+    // usertitle: string;
     url: string;
-
-    // created_at: string;
-    // userName: string;
 }
 
-const data = computed<Events[]>(() => {
-    return props.events?.map((event: any) => ({
+const data = computed<events[]>(() => {
+    return props.events.map((event: any) => ({
         id: event.id,
         title: event.title,
-        url: event.event_images.map((item: any) => item.url),
+        created_at: event.created_at,
+        // usertitle: event.user?.title || 'N/A',
+        url: event.event_images[0].image_url,
     }));
 });
-console.log(props.events);
 
-const userColumns: ColumnDef<Events>[] = [
+const userColumns: ColumnDef<events>[] = [
     {
         id: 'select',
         header: ({ table }) =>
             h(Checkbox, {
                 modelValue: table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate'),
-                'onUpdate:modelValue': (value: any) => table.toggleAllPageRowsSelected(!!value),
+                'onUpdate:modelValue': (value) => table.toggleAllPageRowsSelected(!!value),
                 ariaLabel: 'Select all',
             }),
         cell: ({ row }) =>
             h(Checkbox, {
                 modelValue: row.getIsSelected(),
-                'onUpdate:modelValue': (value: any) => row.toggleSelected(!!value),
+                'onUpdate:modelValue': (value) => row.toggleSelected(!!value),
                 ariaLabel: 'Select row',
             }),
         enableSorting: false,
@@ -72,13 +75,18 @@ const userColumns: ColumnDef<Events>[] = [
     {
         accessorKey: 'id',
         header: 'ID',
-        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('id')),
+        cell: ({ row }) => h('div', row.getValue('id')),
     },
     {
         accessorKey: 'title',
         header: 'Title',
-        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('title')),
+        cell: ({ row }) => h('div', row.getValue('title')),
     },
+    // {
+    //     accessorKey: 'usertitle',
+    //     header: 'User title',
+    //     cell: ({ row }) => h('div', row.getValue('usertitle')),
+    // },
     {
         accessorKey: 'url',
         header: 'Img',
@@ -88,36 +96,35 @@ const userColumns: ColumnDef<Events>[] = [
                 { class: 'flex items-center gap-2' },
                 h(SmartAvatar, {
                     name: row.getValue('title'),
-                    src: row.original.url[0],
+                    src: row.original.url,
                 }),
             ),
+    },
+    {
+        accessorKey: 'created_at',
+        header: 'Created at',
+        cell: ({ row }) => h('div', new Date(row.getValue('created_at')).toLocaleDateString()),
     },
 
     {
         id: 'actions',
         enableHiding: false,
-        cell: ({ row }) => {
-            const event = row.original;
-            console.log(event);
-
-            return h(
-                'div',
-                { class: 'relative' },
-                h(ActionUser, {
-                    id: row.original.id,
-                    editRoute: events.edit(row.original.id).url,
-                    deleteRoute: events.destroy(row.original.id).url,
-                }),
-            );
-        },
+        cell: ({ row }) =>
+            h(TrashedAction, {
+                id: row.original.id,
+                restoreRoute: events.restore(row.original.id).url,
+                deleteRoute: events.delete(row.original.id).url,
+                showRestore: true,
+                showForceDelete: true,
+            }),
     },
 ];
 
+// --- DELETE LOGIC ---
 const deleteSusses = (id: number) => {
+    // eslint-disable-next-line vue/no-mutating-props
     props.events.value = props.events.value.filter((event: { id: number }) => event.id !== id);
 };
-
-console.log('ddddd', props.events);
 </script>
 
 <template>
@@ -125,13 +132,7 @@ console.log('ddddd', props.events);
         <div class="w-full">
             <div class="flex items-center py-4">
                 <div class="ml-auto flex items-center space-x-2">
-                    <Link title="Trash events" :href="events.trashed().url">
-                        <Button variant="outline" class="h-8 w-8 p-0">
-                            <FolderX class="h-4 w-4 text-primary" />
-                        </Button>
-                    </Link>
-
-                    <Link title="Add New event" :href="events.create().url">
+                    <Link title="events" :href="events.index().url">
                         <Button variant="outline" class="h-8 w-8 p-0">
                             <UserRoundPlus class="h-4 w-4 text-primary" />
                         </Button>

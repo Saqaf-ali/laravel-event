@@ -40,10 +40,10 @@ const deleteItem = () => {
 <template>
     <Actions>
         <DropdownMenuItem>
-            <Link :href="editRoute"> Edit </Link>
+            <Link as="button" :href="editRoute"> Edit </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem @select="openAlert"> Delete </DropdownMenuItem>
+        <DropdownMenuItem variant="destructive" @select="openAlert"> Delete </DropdownMenuItem>
     </Actions>
 
     <AlertDialog :open="isAlertOpen" @update:open="isAlertOpen = $event">

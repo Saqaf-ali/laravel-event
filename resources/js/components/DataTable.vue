@@ -11,10 +11,16 @@ import NoData from './message/NoData.vue';
 import { valueUpdater } from './ui/table/utils';
 
 // الخصائص التي يستقبلها المكون
-const props = defineProps<{
-    data: any[];
-    columns: ColumnDef<any>[];
-}>();
+const props = withDefaults(
+    defineProps<{
+        data: any[];
+        columns: ColumnDef<any>[];
+        columnFilter: string;
+    }>(),
+    {
+        columnFilter: 'name',
+    },
+);
 
 // حالة الجدول
 const sorting = ref<SortingState>([]);
@@ -59,9 +65,9 @@ const table = useVueTable({
         <div class="flex items-center py-4">
             <Input
                 class="max-w-sm"
-                placeholder="Filter names..."
-                :model-value="(table.getColumn('name')?.getFilterValue() as string) ?? ''"
-                @update:model-value="table.getColumn('name')?.setFilterValue($event)"
+                :placeholder="`Filter ${props.columnFilter}...`"
+                :model-value="(table.getColumn(props.columnFilter)?.getFilterValue() as string) ?? ''"
+                @update:model-value="table.getColumn(props.columnFilter)?.setFilterValue($event)"
             />
             <div class="ml-auto flex items-center space-x-2">
                 <DropdownMenu>

@@ -16,7 +16,8 @@ import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
 import { EventSchema } from '@/Schemas/EventSchema';
 import { BreadcrumbItem } from '@/types';
-import { useForm as useInertiaForm } from '@inertiajs/vue3';
+import { Link, useForm as useInertiaForm } from '@inertiajs/vue3';
+import { Undo2 } from 'lucide-vue-next';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -27,6 +28,10 @@ const breadcrumbs: BreadcrumbItem[] = [
         title: 'Events',
         href: events.index().url,
     },
+    {
+        title: 'Edit',
+        href: '',
+    },
 ];
 
 const props = defineProps({
@@ -35,6 +40,10 @@ const props = defineProps({
         required: true,
     },
 });
+
+// Dynamically set the href for the edit breadcrumb
+breadcrumbs[2].href = events.edit(props.event.id).url;
+
 const inertiaForm = useInertiaForm({
     title: props.event.title,
     description: props.event.description,
@@ -164,6 +173,9 @@ const onSubmit = handleSubmit((values) => {
 
                         <!-- end -->
                         <Button type="submit">Submit</Button>
+                        <Link :href="events.index().url" as="button" class="ml-2" title="Cancel">
+                            <Button type="button" variant="outline"> <Undo2 class="h-4 w-4" /> </Button>
+                        </Link>
                     </form>
                 </CardContent>
             </Card>

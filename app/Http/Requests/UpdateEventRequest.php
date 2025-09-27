@@ -27,6 +27,7 @@ class UpdateEventRequest extends FormRequest
             'end_date' => 'filled|date',
             'start_date' => 'filled|date',
             'location' => 'filled|string|max:255',
+            'image' => 'filled|image|mimes:jpeg,png,jpg,gif,svg|max:3072',
 
         ];
     }

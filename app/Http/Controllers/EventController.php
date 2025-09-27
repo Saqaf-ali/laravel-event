@@ -19,8 +19,6 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::with('eventImages')->latest('updated_at')->get();
-        //  echo $events->eventImages()->get()->first()->url;
-        //    die;
         return Inertia('events/Index', ['events' => $events]);
     }
 
@@ -87,13 +85,10 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event)
     {
         $event->load('eventImages');
-        return dd($request->file('image'));
-        die();
         $event->update($request->validated());
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            return dd($event->eventImages()->get());
-            die();
+
             if ($event->eventImages()->exists()) {
                 Storage::disk('public')->delete($event->eventImages->first()->url);
                 $event->eventImages()->delete();
@@ -115,6 +110,32 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        session()->flash('success', 'Event deleted successfully.');
+    }
+    /**
+     * Display a listing of the trashed resources.
+     */
+    public function trashed()
+    {
+        $events = Event::onlyTrashed()->with('eventImages')->latest('updated_at')->get();
+        return Inertia('events/Trashed', ['events' => $events]);
+    }
+    
+    /**
+     * Restore the specified resource.
+     */
+    public function restore(Event $event)
+    {
+        $event->restore();
+        session()->flash('success', 'Event restored successfully.');
+    }
+    /**
+     * Delete the specified resource.
+     */
+    public function delete(Event $event)
+    {
+        $event->forceDelete();
+        session()->flash('success', 'Event deleted permanently.');
     }
 }

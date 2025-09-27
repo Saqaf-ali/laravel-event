@@ -40,6 +40,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // RootRoute::resource('attendees', AttendeeController::class);
 
     // event routes
+    Route::controller(EventController::class)->group(function () {
+        Route::get('/events/trashed', 'trashed')->name('events.trashed');
+        Route::put('/events/{event}/restore', 'restore')->name('events.restore')->withTrashed();
+        Route::delete('/events/{event}/delete', 'delete')->name('events.delete')->withTrashed();
+    });
+    
     Route::resource('events', EventController::class);
 });
 
