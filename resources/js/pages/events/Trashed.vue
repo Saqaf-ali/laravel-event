@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import DataTable from '@/components/DataTable.vue';
+import ButtonBack from '@/components/Navigation/ButtonBack.vue';
 import SmartAvatar from '@/components/SmartAvatar.vue';
 import TrashedAction from '@/components/TrashedAction.vue';
-import Button from '@/components/ui/button/Button.vue';
 import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import events from '@/routes/events';
 // eslint-disable-next-line vue/no-dupe-keys
 import { type BreadcrumbItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
 import type { ColumnDef } from '@tanstack/vue-table';
-import { Undo2 } from 'lucide-vue-next';
 import { computed, h } from 'vue';
 const props = defineProps({
     events: {
@@ -132,9 +130,7 @@ const deleteSusses = (id: number) => {
         <div class="w-full">
             <div class="flex items-center py-4">
                 <div class="ml-auto flex items-center space-x-2">
-                    <Link :href="events.index().url" as="button" class="ml-2" title="Cancel">
-                        <Button type="button" variant="outline"> <Undo2 class="h-4 w-4" /> </Button>
-                    </Link>
+                    <ButtonBack :href="events.index().url" />
                 </div>
             </div>
             <DataTable :data="data" :columns="userColumns" @deleteSusses="deleteSusses" columnFilter="title" />
