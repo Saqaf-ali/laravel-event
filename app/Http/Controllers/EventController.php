@@ -57,7 +57,8 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $event->load('eventImages', 'organizer.user');
+        return Inertia('events/Show', ['event' => $event]);
     }
 
     /**
@@ -121,7 +122,7 @@ class EventController extends Controller
         $events = Event::onlyTrashed()->with('eventImages')->latest('updated_at')->get();
         return Inertia('events/Trashed', ['events' => $events]);
     }
-    
+
     /**
      * Restore the specified resource.
      */

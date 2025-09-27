@@ -107,6 +107,7 @@ const userColumns: ColumnDef<Events>[] = [
                     id: row.original.id,
                     editRoute: events.edit(row.original.id).url,
                     deleteRoute: events.destroy(row.original.id).url,
+                    viewRoute: events.show(row.original.id).url,
                 }),
             );
         },

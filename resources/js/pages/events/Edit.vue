@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
+import { computed, ref } from 'vue';
 
 import { Button } from '@/components/ui/button';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -16,8 +17,7 @@ import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
 import { EventSchema } from '@/Schemas/EventSchema';
 import { BreadcrumbItem } from '@/types';
-import { Link, useForm as useInertiaForm } from '@inertiajs/vue3';
-import { Undo2 } from 'lucide-vue-next';
+import { Head, Link, useForm as useInertiaForm } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -30,7 +30,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
     {
         title: 'Edit',
-        href: '',
+        href: '#', // Will be set dynamically
     },
 ];
 
@@ -57,23 +57,25 @@ const inertiaForm = useInertiaForm({
 const eventSchemas = toTypedSchema(EventSchema);
 
 const { isFieldDirty, handleSubmit, setErrors } = useForm({
-    initialValues: inertiaForm.data(),
-    // validationSchema: eventSchemas,
+    initialValues: {
+        ...inertiaForm.data(),
+        image: undefined, // vee-validate handles file inputs better with undefined
+    },
+    validationSchema: eventSchemas,
+});
+
+const imagePreview = ref<string | null>(null);
+
+const currentImageUrl = computed(() => {
+    return props.event.event_images && props.event.event_images.length > 0 ? props.event.event_images[0].url : null;
 });
 
 const onSubmit = handleSubmit((values) => {
-    inertiaForm.title = values.title;
-    inertiaForm.description = values.description ?? '';
-    inertiaForm.location = values.location;
-    inertiaForm.end_date = values.end_date;
-    inertiaForm.start_date = values.start_date;
-    inertiaForm.image = values.image;
-
-    console.log(inertiaForm.image);
+    // Assign validated values to the inertia form
+    Object.assign(inertiaForm, values);
 
     inertiaForm.post(events.update(props.event.id).url, {
         onError: (errors) => {
-            console.log(errors);
             setErrors(errors);
         },
     });
@@ -81,12 +83,13 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-    <AppLayout :breadcrumbs>
+    <Head title="Dashboard" />
+    <AppLayout :breadcrumbs="breadcrumbs">
         <div class="mx-auto max-w-2xl p-4">
             <Card class="bg-primary-subtle border-none">
-                <CardHeader class="">
-                    <CardTitle class="text-primary">Event Form</CardTitle>
-                    <CardDescription>Create a new event here.</CardDescription>
+                <CardHeader>
+                    <CardTitle class="text-primary">Edit Event</CardTitle>
+                    <CardDescription>Edit the details of an existing event.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form class="space-y-8" @submit="onSubmit">
@@ -158,8 +161,15 @@ const onSubmit = handleSubmit((values) => {
                                         type="file"
                                         @change="
                                             (e) => {
+                                                const target = e.target as HTMLInputElement;
+                                                const file = target.files?.[0];
                                                 componentField.onChange(e);
-                                                inertiaForm.image = e.target.files[0];
+                                                inertiaForm.image = file;
+                                                if (file) {
+                                                    imagePreview = URL.createObjectURL(file);
+                                                } else {
+                                                    imagePreview = null;
+                                                }
                                             }
                                         "
                                     />
@@ -167,12 +177,13 @@ const onSubmit = handleSubmit((values) => {
                                 <FormMessage />
                             </FormItem>
                         </FormField>
-
                         <!-- end -->
-                        <Button type="submit">Submit</Button>
-                        <Link :href="events.index().url" as="button" class="ml-2" title="Cancel">
-                            <Button type="button" variant="outline"> <Undo2 class="h-4 w-4" /> </Button>
-                        </Link>
+                        <div class="flex gap-2">
+                            <Button type="submit" :disabled="inertiaForm.processing">Submit</Button>
+                            <Link :href="events.index().url" as="button">
+                                <Button type="button" variant="outline"> Back </Button>
+                            </Link>
+                        </div>
                     </form>
                 </CardContent>
             </Card>

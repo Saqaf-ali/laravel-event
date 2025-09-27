@@ -12,8 +12,16 @@ import {
 import { Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Actions from './Actions.vue';
+import Icon from './Icon.vue';
 import DropdownMenuItem from './ui/dropdown-menu/DropdownMenuItem.vue';
-const props = defineProps(['id', 'editRoute', 'deleteRoute']);
+
+const props = defineProps<{
+    id: number | string;
+    editRoute: string;
+    deleteRoute: string;
+    viewRoute?: string;
+}>();
+
 const emit = defineEmits(['deleteSusses']);
 const isAlertOpen = ref(false);
 
@@ -29,21 +37,28 @@ const form = useForm({});
 const deleteItem = () => {
     form.delete(props.deleteRoute, {
         onSuccess: () => {
+            closeAlert();
             emit('deleteSusses', props.id);
         },
     });
-
-    closeAlert();
 };
 </script>
 
 <template>
     <Actions>
-        <DropdownMenuItem>
-            <Link as="button" :href="editRoute"> Edit </Link>
+        <DropdownMenuItem v-if="viewRoute" as-child>
+            <Link :href="viewRoute" class="flex items-center gap-2">
+                <Icon name="eye" />
+                <span>View</span>
+            </Link>
         </DropdownMenuItem>
-
-        <DropdownMenuItem variant="destructive" @select="openAlert"> Delete </DropdownMenuItem>
+        <DropdownMenuItem as-child>
+            <Link :href="editRoute" class="flex items-center gap-2">
+                <Icon name="pencil" />
+                <span>Edit</span></Link
+            >
+        </DropdownMenuItem>
+        <DropdownMenuItem class="text-destructive focus:bg-destructive/10 focus:text-destructive" @select="openAlert"> Delete </DropdownMenuItem>
     </Actions>
 
     <AlertDialog :open="isAlertOpen" @update:open="isAlertOpen = $event">
@@ -53,7 +68,7 @@ const deleteItem = () => {
                 <AlertDialogDescription> This action cannot be undone. </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-                <AlertDialogCancel @click="closeAlert">Cancel</AlertDialogCancel>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction @click="deleteItem">Delete</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>

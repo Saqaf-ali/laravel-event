@@ -11,6 +11,7 @@ import DropdownMenuTrigger from './ui/dropdown-menu/DropdownMenuTrigger.vue';
         <DropdownMenuTrigger as-child>
             <Button variant="ghost" class="h-8 w-8 p-0">
                 <MoreHorizontal class="h-4 w-4" />
+                
             </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end"> <slot /> </DropdownMenuContent>
