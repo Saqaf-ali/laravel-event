@@ -48,9 +48,9 @@ const restoreItem = () => {
 
 <template>
     <Actions>
-        <DropdownMenuItem @select="restoreItem"> Restore </DropdownMenuItem>
+        <DropdownMenuItem class="text-primary" @select="restoreItem"> Restore </DropdownMenuItem>
 
-        <DropdownMenuItem @select="openAlert"> Delete </DropdownMenuItem>
+        <DropdownMenuItem class="text-destructive" variant="destructive" @select="openAlert"> Delete </DropdownMenuItem>
     </Actions>
 
     <AlertDialog :open="isAlertOpen" @update:open="isAlertOpen = $event">

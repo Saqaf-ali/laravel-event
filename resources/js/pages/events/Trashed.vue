@@ -2,7 +2,6 @@
 import DataTable from '@/components/DataTable.vue';
 import SmartAvatar from '@/components/SmartAvatar.vue';
 import TrashedAction from '@/components/TrashedAction.vue';
-import Button from '@/components/ui/button/Button.vue';
 import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
@@ -10,7 +9,6 @@ import events from '@/routes/events';
 // eslint-disable-next-line vue/no-dupe-keys
 import { type BreadcrumbItem } from '@/types';
 import type { ColumnDef } from '@tanstack/vue-table';
-import { Link, UserRoundPlus } from 'lucide-vue-next';
 import { computed, h } from 'vue';
 
 const props = defineProps({
@@ -131,13 +129,7 @@ const deleteSusses = (id: number) => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="w-full">
             <div class="flex items-center py-4">
-                <div class="ml-auto flex items-center space-x-2">
-                    <Link title="events" :href="events.index().url">
-                        <Button variant="outline" class="h-8 w-8 p-0">
-                            <UserRoundPlus class="h-4 w-4 text-primary" />
-                        </Button>
-                    </Link>
-                </div>
+                <div class="ml-auto flex items-center space-x-2"></div>
             </div>
             <DataTable :data="data" :columns="userColumns" @deleteSusses="deleteSusses" columnFilter="title" />
         </div>

@@ -76,9 +76,6 @@ const onSubmit = handleSubmit((values) => {
             console.log(errors);
             setErrors(errors);
         },
-        onSuccess: () => {
-            inertiaForm.reset();
-        },
     });
 });
 </script>
