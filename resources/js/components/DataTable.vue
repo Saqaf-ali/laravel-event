@@ -15,7 +15,7 @@ const props = withDefaults(
     defineProps<{
         data: any[];
         columns: ColumnDef<any>[];
-        columnFilter: string;
+        columnFilter: number | string;
     }>(),
     {
         columnFilter: 'name',
@@ -29,7 +29,6 @@ const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
 
 // إعداد محرك TanStack Table
-
 const table = useVueTable({
     get data() {
         return props.data;

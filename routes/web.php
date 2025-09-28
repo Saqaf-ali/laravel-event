@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventImageController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -45,8 +46,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/events/{event}/restore', 'restore')->name('events.restore')->withTrashed();
         Route::delete('/events/{event}/delete', 'delete')->name('events.delete')->withTrashed();
     });
-    
+
     Route::resource('events', EventController::class);
+    Route::resource('event_images', EventImageController::class);
 });
 
 Route::get('test', function () {

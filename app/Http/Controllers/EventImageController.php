@@ -45,7 +45,7 @@ class EventImageController extends Controller
      */
     public function edit(EventImage $eventImage)
     {
-        //
+     return Inertia('event_images/Edit', ['eventImage' => $eventImage]);
     }
 
     /**
