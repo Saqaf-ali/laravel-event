@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('event.eventImages', EventImageController::class)
         ->parameters(['eventImages' => 'image'])
         ->only(['store', 'create']);
-    Route::resource('event_images', EventImageController::class)->except(['store', 'create']);
+    Route::resource('event_images', EventImageController::class)->except(['store', 'create', 'show', 'index']);
 });
 
 Route::get('test', function () {
