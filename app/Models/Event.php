@@ -28,4 +28,8 @@ class Event extends Model
     {
         return $this->hasMany(EventImage::class);
     }
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }
