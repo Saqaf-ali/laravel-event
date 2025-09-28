@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EventImage;
 use App\Http\Requests\StoreEventImageRequest;
 use App\Http\Requests\UpdateEventImageRequest;
+use Illuminate\Support\Facades\Storage;
 
 class EventImageController extends Controller
 {
@@ -45,7 +46,7 @@ class EventImageController extends Controller
      */
     public function edit(EventImage $eventImage)
     {
-     return Inertia('event_images/Edit', ['eventImage' => $eventImage]);
+        return Inertia('event_images/Edit', ['eventImage' => $eventImage]);
     }
 
     /**
@@ -53,7 +54,19 @@ class EventImageController extends Controller
      */
     public function update(UpdateEventImageRequest $request, EventImage $eventImage)
     {
-        //
+        if ($request->hasFile('image')) {
+            if ($eventImage->url) {
+                Storage::disk('public')->delete($eventImage->url);
+            }
+
+            $imagePath = $request->file('image')->store('event_images', 'public');
+            $eventImage->update([
+                'url' => $imagePath,
+            ]);
+        }
+
+        session()->flash('success', 'EventImage updated successfully.');
+        return redirect()->route('events.index');
     }
 
     /**
