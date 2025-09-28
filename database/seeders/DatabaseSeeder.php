@@ -16,21 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // $this->call([OrganizerSeeder::class]);
-        Organizer::factory()
+        User::factory()
             ->has(
-                Event::factory()
-                    ->count(10)
-                    ->has(EventImage::factory()->count(3)),
+                Organizer::factory()->has(
+                    Event::factory()
+                        ->count(10)
+                        ->has(EventImage::factory()->count(3)),
+                ),
             )
-            ->count(5)
             ->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
     }
 }

@@ -40,7 +40,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         <AppContent>
             <Card class="mx-auto max-w-4xl border-none bg-card p-4">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <CardHeader class="">
+                    <CardHeader>
                         <Heading class="text-primary" :title="props.event.title" :description="props.event.description" />
                     </CardHeader>
                     <CardContent>
@@ -48,7 +48,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                             <AppContent class="flex-2/2">
                                 <HeadingSmall title="Location" :description="props.event.location" />
                             </AppContent>
-                            <AppContent class="">
+                            <AppContent>
                                 <HeadingSmall title="Start Date" :description="new Date(props.event.start_date).toLocaleDateString()" />
                             </AppContent>
                             <AppContent>
@@ -63,6 +63,24 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <div v-if="props.event.event_images && props.event.event_images.length > 0">
                         <CarouselImages :images="props.event.event_images" />
                     </div>
+
+                    <CardContent>
+                        <!-- <Heading title="Organizer Details" /> -->
+                        <div class="flex flex-wrap gap-2 space-y-4">
+                            <AppContent class="flex-2/2">
+                                <HeadingSmall title="Name" :description="props.event.organizer.name" />
+                            </AppContent>
+                            <AppContent>
+                                <HeadingSmall title="Email" :description="props.event.organizer.user.email" />
+                            </AppContent>
+                            <AppContent>
+                                <HeadingSmall title="user" :description="props.event.organizer.user.name" />
+                            </AppContent>
+                            <AppContent>
+                                <HeadingSmall title="Number Imgs" :description="props.event.event_images.length" />
+                            </AppContent>
+                        </div>
+                    </CardContent>
                 </div>
             </Card>
         </AppContent>
