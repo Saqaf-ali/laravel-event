@@ -25,8 +25,12 @@ class EventImageFactory extends Factory
             mkdir($storagePath, 0755, true);
         }
 
+        $categories = ['nature', 'city', 'food', 'abstract', 'people', 'tech']; // Define categories for images (e.g., 'nature', 'city', 'food', 'abstract').
+        $randomCategory = fake()->randomElement($categories);
+
         // Generate a unique filename.
         $imageName = fake()->uuid() . '.jpg';
+
         $imagePath = $storagePath . '/' . $imageName;
 
         // URL for a random image from picsum.photos (which uses Unsplash).
