@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EventImage;
 use App\Http\Requests\StoreEventImageRequest;
 use App\Http\Requests\UpdateEventImageRequest;
+use App\Models\Event;
 use Illuminate\Support\Facades\Storage;
 
 class EventImageController extends Controller
@@ -20,17 +21,25 @@ class EventImageController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Event $event)
     {
-        //
+        return Inertia('event_images/Create', ['event' => $event]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventImageRequest $request)
+    public function store(StoreEventImageRequest $request, Event $event)
     {
-        //
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('event_images', 'public');
+            EventImage::create([
+                'event_id' => $event->id,
+                'url' => $imagePath,
+            ]);
+        }
+        session()->flash('success', 'EventImage created successfully.');
+        return redirect()->route('events.show', $event->id);
     }
 
     /**
@@ -41,9 +50,6 @@ class EventImageController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(EventImage $eventImage)
     {
         return Inertia('event_images/Edit', ['eventImage' => $eventImage]);
@@ -74,6 +80,11 @@ class EventImageController extends Controller
      */
     public function destroy(EventImage $eventImage)
     {
-        //
+        if ($eventImage->url) {
+            Storage::disk('public')->delete($eventImage->url);
+        }
+        $eventImage->delete();
+        session()->flash('success', 'EventImage deleted successfully.');
+        return redirect()->route('events.show', $eventImage->event_id);
     }
 }

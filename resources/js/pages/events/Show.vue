@@ -2,7 +2,6 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { computed, h } from 'vue';
 
-import ActionUser from '@/components/ActionUser.vue';
 import AppContent from '@/components/AppContent.vue';
 import DataTable from '@/components/DataTable.vue';
 import Heading from '@/components/Heading.vue';
@@ -14,11 +13,15 @@ import Card from '@/components/ui/card/Card.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
+
+import ActionUser from '@/components/ActionUser.vue';
+
 import event_images from '@/routes/event_images';
 import events from '@/routes/events';
 import { type BreadcrumbItem } from '@/types';
 import { ColumnDef } from '@tanstack/vue-table';
 import { ImagePlus } from 'lucide-vue-next';
+import event from '@/routes/event';
 
 interface EventImage {
     url: string;
@@ -114,7 +117,7 @@ const eventColumns = computed<ColumnDef<EventImages>[]>(() => [
         id: 'actions',
         enableHiding: false,
         cell: ({ row }) => {
-            const event = row.original;
+            const eventItem = row.original;
             console.log(event);
 
             return h(
@@ -122,8 +125,8 @@ const eventColumns = computed<ColumnDef<EventImages>[]>(() => [
                 { class: 'relative' },
                 h(ActionUser, {
                     id: row.original.id,
-                    editRoute: event_images.edit(row.original.id).url,
-                    deleteRoute: event_images.destroy(row.original.id).url,
+                    editRoute: event_images.edit(eventItem.id).url,
+                    deleteRoute: event_images.destroy(eventItem.id).url,
                 }),
             );
         },
@@ -189,7 +192,7 @@ const hasImages = computed(() => props.event.event_images && props.event.event_i
             <div class="p-4">
                 <Heading title="Related Events" description="Explore other events you might be interested in." />
                 <div class="flex items-center py-4">
-                    <Link title="Add New image" :href="events.create().url">
+                    <Link title="Add New image" :href="event.eventImages.create(props.event.id).url">
                         <Button variant="outline" class="h-8 w-8 p-0">
                             <ImagePlus class="h-4 w-4 text-primary" />
                         </Button>

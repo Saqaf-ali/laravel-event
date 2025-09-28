@@ -17,9 +17,9 @@ import DropdownMenuItem from './ui/dropdown-menu/DropdownMenuItem.vue';
 
 const props = defineProps<{
     id: number | string;
-    editRoute: string;
-    deleteRoute: string;
-    viewRoute?: string;
+    editRoute: any;
+    deleteRoute: any;
+    viewRoute?: any;
 }>();
 
 const emit = defineEmits(['deleteSusses']);

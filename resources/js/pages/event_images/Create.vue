@@ -7,52 +7,46 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
-import event_images from '@/routes/event_images';
+import event from '@/routes/event';
 
+import events from '@/routes/events';
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 
 const props = defineProps<{
-    eventImage: {
+    event: {
         id: number;
-        url: string;
-        event_id: number;
     };
 }>();
 const form = useForm({
     image: null as File | null,
-    _method: 'put',
 });
-
-console.log(props.eventImage);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
         href: dashboard().url,
     },
+    {
+        title: 'Events',
+        href: events.index().url,
+    },
 ];
 
 const submit = () => {
-    form.post(event_images.update(props.eventImage.id).url, {
+    form.post(event.eventImages.store(props.event.id).url, {
         forceFormData: true,
     });
 };
-
-console.log('id eventImage', props.eventImage.id);
 </script>
 
 <template>
-    <Head :title="`Edit Event Image: ${props.eventImage.id}`" />
+    <Head title="Create Event Image" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <AppContent>
             <div class="mx-auto max-w-2xl p-4">
-                <Heading
-                    title="Edit Event Image"
-                    description="Edit the image for this event.
-                "
-                />
+                <Heading title="Add Event Image" description="Upload a new image for an event." />
                 <form @submit.prevent="submit" class="flex flex-col gap-6">
                     <div class="grid gap-2">
                         <Label for="image">Image</Label>
