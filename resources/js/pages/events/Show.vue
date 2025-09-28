@@ -16,12 +16,12 @@ import { dashboard } from '@/routes';
 
 import ActionUser from '@/components/ActionUser.vue';
 
+import event from '@/routes/event';
 import event_images from '@/routes/event_images';
 import events from '@/routes/events';
 import { type BreadcrumbItem } from '@/types';
 import { ColumnDef } from '@tanstack/vue-table';
 import { ImagePlus } from 'lucide-vue-next';
-import event from '@/routes/event';
 
 interface EventImage {
     url: string;
@@ -201,5 +201,6 @@ const hasImages = computed(() => props.event.event_images && props.event.event_i
                 <DataTable :data="eventImages" :columns="eventColumns" column-filter="id" />
             </div>
         </div>
+
     </AppLayout>
 </template>

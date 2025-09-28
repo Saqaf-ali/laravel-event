@@ -17,10 +17,31 @@ class EventImageFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'url' =>
-                'https://th.bing.com/th/id/R.ca39168088818cbbb5126db2607a94be?rik=tVUMnxXsl9Ksbg&riu=http%3a%2f%2fjonathanlepapillon.j.o.pic.centerblog.net%2fo%2f0a3143b3.jpg&ehk=lL9cfhbTgwVU%2b02XR6SeUK7h6hz49IhgHxYYed2%2bdtQ%3d&risl=&pid=ImgRaw&r=0',
+        // Define the directory to store images.
+        $storagePath = storage_path('app/public/event_images');
 
+        // Ensure the directory exists.
+        if (!is_dir($storagePath)) {
+            mkdir($storagePath, 0755, true);
+        }
+
+        // Generate a unique filename.
+        $imageName = fake()->uuid() . '.jpg';
+        $imagePath = $storagePath . '/' . $imageName;
+
+        // URL for a random image from picsum.photos (which uses Unsplash).
+        $imageUrl = 'https://picsum.photos/800/600';
+
+        // Download the image. Using file_get_contents and file_put_contents for simplicity.
+        // For production, consider using a more robust HTTP client like Guzzle.
+        file_put_contents($imagePath, file_get_contents($imageUrl));
+
+        if (!$imagePath) {
+            return []; // Or handle the error appropriately
+        }
+
+        return [
+            'url' => 'event_images/' . $imageName,
             'event_id' => Event::factory(),
         ];
     }
