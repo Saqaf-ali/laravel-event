@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
             $table->foreignIdFor(Event::class)->constrained()->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

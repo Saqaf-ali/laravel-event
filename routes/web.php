@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventImageController;
 use App\Http\Controllers\OrganizerController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -52,11 +53,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->parameters(['eventImages' => 'image'])
         ->only(['store', 'create']);
     Route::resource('event_images', EventImageController::class)->except(['store', 'create', 'show', 'index']);
-});
 
-Route::get('test', function () {
-    return dd('saqaf');
-})->name('saqaf');
+    // ticket routes
+    Route::resource('tickets', TicketController::class);
+});
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
