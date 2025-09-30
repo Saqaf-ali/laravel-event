@@ -201,6 +201,6 @@ const hasImages = computed(() => props.event.event_images && props.event.event_i
                 <DataTable :data="eventImages" :columns="eventColumns" column-filter="id" />
             </div>
         </div>
-
+        <img :src="'storage/' + props.event.event_images[0].url" alt="dddd" />
     </AppLayout>
 </template>

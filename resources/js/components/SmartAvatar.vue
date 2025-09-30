@@ -19,8 +19,8 @@ const partName = computed(() => {
 
 <template>
     <Avatar>
-        <!-- <AvatarImage :src="'storage/' + src" :alt="alt" /> -->
-        <AvatarImage :src="src ?? ''" :alt="alt" />
+        <AvatarImage :src="'storage/' + src" :alt="alt" />
+        <!-- <AvatarImage :src="src ?? ''" :alt="alt" /> -->
         <AvatarFallback>{{ partName }}</AvatarFallback>
     </Avatar>
 </template>

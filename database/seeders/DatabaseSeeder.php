@@ -18,12 +18,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. حذف المجلد القديم لضمان بداية نظيفة
         Storage::disk('public')->deleteDirectory('event_images');
-        // 2. إنشاء المجلد مرة أخرى
         Storage::disk('public')->makeDirectory('event_images');
 
         User::factory()
+            ->count(5) 
             ->has(
                 Organizer::factory()->has(
                     Event::factory()
