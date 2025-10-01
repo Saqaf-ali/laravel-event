@@ -15,12 +15,13 @@ const partName = computed(() => {
     const partName = props.name[0];
     return partName.toUpperCase();
 });
+console.log('src11', props.src);
 </script>
 
 <template>
     <Avatar>
-        <AvatarImage :src="'storage/' + src" :alt="alt" />
-        <!-- <AvatarImage :src="src ?? ''" :alt="alt" /> -->
+        <!-- <AvatarImage :src="'storage/' + props.src" :alt="alt" /> -->
+        <AvatarImage :src="src ?? ''" :alt="alt" />
         <AvatarFallback>{{ partName }}</AvatarFallback>
     </Avatar>
 </template>

@@ -15,6 +15,14 @@ import type { ColumnDef } from '@tanstack/vue-table';
 import { FolderX, UserRoundPlus } from 'lucide-vue-next';
 import { computed, h } from 'vue';
 
+interface EventImage {
+    url: string;
+    id: number;
+    updated_at: string;
+    image_url: string;
+}
+
+
 const props = defineProps({
     events: {
         type: Array,
@@ -37,16 +45,16 @@ export interface Events {
     id: number;
     title: string;
     url: string;
-
-    // created_at: string;
-    // userName: string;
+    event_images: EventImage[];
 }
+
+
 
 const data = computed<Events[]>(() => {
     return props.events?.map((event: any) => ({
         id: event.id,
         title: event.title,
-        url: event.event_images.map((item: any) => item.url),
+        url: event.event_images[0]?.image_url,
     }));
 });
 console.log(props.events);
@@ -88,7 +96,7 @@ const userColumns: ColumnDef<Events>[] = [
                 { class: 'flex items-center gap-2' },
                 h(SmartAvatar, {
                     name: row.getValue('title'),
-                    src: row.original.url[0],
+                    src: row.original.url,
                 }),
             ),
     },
@@ -119,6 +127,9 @@ const deleteSusses = (id: number) => {
 };
 
 console.log('ddddd', props.events);
+console.log('ddddd111', props.events[0].event_images[0].url
+
+);
 </script>
 
 <template>

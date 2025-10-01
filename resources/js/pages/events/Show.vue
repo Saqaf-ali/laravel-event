@@ -27,6 +27,7 @@ interface EventImage {
     url: string;
     id: number;
     updated_at: string;
+    image_url: string;
 }
 
 interface Organizer {
@@ -78,7 +79,7 @@ const eventImages = computed<EventImages[]>(() => {
     return props.event.event_images.map((image: EventImage) => ({
         id: image.id,
         updatedAt: image.updated_at,
-        url: image.url,
+        url: image.image_url,
         eventId: props.event.id,
     }));
 });
@@ -97,7 +98,7 @@ const eventColumns = computed<ColumnDef<EventImages>[]>(() => [
                 'div',
                 { class: 'flex items-center gap-2' },
                 h(SmartAvatar, {
-                    name: row.getValue('title'),
+                    name: 'image',
                     src: row.original.url,
                 }),
             ),
@@ -140,6 +141,8 @@ const formattedEndDate = computed(() => formatDate(props.event.end_date));
 const formattedCreatedAt = computed(() => formatDate(props.event.created_at));
 
 const hasImages = computed(() => props.event.event_images && props.event.event_images.length > 0);
+
+console.log('event1111111', eventImages);
 </script>
 <template>
     <Head :title="`Event: ${props.event.title}`" />
@@ -201,6 +204,5 @@ const hasImages = computed(() => props.event.event_images && props.event.event_i
                 <DataTable :data="eventImages" :columns="eventColumns" column-filter="id" />
             </div>
         </div>
-        <img :src="'storage/' + props.event.event_images[0].url" alt="dddd" />
     </AppLayout>
 </template>

@@ -22,11 +22,10 @@ class DatabaseSeeder extends Seeder
         Storage::disk('public')->makeDirectory('event_images');
 
         User::factory()
-            ->count(5) 
             ->has(
                 Organizer::factory()->has(
                     Event::factory()
-                        ->count(10)
+                        ->count(7)
                         ->has(EventImage::factory()->count(3))
                         ->has(Ticket::factory()->count(3)),
                 ),

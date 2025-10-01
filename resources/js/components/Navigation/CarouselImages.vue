@@ -2,7 +2,7 @@
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 
 interface CarouselImagesProps {
-    images: { url: string }[];
+    images: { image_url: string }[];
 }
 
 const props = defineProps<CarouselImagesProps>();
@@ -13,7 +13,7 @@ const props = defineProps<CarouselImagesProps>();
         <CarouselContent>
             <CarouselItem v-for="(image, index) in props.images" :key="index">
                 <div class="aspect-video cursor-grab p-1">
-                    <img :src="image.url" alt="Event Image" class="h-auto w-full rounded-lg shadow-md" />
+                    <img :src="image.image_url" alt="Event Image" class="h-auto w-full rounded-lg shadow-md" />
                 </div>
             </CarouselItem>
         </CarouselContent>
