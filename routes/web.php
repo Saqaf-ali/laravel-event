@@ -55,6 +55,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('event_images', EventImageController::class)->except(['store', 'create', 'show', 'index']);
 
     // ticket routes
+    Route::controller(TicketController::class)->group(function () {
+        Route::get('/tickets/trashed', 'trashed')->name('tickets.trashed');
+        Route::put('/tickets/{ticket}/restore', 'restore')->name('tickets.restore')->withTrashed();
+        Route::delete('/tickets/{ticket}/delete', 'delete')->name('tickets.delete')->withTrashed();
+    });
+
     Route::resource('tickets', TicketController::class);
 });
 

@@ -25,6 +25,7 @@ class StoreTicketRequest extends FormRequest
             'type' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:1',
+            'event_id' => 'required|integer',
         ];
     }
 }

@@ -127,7 +127,6 @@ const userColumns: ColumnDef<Tickets>[] = [
 const deleteSusses = (id: number) => {
     props.tickets.value = props.tickets.value.filter((ticket: { id: number }) => ticket.id !== id);
 };
-console.log('props.tickets', props.tickets[0].event.event_images[0].image_url);
 </script>
 
 <template>
@@ -136,7 +135,7 @@ console.log('props.tickets', props.tickets[0].event.event_images[0].image_url);
         <div class="w-full">
             <div class="flex items-center py-4">
                 <div class="ml-auto flex items-center space-x-2">
-                    <Link type="Trash tickets">
+                    <Link as="button" :href="tickets.trashed().url" type="Trash tickets">
                         <Button variant="outline" class="h-8 w-8 p-0">
                             <FolderX class="h-4 w-4 text-primary" />
                         </Button>

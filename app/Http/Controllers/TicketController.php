@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
+use App\Models\Event;
 
 class TicketController extends Controller
 {
@@ -22,7 +23,8 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
+        $events = Event::latest('updated_at')->get();
+        return Inertia('tickets/Create', ['events' => $events]);
     }
 
     /**
@@ -30,7 +32,9 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-        //
+        Ticket::create($request->validated());
+        session()->flash('success', 'Ticket created successfully.');
+        return redirect()->route('tickets.index');
     }
 
     /**
@@ -64,6 +68,35 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+        session()->flash('success', 'Ticket deleted successfully.');
+        return redirect()->route('tickets.index');
+    }
+    /**
+     * Display a listing of the trashed resources.
+     */
+    public function trashed()
+    {
+        $tickets = Ticket::onlyTrashed()->with('event.eventImages')->latest('updated_at')->get();
+        return Inertia('tickets/Trashed', ['tickets' => $tickets]);
+    }
+
+    /**
+     * Restore the specified resource.
+     */
+    public function restore(Ticket $ticket)
+    {
+        $ticket->restore();
+        session()->flash('success', 'Ticket restored successfully.');
+        return redirect()->route('tickets.trashed');
+    }
+    /**
+     * Delete the specified resource.
+     */
+    public function delete(Ticket $ticket)
+    {
+        $ticket->forceDelete();
+        session()->flash('success', 'Ticket deleted permanently.');
+        return redirect()->route('tickets.trashed');
     }
 }
