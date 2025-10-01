@@ -42,15 +42,6 @@ const table = useVueTable({
     onColumnFiltersChange: (updaterOrValue) => valueUpdater(updaterOrValue, columnFilters),
     onColumnVisibilityChange: (updaterOrValue) => valueUpdater(updaterOrValue, columnVisibility),
     onRowSelectionChange: (updaterOrValue) => valueUpdater(updaterOrValue, rowSelection),
-
-    // ⬇️⬇️⬇️ السطر الذي يحدد عدد العناصر في الصفحة (10 صفوف) ⬇️⬇️⬇️
-    initialState: {
-        pagination: {
-            pageSize: 10,
-        },
-    },
-    // ⬆️⬆️⬆️ السطر الذي يحدد عدد العناصر في الصفحة (10 صفوف) ⬆️⬆️⬆️
-
     state: {
         get sorting() {
             return sorting.value;
@@ -118,7 +109,7 @@ const table = useVueTable({
                         </TableRow>
                     </template>
                     <TableRow v-else>
-                        <TableCell :colspan="columns.length" class="h-24 text-center"> No data found. </TableCell>
+                        <TableCell :colspan="columns.length" class="h-24 text-center"> No users found. </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

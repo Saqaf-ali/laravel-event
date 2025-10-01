@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ActionUser from '@/components/ActionUser.vue';
 import DataTable from '@/components/DataTable.vue';
+import SmartAvatar from '@/components/SmartAvatar.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -13,13 +14,6 @@ import type { ColumnDef } from '@tanstack/vue-table';
 
 import { BadgePlus, FolderX } from 'lucide-vue-next';
 import { computed, h } from 'vue';
-
-interface TicketImage {
-    url: string;
-    id: number;
-    updated_at: string;
-    image_url: string;
-}
 
 const props = defineProps({
     tickets: {
@@ -44,8 +38,7 @@ export interface Tickets {
     ticketType: string;
     price: number;
     quantity: number;
-
-    ticket_images: TicketImage[];
+    eventImg: string;
 }
 
 const data = computed<Tickets[]>(() => {
@@ -54,6 +47,7 @@ const data = computed<Tickets[]>(() => {
         ticketType: ticket.type,
         price: ticket.price,
         quantity: ticket.quantity,
+        eventImg: ticket.event.event_images[0]?.image_url,
     }));
 });
 console.log(props.tickets);
@@ -96,6 +90,19 @@ const userColumns: ColumnDef<Tickets>[] = [
         header: 'Quantity',
         cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('quantity')),
     },
+    {
+        accessorKey: 'eventImg',
+        header: 'Event Img',
+        cell: ({ row }) =>
+            h(
+                'div',
+                { class: 'flex items-center gap-2' },
+                h(SmartAvatar, {
+                    name: row.getValue('title'),
+                    src: row.original.eventImg,
+                }),
+            ),
+    },
 
     {
         id: 'actions',
@@ -121,11 +128,11 @@ const userColumns: ColumnDef<Tickets>[] = [
 const deleteSusses = (id: number) => {
     props.tickets.value = props.tickets.value.filter((ticket: { id: number }) => ticket.id !== id);
 };
-console.log("props.tickets",props.tickets);
-
+console.log('props.tickets', props.tickets[0].event.event_images[0].image_url);
 </script>
 
 <template>
+    <!-- <img :src="props.tickets[0].event.event_images[0].image_url" alt=""> -->
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="w-full">
             <div class="flex items-center py-4">
@@ -143,7 +150,7 @@ console.log("props.tickets",props.tickets);
                     </Link>
                 </div>
             </div>
-            <DataTable :data="data" :columns="userColumns" @deleteSusses="deleteSusses" columnFilter="type" />
+            <DataTable :data="data" :columns="userColumns" @deleteSusses="deleteSusses" columnFilter="ticketType" />
         </div>
     </AppLayout>
 </template>

@@ -13,9 +13,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::with('event')->latest('updated_at')->get();
-        return dd($tickets);
-
+        $tickets = Ticket::with('event.eventImages')->latest('updated_at')->get();
         return Inertia('tickets/Index', ['tickets' => $tickets]);
     }
 
