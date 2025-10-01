@@ -30,6 +30,11 @@ const mainNavItems: NavItem[] = [
         href: 'events',
         icon: TentTree,
     },
+    {
+        title: 'Tickets',
+        href: 'tickets',
+        icon: BookOpen,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
