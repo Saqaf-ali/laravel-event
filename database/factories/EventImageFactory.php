@@ -27,17 +27,10 @@ class EventImageFactory extends Factory
 
         $categories = ['nature', 'city', 'food', 'abstract', 'people', 'tech']; // Define categories for images (e.g., 'nature', 'city', 'food', 'abstract').
         $randomCategory = fake()->randomElement($categories);
-
         // Generate a unique filename.
         $imageName = fake()->uuid() . '.jpg';
-
         $imagePath = $storagePath . '/' . $imageName;
-
-        // URL for a random image from picsum.photos (which uses Unsplash).
         $imageUrl = 'https://picsum.photos/800/600';
-
-        // Download the image. Using file_get_contents and file_put_contents for simplicity.
-        // For production, consider using a more robust HTTP client like Guzzle.
         file_put_contents($imagePath, file_get_contents($imageUrl));
 
         if (!$imagePath) {
@@ -46,7 +39,6 @@ class EventImageFactory extends Factory
 
         return [
             'url' => 'event_images/' . $imageName,
-            'event_id' => Event::factory(),
         ];
     }
 }
