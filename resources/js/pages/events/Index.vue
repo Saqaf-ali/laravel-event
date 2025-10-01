@@ -12,7 +12,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import type { ColumnDef } from '@tanstack/vue-table';
 
-import { FolderX, UserRoundPlus } from 'lucide-vue-next';
+import { BadgePlus, FolderX } from 'lucide-vue-next';
 import { computed, h } from 'vue';
 
 interface EventImage {
@@ -21,7 +21,6 @@ interface EventImage {
     updated_at: string;
     image_url: string;
 }
-
 
 const props = defineProps({
     events: {
@@ -47,8 +46,6 @@ export interface Events {
     url: string;
     event_images: EventImage[];
 }
-
-
 
 const data = computed<Events[]>(() => {
     return props.events?.map((event: any) => ({
@@ -127,9 +124,7 @@ const deleteSusses = (id: number) => {
 };
 
 console.log('ddddd', props.events);
-console.log('ddddd111', props.events[0].event_images[0].url
-
-);
+console.log('ddddd111', props.events[0].event_images[0].url);
 </script>
 
 <template>
@@ -145,7 +140,7 @@ console.log('ddddd111', props.events[0].event_images[0].url
 
                     <Link title="Add New event" :href="events.create().url">
                         <Button variant="outline" class="h-8 w-8 p-0">
-                            <UserRoundPlus class="h-4 w-4 text-primary" />
+                            <BadgePlus class="h-4 w-4 text-primary" />
                         </Button>
                     </Link>
                 </div>
