@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventImageController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
@@ -62,6 +63,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::resource('tickets', TicketController::class);
+
+    // order routes
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/orders/trashed', 'trashed')->name('orders.trashed');
+        Route::put('/orders/{order}/restore', 'restore')->name('orders.restore')->withTrashed();
+        Route::delete('/orders/{order}/delete', 'delete')->name('orders.delete')->withTrashed();
+    });
+    Route::resource('orders', OrderController::class);
 });
 
 require __DIR__ . '/settings.php';
