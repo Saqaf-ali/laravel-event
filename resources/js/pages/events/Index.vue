@@ -122,9 +122,6 @@ const userColumns: ColumnDef<Events>[] = [
 const deleteSusses = (id: number) => {
     props.events.value = props.events.value.filter((event: { id: number }) => event.id !== id);
 };
-
-console.log('ddddd', props.events);
-console.log('ddddd111', props.events[0].event_images[0].url);
 </script>
 
 <template>

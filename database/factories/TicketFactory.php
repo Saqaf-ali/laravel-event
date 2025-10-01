@@ -21,7 +21,6 @@ class TicketFactory extends Factory
             'type' => fake()->randomElement(['VIP', 'Standard', 'Early Bird']),
             'price' => fake()->randomFloat(2, 10, 200),
             'quantity' => fake()->numberBetween(1, 100),
-            'event_id' => Event::factory(),
         ];
     }
 }
