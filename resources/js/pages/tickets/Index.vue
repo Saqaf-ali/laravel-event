@@ -24,11 +24,11 @@ const props = defineProps({
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        type: 'Dashboard',
+        title: 'Dashboard',
         href: dashboard().url,
     },
     {
-        type: 'Tickets',
+        title: 'Tickets',
         href: tickets.index().url,
     },
 ];
@@ -118,7 +118,6 @@ const userColumns: ColumnDef<Tickets>[] = [
                     id: row.original.id,
                     editRoute: tickets.edit(row.original.id).url,
                     deleteRoute: tickets.destroy(row.original.id).url,
-                    viewRoute: tickets.show(row.original.id).url,
                 }),
             );
         },

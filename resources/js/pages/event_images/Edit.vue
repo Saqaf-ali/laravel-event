@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import event_images from '@/routes/event_images';
+import events from '@/routes/events';
 
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
@@ -31,6 +32,14 @@ const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
         href: dashboard().url,
+    },
+    {
+        title: 'Event Images',
+        href: events.show(props.eventImage.event_id).url,
+    },
+    {
+        title: 'Edit',
+        href: event_images.edit(props.eventImage.id).url,
     },
 ];
 

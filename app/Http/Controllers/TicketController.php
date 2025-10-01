@@ -46,7 +46,7 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        //
+        return Inertia('tickets/Edit', ['ticket' => $ticket]);
     }
 
     /**
@@ -54,7 +54,9 @@ class TicketController extends Controller
      */
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        //
+        $ticket->update($request->validated());
+        session()->flash('success', 'Ticket updated successfully.');
+        return redirect()->route('tickets.index');
     }
 
     /**
