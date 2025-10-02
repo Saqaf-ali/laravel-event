@@ -12,7 +12,7 @@ class Order extends Model
     use HasFactory;
     protected $fillable = ['event_id', 'attendee_id', 'total_price', 'status'];
     protected $casts = [
-        'total_price' => 'decimal',
+        'total_price' => 'decimal:2',
         'status' => OrderStatus::class,
     ];
 
