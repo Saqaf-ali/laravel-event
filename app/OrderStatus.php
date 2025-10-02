@@ -16,7 +16,7 @@ enum OrderStatus: int
             self::Pending => 'text-orange-500',
             self::Completed => 'text-primary',
             self::Cancelled, self::Failed => 'text-destructive',
-            self::Refunded => 'text-blue-500',
+            self::Refunded => 'text-blue-500/70',
         };
     }
 

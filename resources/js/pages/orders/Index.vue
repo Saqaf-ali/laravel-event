@@ -118,7 +118,9 @@ const userColumns: ColumnDef<Order>[] = [
     },
 ];
 
-const deleteSusses = (id: number) => {};
+const deleteSusses = (id: number) => {
+    props.orders.value = props.orders.value.filter((order: { id: number }) => order.id !== id);
+};
 
 console.log('orders', props.orders[0]);
 </script>
@@ -144,6 +146,5 @@ console.log('orders', props.orders[0]);
             </div>
             <DataTable :data="data" :columns="userColumns" @deleteSusses="deleteSusses" columnFilter="ticketType" />
         </div>
-      
     </AppLayout>
 </template>

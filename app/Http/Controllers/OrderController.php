@@ -46,7 +46,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        return Inertia('orders/Edit', ['order' => $order]);
     }
 
     /**
@@ -62,6 +62,8 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        session()->flash('success', 'Order deleted successfully.');
+        return redirect()->route('orders.index');
     }
 }
