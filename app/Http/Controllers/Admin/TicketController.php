@@ -16,7 +16,7 @@ class TicketController extends Controller
     public function index()
     {
         $tickets = Ticket::with('event.eventImages')->latest('updated_at')->get();
-        return Inertia('tickets/Index', ['tickets' => $tickets]);
+        return Inertia('Admin/tickets/Index', ['tickets' => $tickets]);
     }
 
     /**
@@ -25,7 +25,7 @@ class TicketController extends Controller
     public function create()
     {
         $events = Event::latest('updated_at')->get();
-        return Inertia('tickets/Create', ['events' => $events]);
+        return Inertia('Admin/tickets/Create', ['events' => $events]);
     }
 
     /**
@@ -51,7 +51,7 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        return Inertia('tickets/Edit', ['ticket' => $ticket]);
+        return Inertia('Admin/tickets/Edit', ['ticket' => $ticket]);
     }
 
     /**
@@ -79,7 +79,7 @@ class TicketController extends Controller
     public function trashed()
     {
         $tickets = Ticket::onlyTrashed()->with('event.eventImages')->latest('updated_at')->get();
-        return Inertia('tickets/Trashed', ['tickets' => $tickets]);
+        return Inertia('Admin/tickets/Trashed', ['tickets' => $tickets]);
     }
 
     /**

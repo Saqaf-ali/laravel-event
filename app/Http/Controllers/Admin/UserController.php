@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest('updated_at')->get();
-        return Inertia::render('users/Index', ['users' => $users]);
+        return Inertia::render('Admin/users/Index', ['users' => $users]);
     }
 
     /**
@@ -71,7 +71,7 @@ class UserController extends Controller
     public function trashed()
     {
         $users = User::onlyTrashed()->latest('updated_at')->get();
-        return Inertia::render('users/Trashed', ['users' => $users]);
+        return Inertia::render('Admin/users/Trashed', ['users' => $users]);
     }
     /**
      * Restore the specified resource.

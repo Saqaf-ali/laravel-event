@@ -16,7 +16,7 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::with('eventImages')->latest('updated_at')->get();
-        return Inertia('events/Index', ['events' => $events]);
+        return Inertia('Admin/events/Index', ['events' => $events]);
     }
 
     /**
@@ -24,7 +24,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return Inertia('events/Create');
+        return Inertia('Admin/events/Create');
     }
 
     public function store(StoreEventRequest $request)
@@ -55,7 +55,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         $event->load('eventImages', 'organizer.user');
-        return Inertia('events/Show', ['event' => $event]);
+        return Inertia('Admin/events/Show', ['event' => $event]);
     }
 
     /**
@@ -65,7 +65,7 @@ class EventController extends Controller
     {
         $event->load('eventImages');
 
-        return Inertia('events/Edit', [
+        return Inertia('Admin/events/Edit', [
             'event' => [
                 'id' => $event->id,
                 'title' => $event->title,
@@ -117,7 +117,7 @@ class EventController extends Controller
     public function trashed()
     {
         $events = Event::onlyTrashed()->with('eventImages')->latest('updated_at')->get();
-        return Inertia('events/Trashed', ['events' => $events]);
+        return Inertia('Admin/events/Trashed', ['events' => $events]);
     }
 
     /**

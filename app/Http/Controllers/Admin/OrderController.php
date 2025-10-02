@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with('attendee.user', 'event')->latest('updated_at')->get();
-        return Inertia('orders/Index', ['orders' => $orders]);
+        return Inertia('Admin/orders/Index', ['orders' => $orders]);
     }
 
     /**
@@ -23,7 +23,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return Inertia('orders/Create');
+        return Inertia('Admin/orders/Create');
     }
 
     /**
@@ -47,7 +47,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return Inertia('orders/Edit', ['order' => $order]);
+        return Inertia('Admin/orders/Edit', ['order' => $order]);
     }
 
     /**
@@ -73,7 +73,7 @@ class OrderController extends Controller
     public function trashed()
     {
         $orders = Order::onlyTrashed()->with('attendee.user', 'event')->latest('updated_at')->get();
-        return Inertia('orders/Trashed', ['orders' => $orders]);
+        return Inertia('Admin/orders/Trashed', ['orders' => $orders]);
     }
 
     /**

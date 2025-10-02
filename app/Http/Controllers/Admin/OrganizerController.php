@@ -17,7 +17,7 @@ class OrganizerController extends Controller
     {
         $organizers = Organizer::with('user')->latest('updated_at')->get();
         // return dd($organizers);
-        return Inertia::render('organizers/Index', ['organizers' => $organizers]);
+        return Inertia::render('Admin/organizers/Index', ['organizers' => $organizers]);
     }
 
     /**
@@ -76,7 +76,7 @@ class OrganizerController extends Controller
     {
         $organizers = Organizer::with('user')->onlyTrashed()->latest('updated_at')->get();
 
-        return Inertia::render('organizers/Trashed', ['organizers' => $organizers]);
+        return Inertia::render('Admin/organizers/Trashed', ['organizers' => $organizers]);
     }
     /**
      * Restore the specified resource.
