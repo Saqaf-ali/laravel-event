@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 
-class MainController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia('main/events/Index');
+        return Inertia('Web/events/Index');
     }
 
     /**
