@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\EventImageController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderItemController;
-use App\Http\Controllers\OrganizerController;
-use App\Http\Controllers\PurchasedTicketController;
-use App\Http\Controllers\TicketController;
-use App\Http\Controllers\UserController;
-use App\Models\User;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\EventImageController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\OrderItemController;
+use App\Http\Controllers\Admin\OrganizerController;
+use App\Http\Controllers\Admin\PurchasedTicketController;
+use App\Http\Controllers\Admin\TicketController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\EventController as ControllersEventController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -81,7 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/order_items/{order_item}/delete', 'delete')->name('order_items.delete')->withTrashed();
     });
     Route::resource('order_items', OrderItemController::class);
-    
+
     // purchased tickets routes
     Route::controller(PurchasedTicketController::class)->group(function () {
         Route::get('/purchased_tickets/trashed', 'trashed')->name('purchased_tickets.trashed');
@@ -89,6 +89,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/purchased_tickets/{purchased_ticket}/delete', 'delete')->name('purchased_tickets.delete')->withTrashed();
     });
     Route::resource('purchased_tickets', PurchasedTicketController::class);
+
+    Route::resource('events', EventController::class);
 });
 
 require __DIR__ . '/settings.php';

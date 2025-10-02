@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Attendee;
 use App\Http\Requests\StoreAttendeeRequest;
 use App\Http\Requests\UpdateAttendeeRequest;
