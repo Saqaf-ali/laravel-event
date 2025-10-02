@@ -66,4 +66,32 @@ class OrderController extends Controller
         session()->flash('success', 'Order deleted successfully.');
         return redirect()->route('orders.index');
     }
+    /**
+     * Display a listing of the trashed resources.
+     */
+    public function trashed()
+    {
+        $orders = Order::onlyTrashed()->with('attendee.user', 'event')->latest('updated_at')->get();
+        return Inertia('orders/Trashed', ['orders' => $orders]);
+    }
+
+    /**
+     * Restore the specified resource.
+     */
+    public function restore(Order $order)
+    {
+        $order->restore();
+        session()->flash('success', 'Order restored successfully.');
+        return redirect()->route('orders.trashed');
+    }
+
+    /**
+     * Delete the specified resource.
+     */
+    public function delete(Order $order)
+    {
+        $order->forceDelete();
+        session()->flash('success', 'Order deleted permanently.');
+        return redirect()->route('orders.trashed');
+    }
 }
