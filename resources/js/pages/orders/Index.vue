@@ -36,7 +36,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 export interface Order {
     id: number;
     total_price: number;
-    status: string;
+    statusLabel: string;
+    statusColor: string;
     eventTitle: string;
     attendeeName: string;
 }
@@ -45,7 +46,8 @@ const data = computed<Order[]>(() => {
     return props.orders?.map((order: any) => ({
         id: order.id,
         total_price: order.total_price,
-        status: order.status,
+        statusLabel: order.statusLabel,
+        statusColor: order.statusColor,
         eventTitle: order.event.title,
         attendeeName: order.attendee.user.name,
     }));
@@ -81,9 +83,9 @@ const userColumns: ColumnDef<Order>[] = [
         cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('total_price')),
     },
     {
-        accessorKey: 'status',
+        accessorKey: 'statusLabel',
         header: 'Status',
-        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('status')),
+        cell: ({ row }) => h('div', { class: `capitalize ${row.original.statusColor}` }, row.getValue('statusLabel')),
     },
     {
         accessorKey: 'eventTitle',
@@ -142,5 +144,6 @@ console.log('orders', props.orders[0]);
             </div>
             <DataTable :data="data" :columns="userColumns" @deleteSusses="deleteSusses" columnFilter="ticketType" />
         </div>
+      
     </AppLayout>
 </template>

@@ -16,6 +16,17 @@ class Order extends Model
         'status' => OrderStatus::class,
     ];
 
+    protected $appends = ['statusLabel', 'statusColor'];
+    public function getStatusLabelAttribute()
+    {
+        return $this->status->statusLabel();
+    }
+
+    public function getStatusColorAttribute()
+    {
+        return $this->status->statusColor();
+    }
+    
     public function event()
     {
         return $this->belongsTo(Event::class);

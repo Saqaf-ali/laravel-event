@@ -10,13 +10,13 @@ enum OrderStatus: int
     case Failed = 3;
     case Refunded = 4;
 
-    public function getColor(): string
+    public function statusColor(): string
     {
         return match ($this) {
-            self::Pending => 'orange',
-            self::Completed => 'green',
-            self::Cancelled, self::Failed => 'red',
-            self::Refunded => 'blue',
+            self::Pending => 'text-orange-500',
+            self::Completed => 'text-primary',
+            self::Cancelled, self::Failed => 'text-destructive',
+            self::Refunded => 'text-blue-500',
         };
     }
 
@@ -31,7 +31,7 @@ enum OrderStatus: int
         };
     }
 
-    public function getLabel(): string
+    public function statusLabel(): string
     {
         return match ($this) {
             self::Pending => 'Pending',
