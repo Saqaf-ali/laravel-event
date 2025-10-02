@@ -40,6 +40,7 @@ const mainNavItems: NavItem[] = [
         href: 'orders',
         icon: ClockArrowDown,
     },
+
 ];
 
 const footerNavItems: NavItem[] = [
