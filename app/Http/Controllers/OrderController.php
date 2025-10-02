@@ -13,7 +13,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::latest('updated_at')->get();
+        $orders = Order::with('attendee.user', 'event')->latest('updated_at')->get();
         return Inertia('orders/Index', ['orders' => $orders]);
     }
 

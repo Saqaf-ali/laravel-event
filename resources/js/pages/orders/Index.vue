@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import ActionUser from '@/components/ActionUser.vue';
+import DataTable from '@/components/DataTable.vue';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
+import orders from '@/routes/orders';
 
 // eslint-disable-next-line vue/no-dupe-keys
-import orders from '@/routes/orders';
 import { type BreadcrumbItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
+import type { ColumnDef } from '@tanstack/vue-table';
+
 import { BadgePlus, FolderX } from 'lucide-vue-next';
+import { computed, h } from 'vue';
 
 const props = defineProps({
     orders: {
@@ -27,7 +33,92 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-console.log('orders', props.orders);
+export interface Order {
+    id: number;
+    total_price: number;
+    status: string;
+    eventTitle: string;
+    attendeeName: string;
+}
+
+const data = computed<Order[]>(() => {
+    return props.orders?.map((order: any) => ({
+        id: order.id,
+        total_price: order.total_price,
+        status: order.status,
+        eventTitle: order.event.title,
+        attendeeName: order.attendee.user.name,
+    }));
+});
+
+const userColumns: ColumnDef<Order>[] = [
+    {
+        id: 'select',
+        header: ({ table }) =>
+            h(Checkbox, {
+                modelValue: table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate'),
+                'onUpdate:modelValue': (value: any) => table.toggleAllPageRowsSelected(!!value),
+                ariaLabel: 'Select all',
+            }),
+        cell: ({ row }) =>
+            h(Checkbox, {
+                modelValue: row.getIsSelected(),
+                'onUpdate:modelValue': (value: any) => row.toggleSelected(!!value),
+                ariaLabel: 'Select row',
+            }),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
+        accessorKey: 'id',
+        header: 'ID',
+        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('id')),
+    },
+
+    {
+        accessorKey: 'total_price',
+        header: 'Total Price',
+        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('total_price')),
+    },
+    {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('status')),
+    },
+    {
+        accessorKey: 'eventTitle',
+        header: 'Event Title',
+        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('eventTitle')),
+    },
+    {
+        accessorKey: 'attendeeName',
+        header: 'Attendee Name',
+        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('attendeeName')),
+    },
+
+    {
+        id: 'actions',
+        enableHiding: false,
+        cell: ({ row }) => {
+            const order = row.original;
+            console.log(order);
+
+            return h(
+                'div',
+                { class: 'relative' },
+                h(ActionUser, {
+                    id: row.original.id,
+                    editRoute: orders.edit(row.original.id).url,
+                    deleteRoute: orders.destroy(row.original.id).url,
+                }),
+            );
+        },
+    },
+];
+
+const deleteSusses = (id: number) => {};
+
+console.log('orders', props.orders[0]);
 </script>
 
 <template>
@@ -49,6 +140,7 @@ console.log('orders', props.orders);
                     </Link>
                 </div>
             </div>
+            <DataTable :data="data" :columns="userColumns" @deleteSusses="deleteSusses" columnFilter="ticketType" />
         </div>
     </AppLayout>
 </template>
