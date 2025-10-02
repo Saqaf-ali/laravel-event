@@ -43,4 +43,8 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+    public function purchasedTickets()
+    {
+        return $this->hasMany(PurchasedTicket::class);
+    }
 }

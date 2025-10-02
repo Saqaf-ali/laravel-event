@@ -14,7 +14,7 @@ class OrderItemController extends Controller
     public function index()
     {
         $orderItems = OrderItem::with('order.attendee.user', 'ticket.event')->latest('updated_at')->get();
-        return Inertia('order_items/Index', ['orderItems' => $orderItems]);
+        dd($orderItems);
     }
 
     /**
