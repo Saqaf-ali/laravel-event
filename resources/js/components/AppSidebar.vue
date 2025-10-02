@@ -45,6 +45,11 @@ const mainNavItems: NavItem[] = [
         href: 'order_items',
         icon: BellDot,
     },
+    {
+        title: 'Main',
+        href: 'main',
+        icon: BellDot,
+    },
 ];
 
 const footerNavItems: NavItem[] = [

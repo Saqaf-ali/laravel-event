@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PurchasedTicketController;
 use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\EventController as ControllersEventController;
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -90,8 +91,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     Route::resource('purchased_tickets', PurchasedTicketController::class);
 
-    Route::resource('events', EventController::class);
-});
 
+});
+   Route::resource('main', MainController::class);
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
