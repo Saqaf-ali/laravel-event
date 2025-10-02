@@ -6,7 +6,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Briefcase, ClockArrowDown, Folder, LayoutGrid, TentTree, Users } from 'lucide-vue-next';
+import { BellDot, BookOpen, Briefcase, ClockArrowDown, Folder, LayoutGrid, TentTree, Users } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
@@ -40,7 +40,11 @@ const mainNavItems: NavItem[] = [
         href: 'orders',
         icon: ClockArrowDown,
     },
-
+    {
+        title: 'Order Items',
+        href: 'order_items',
+        icon: BellDot,
+    },
 ];
 
 const footerNavItems: NavItem[] = [

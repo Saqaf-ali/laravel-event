@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventImageController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
@@ -71,6 +72,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/orders/{order}/delete', 'delete')->name('orders.delete')->withTrashed();
     });
     Route::resource('orders', OrderController::class);
+
+    // order items routes
+    Route::controller(OrderItemController::class)->group(function () {
+        Route::get('/order_items/trashed', 'trashed')->name('order_items.trashed');
+        Route::put('/order_items/{order_item}/restore', 'restore')->name('order_items.restore')->withTrashed();
+        Route::delete('/order_items/{order_item}/delete', 'delete')->name('order_items.delete')->withTrashed();
+    });
+    Route::resource('order_items', OrderItemController::class);
 });
 
 require __DIR__ . '/settings.php';

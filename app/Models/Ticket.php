@@ -19,4 +19,8 @@ class Ticket extends Model
     {
         return $this->belongsTo(Event::class);
     }
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }
