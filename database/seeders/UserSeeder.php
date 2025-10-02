@@ -2,20 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\Organizer;
+use App\Models\Attendee;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class OrganizerSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        User::factory(1)
-            ->has(Organizer::factory()->count(1))
+        User::factory(10)
+            ->has(Attendee::factory()->count(1))
             ->create();
     }
 }
