@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->foreignIdFor(Event::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Attendee::class)->constrained()->onDelete('cascade');
             $table->decimal('total_price', 10, 2);
-            $table->string('status', 150);
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }
