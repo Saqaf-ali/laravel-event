@@ -3,12 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import type { NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { Bell, ClockArrowDown, Home, Menu, Search, ShoppingCart, TentTree, User } from 'lucide-vue-next';
+import { Bell, ClockArrowDown, Home, Menu, ShoppingCart, TentTree, User } from 'lucide-vue-next';
 import { ref } from 'vue';
 import AppLogo from '../AppLogo.vue';
+import ButtonTip from '../ButtonTip.vue';
+import Icon from '../Icon.vue';
 import TextLink from '../TextLink.vue';
 import WebNav from './WebNav.vue';
-import ButtonTip from '../ButtonTip.vue';
 
 const isOpen = ref(false);
 
@@ -29,11 +30,11 @@ const mobileNav: NavItem[] = [
 ];
 
 const buttonTap = [
-    { tip: 'Search', icon: Search, href: '/search' },
+    { tip: 'Search', icon: 'Search', href: '/search' },
     // { tip: 'Orders', icon: ClockArrowDown, href: '/orders' },
-    { tip: 'Cart', icon: ShoppingCart, href: '/cart' },
-    { tip: 'Notifications', icon: Bell, href: '/notifications' },
-    { tip: 'Profile', icon: User, href: '/profile' },
+    { tip: 'Cart', icon: 'ShoppingCart', href: '/cart' },
+    { tip: 'Notifications', icon: 'Bell', href: '/notifications' },
+    { tip: 'Profile', icon: 'User', href: '/profile' },
 ];
 const allNav = [...mainNav, ...mobileNav];
 </script>
@@ -50,8 +51,7 @@ const allNav = [...mainNav, ...mobileNav];
                     </SheetTrigger>
                     <SheetContent side="left">
                         <div class="flex flex-col gap-4">
-
-                                <AppLogo />
+                            <AppLogo />
 
                             <WebNav :items="allNav" />
                         </div>
@@ -72,7 +72,7 @@ const allNav = [...mainNav, ...mobileNav];
             <div class="flex items-center gap-4">
                 <ButtonTip v-for="(item, index) in buttonTap" :key="index" :tip="item.tip">
                     <template #icon>
-                        <component :is="item.icon" class="h-5 w-5" />
+                        <Icon :name="item.icon" size="20" />
                     </template>
                 </ButtonTip>
             </div>
