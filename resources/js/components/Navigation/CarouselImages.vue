@@ -9,11 +9,11 @@ const props = defineProps<CarouselImagesProps>();
 </script>
 
 <template>
-    <Carousel class="">
-        <CarouselContent>
-            <CarouselItem v-for="(image, index) in props.images" :key="index">
-                <div class="aspect-video cursor-grab p-1">
-                    <img :src="image.image_url" alt="Event Image" class="h-auto w-full rounded-lg shadow-md" />
+    <Carousel class="h-full">
+        <CarouselContent class="h-full">
+            <CarouselItem v-for="(image, index) in props.images" :key="index" class="h-full">
+                <div class="cursor-grab p-1 h-full">
+                    <img :src="image.image_url" alt="Event Image" class="inset-0 h-full w-full rounded-lg object-cover shadow-md" />
                 </div>
             </CarouselItem>
         </CarouselContent>
