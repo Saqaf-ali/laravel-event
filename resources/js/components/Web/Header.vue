@@ -10,6 +10,7 @@ import ButtonTip from '../ButtonTip.vue';
 import Icon from '../Icon.vue';
 import TextLink from '../TextLink.vue';
 import WebNav from './WebNav.vue';
+import Footer from './Footer.vue';
 
 const isOpen = ref(false);
 
@@ -78,4 +79,5 @@ const allNav = [...mainNav, ...mobileNav];
             </div>
         </div>
     </header>
+    <Footer/>
 </template>

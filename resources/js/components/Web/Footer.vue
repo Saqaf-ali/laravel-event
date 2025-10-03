@@ -5,6 +5,7 @@ import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { Facebook, Instagram, Twitter } from 'lucide-vue-next';
+import Icon from '../Icon.vue';
 
 const mainNav: NavItem[] = [
     { title: 'Home', href: '/' },
@@ -27,7 +28,7 @@ const socialNav: NavItem[] = [
                 <Link :href="dashboard()" class="flex items-center gap-x-2">
                     <AppLogo />
                 </Link>
-                <p class="text-muted-foreground text-sm">© 2024 Event Wave. All rights reserved.</p>
+                <p class="text-sm text-muted-foreground">© 2024 Event Wave. All rights reserved.</p>
             </div>
 
             <div class="flex flex-col gap-2">
@@ -40,8 +41,13 @@ const socialNav: NavItem[] = [
             <div class="flex flex-col gap-2">
                 <h3 class="text-lg font-semibold">Follow Us</h3>
                 <div class="flex gap-4">
-                    <a v-for="(item, index) in socialNav" :key="index" :href="item.href" class="text-muted-foreground hover:text-primary transition-colors">
-                        <component :is="item.icon" class="h-6 w-6" />
+                    <a
+                        v-for="(item, index) in socialNav"
+                        :key="index"
+                        :href="item.href"
+                        class="text-muted-foreground transition-colors hover:text-primary"
+                    >
+                       <Icon :name="item.title" size="24" />
                         <span class="sr-only">{{ item.title }}</span>
                     </a>
                 </div>

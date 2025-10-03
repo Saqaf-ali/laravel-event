@@ -12,7 +12,7 @@ defineProps<Props>();
 </script>
 
 <template>
-    <Link :href="href" :method="method" :as="as" class="text-sm font-medium transition-colors hover:text-accent">
+    <Link :href="href" :method="method" :as="as" class="text-sm font-medium text-foreground transition-colors hover:text-primary">
         <slot />
     </Link>
 </template>
