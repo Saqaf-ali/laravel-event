@@ -8,13 +8,12 @@ const images = [{ image_url: '/pexels-chi-n-ba-3626645-33765242.jpg' }];
 </script>
 
 <template>
-    <Head title="Welcome"> </Head>
+    <Head title="Welcome" />
     <AppLayout>
         <!-- hero -->
-        <section class="relative bg-amber-800">
-            <div class="">
-                <CarouselImages :images="images" class=" " />
-            </div>
+        <section class="relative">
+            <CarouselImages :images="images" class=" " />
+
             <div class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/50 text-white">
                 <h1 class="text-5xl font-bold">Welcome to Event Wave</h1>
                 <p class="text-x mt-4 text-muted">Your one-stop shop for the hottest events!</p>
