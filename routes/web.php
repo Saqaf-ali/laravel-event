@@ -8,6 +8,10 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 
+Route::get('about', function () {
+    return Inertia::render('Web/About');
+})->name('about');
+
 Route::get('dashboard', function () {
     return Inertia::render(component: 'Dashboard');
 })
