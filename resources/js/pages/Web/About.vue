@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
+import SectionRight from '@/components/Web/SectionRight.vue';
 import AppLayout from '@/layouts/web/AppLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 </script>
@@ -40,35 +41,15 @@ import { Head, Link } from '@inertiajs/vue3';
                 </div>
             </div>
         </section>
-
-        <section class=" py-16">
-            <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 gap-12 md:grid-cols-2">
-                    <div>
-                        <img
-                            src="https://images.pexels.com/photos/33661252/pexels-photo-33661252.jpeg"
-                            alt="Our Vision"
-                            class="h-auto w-full rounded-lg shadow-lg"
-                        />
-                    </div>
-                    <div>
-                        <Heading
-                            title="Our Vision"
-                            description="Our vision is to be the leading global platform for event discovery and management,
-                            empowering individuals and organizations to create, share, and experience
-                            unforgettable moments. We envision a world where every event,
-                            big or small, is easily accessible and seamlessly managed,
-                            fostering connection and enriching lives."
-                        />
-
-                        <p class="text-sm text-muted-foreground">
-                            We are committed to continuous innovation, leveraging cutting-edge technology to enhance user experience, streamline event
-                            management, and provide unparalleled access to a world of events.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <SectionRight
+            title="Our Vision"
+            description="Our vision is to become the leading global platform for event discovery and management,
+                        empowering individuals and organizations to create, share, and experience
+                        unforgettable moments. We envision a world where every event, big or small,
+                        is easily accessible and seamlessly organized, fostering connection and joy across communities."
+            descriptionSecondary="We believe in the power of shared experiences to bring people together, inspire creativity, and drive positive change. Event Wave is committed to continuously innovating and expanding our offerings to meet the evolving needs of our users, making event participation a delightful and enriching part of life."
+            image="https://images.pexels.com/photos/33661252/pexels-photo-33661252.jpeg"
+        />
 
         <section class="container mx-auto px-4 py-16">
             <div class="text-center">
