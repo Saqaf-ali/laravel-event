@@ -47,7 +47,7 @@ const socialNav: NavItem[] = [
                         :href="item.href"
                         class="text-muted-foreground transition-colors hover:text-primary"
                     >
-                       <Icon :name="item.title" size="24" />
+                        <Icon :name="item.title" size="24" />
                         <span class="sr-only">{{ item.title }}</span>
                     </a>
                 </div>

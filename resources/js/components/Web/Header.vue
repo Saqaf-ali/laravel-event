@@ -2,15 +2,17 @@
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import type { NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { Bell, ClockArrowDown, Home, Menu, ShoppingCart, TentTree, User } from 'lucide-vue-next';
 import { ref } from 'vue';
 import AppLogo from '../AppLogo.vue';
 import ButtonTip from '../ButtonTip.vue';
 import Icon from '../Icon.vue';
 import TextLink from '../TextLink.vue';
+
+const page = usePage();
+
 import WebNav from './WebNav.vue';
-import Footer from './Footer.vue';
 
 const isOpen = ref(false);
 
@@ -79,5 +81,4 @@ const allNav = [...mainNav, ...mobileNav];
             </div>
         </div>
     </header>
-    <Footer/>
 </template>
