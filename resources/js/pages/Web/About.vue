@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Heading from '@/components/Heading.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
+import HeadingSmaller from '@/components/HeadingSmaller.vue';
 import Paragraph from '@/components/Paragraph.vue';
 import SmartAvatar from '@/components/SmartAvatar.vue';
 import { Button } from '@/components/ui/button';
@@ -33,10 +34,10 @@ const users = [
 <template>
     <Head title="About Us" />
     <AppLayout>
-        <section class="relative bg-gradient-to-r from-purple-600 to-blue-600 py-20 text-white">
+        <section class="relative bg-gradient-to-r from-primary to-accent py-20 text-white">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="mb-4 text-5xl font-bold">About Event Wave</h1>
-                <p class="text-xl">Your ultimate platform for discovering and managing events.</p>
+                <h1 class="mb-4 text-5xl font-bold text-primary-foreground">About Event Wave</h1>
+                <p class="text-xl text-primary-foreground/90">Your ultimate platform for discovering and managing events.</p>
             </div>
         </section>
 
@@ -77,15 +78,16 @@ const users = [
             </div>
         </section>
 
-        <section class="bg-gradient-to-r from-blue-600 to-purple-600 py-16 text-white">
+        <section class="bg-primary/5 py-16">
             <div class="container mx-auto px-4 text-center">
-                <h2 class="mb-6 text-3xl font-semibold">Join the Event Wave Community</h2>
-                <p class="mb-8 text-lg leading-relaxed">
-                    Ready to discover amazing events or plan your own? Join Event Wave today and be part of a growing community passionate about
-                    experiences.
-                </p>
-                <Link>
-                    <Button size="lg" class="bg-white text-blue-600 hover:bg-gray-100">Get Started Now</Button>
+                <HeadingSmaller
+                    title="Join Our Community"
+                    description="Become a part of the Event Wave family and start exploring amazing events today!"
+                    class="mb-8"
+                />
+
+                <Link href="/register">
+                    <Button class="">Get Started Now</Button>
                 </Link>
             </div>
         </section>

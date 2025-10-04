@@ -3,7 +3,7 @@ import Icon from '@/components/Icon.vue';
 import CarouselImages from '@/components/Navigation/CarouselImages.vue';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/web/AppLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 
 const images = [{ image_url: '/pexels-chi-n-ba-3626645-33765242.jpg' }];
 </script>
@@ -58,7 +58,9 @@ const images = [{ image_url: '/pexels-chi-n-ba-3626645-33765242.jpg' }];
             <div class="container mx-auto px-4">
                 <h2 class="mb-4">Ready to experience the next wave of events?</h2>
                 <p class="mb-8 text-muted-foreground">Join Event Wave today and never miss out on the excitement!</p>
-                <Button>Sign Up Now</Button>
+                <Link href="/register">
+                    <Button>Sign Up Now</Button>
+                </Link>
             </div>
         </section>
     </AppLayout>
