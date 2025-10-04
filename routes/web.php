@@ -16,8 +16,11 @@ Route::get('contact', function () {
     return Inertia::render('Web/Contact');
 })->name('contact');
 
-Route::get('events', [EventController::class, 'index'])->name('events.index');
-Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
+Route::prefix('web')->group(function () {
+    Route::get('/events', [EventController::class, 'index'])->name('web.event.index');
+    Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
+});
+
 Route::resource('contacts', ContactController::class);
 
 Route::get('dashboard', function () {

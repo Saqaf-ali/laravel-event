@@ -21,7 +21,7 @@ const mainNav: NavItem[] = [
     { title: 'Home', href: '/', icon: Home },
     { title: 'About', href: '/about', icon: User },
     { title: 'Contact', href: '/contact', icon: Bell },
-    { title: 'Events', href: '/events', icon: TentTree },
+    { title: 'Events', href: '/web/events', icon: TentTree },
 ];
 
 const mobileNav: NavItem[] = [
