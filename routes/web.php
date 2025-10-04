@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\EventController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -11,6 +12,13 @@ Route::get('/', function () {
 Route::get('about', function () {
     return Inertia::render('Web/About');
 })->name('about');
+Route::get('contact', function () {
+    return Inertia::render('Web/Contact');
+})->name('contact');
+
+Route::get('events', [EventController::class, 'index'])->name('events.index');
+Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
+Route::resource('contacts', ContactController::class);
 
 Route::get('dashboard', function () {
     return Inertia::render(component: 'Dashboard');
