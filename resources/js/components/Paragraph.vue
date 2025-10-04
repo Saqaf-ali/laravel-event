@@ -7,7 +7,7 @@ defineProps<Props>();
 </script>
 
 <template>
-    <p class="leading-7 [&:not(:first-child)]:mt-6">
+    <p class="text-xs text-muted-foreground">
         {{ text }}
     </p>
 </template>

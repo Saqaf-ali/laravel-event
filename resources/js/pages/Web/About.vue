@@ -1,9 +1,33 @@
 <script setup lang="ts">
 import Heading from '@/components/Heading.vue';
+import HeadingSmall from '@/components/HeadingSmall.vue';
+import Paragraph from '@/components/Paragraph.vue';
+import SmartAvatar from '@/components/SmartAvatar.vue';
 import { Button } from '@/components/ui/button';
+import SectionLeft from '@/components/Web/SectionLeft.vue';
 import SectionRight from '@/components/Web/SectionRight.vue';
 import AppLayout from '@/layouts/web/AppLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+const users = [
+    {
+        name: 'Jane Doe',
+        title: 'CEO & Founder',
+        description: 'Jane is a visionary leader with a passion for connecting people through events.',
+        image: 'https://images.pexels.com/photos/371160/pexels-photo-371160.jpeg',
+    },
+    {
+        name: 'John Smith',
+        title: 'Chief Technology Officer',
+        description: 'John leads our tech team, ensuring Event Wave is always at the forefront of innovation.',
+        image: 'https://images.pexels.com/photos/343717/pexels-photo-343717.jpeg',
+    },
+    {
+        name: 'Emily White',
+        title: 'Head of Marketing',
+        description: 'Emily is dedicated to spreading the word about Event Wave and engaging our community.',
+        image: 'https://images.pexels.com/photos/1370750/pexels-photo-1370750.jpeg',
+    },
+];
 </script>
 
 <template>
@@ -16,31 +40,19 @@ import { Head, Link } from '@inertiajs/vue3';
             </div>
         </section>
 
-        <section class="container mx-auto px-4 py-16">
-            <div class="grid grid-cols-1 gap-12 md:grid-cols-2">
-                <div>
-                    <Heading
-                        title="Our Mission"
-                        description="Our mission at Event Wave is to
-                        revolutionize the way people discover, experience,
-                         and participate in events. We strive to create a seamless and intuitive platform that
-                         connects individuals with a diverse range of events, fostering vibrant communities and
-                          unforgettable memories."
-                    />
-                    <p class="text-sm text-muted-foreground">
-                        Whether you're looking for a local concert, a professional conference, a vibrant festival, or a niche workshop, Event Wave is
-                        designed to help you find exactly what you're looking for and more.
-                    </p>
-                </div>
-                <div>
-                    <img
-                        src="https://images.pexels.com/photos/33924795/pexels-photo-33924795.jpeg"
-                        alt="Our Mission"
-                        class="h-auto w-full rounded-lg shadow-lg"
-                    />
-                </div>
-            </div>
-        </section>
+        <SectionLeft
+            class="bg-secondary"
+            title="Our Mission"
+            description="At Event Wave, our mission is to revolutionize the event industry by providing a seamless,
+                        user-friendly platform that connects event organizers with enthusiastic attendees.
+                        We strive to simplify every aspect of event management, from planning and promotion to ticketing and post-event analysis,
+                        while offering users an unparalleled experience in discovering and engaging with events tailored to their interests."
+            descriptionSecondary="We are committed to fostering a vibrant community where memorable experiences are created and shared,
+                        making event participation accessible, enjoyable, and effortless for everyone.
+                        Our dedication to innovation, user satisfaction, and community building drives us to continuously enhance our platform and services."
+            image="https://images.pexels.com/photos/33924795/pexels-photo-33924795.jpeg"
+        />
+
         <SectionRight
             title="Our Vision"
             description="Our vision is to become the leading global platform for event discovery and management,
@@ -51,34 +63,15 @@ import { Head, Link } from '@inertiajs/vue3';
             image="https://images.pexels.com/photos/33661252/pexels-photo-33661252.jpeg"
         />
 
-        <section class="container mx-auto px-4 py-16">
-            <div class="text-center">
-                <h2 class="mb-6 text-3xl font-semibold">Meet the Team</h2>
-                <p class="mb-12 text-lg leading-relaxed text-gray-700">
-                    Behind Event Wave is a passionate team dedicated to making your event experience exceptional.
-                </p>
+        <section class="w-full bg-accent/10 py-16">
+            <div class="container mx-auto px-4 text-center">
+                <Heading title="Meet Our Team" description="Behind Event Wave is a passionate team" />
+
                 <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-                    <div class="flex flex-col items-center">
-                        <img src="/images/team-member-1.jpg" alt="Team Member 1" class="mb-4 h-32 w-32 rounded-full object-cover shadow-lg" />
-                        <h3 class="text-xl font-semibold">Jane Doe</h3>
-                        <p class="text-primary">CEO & Founder</p>
-                        <p class="mt-2 text-center text-gray-600">Jane is a visionary leader with a passion for connecting people through events.</p>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <img src="/images/team-member-2.jpg" alt="Team Member 2" class="mb-4 h-32 w-32 rounded-full object-cover shadow-lg" />
-                        <h3 class="text-xl font-semibold">John Smith</h3>
-                        <p class="text-primary">Chief Technology Officer</p>
-                        <p class="mt-2 text-center text-gray-600">
-                            John leads our tech team, ensuring Event Wave is always at the forefront of innovation.
-                        </p>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <img src="/images/team-member-3.jpg" alt="Team Member 3" class="mb-4 h-32 w-32 rounded-full object-cover shadow-lg" />
-                        <h3 class="text-xl font-semibold">Emily White</h3>
-                        <p class="text-primary">Head of Marketing</p>
-                        <p class="mt-2 text-center text-gray-600">
-                            Emily is dedicated to spreading the word about Event Wave and engaging our community.
-                        </p>
+                    <div v-for="user in users" :key="user.name" class="flex flex-col items-center">
+                        <SmartAvatar :src="user.image" :alt="user.name" class="mb-4 h-32 w-32" />
+                        <HeadingSmall :title="user.name" :description="user.title" class="text-accent" />
+                        <Paragraph :text="user.description" />
                     </div>
                 </div>
             </div>
