@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\EventController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Pest\Collision\Events;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -16,10 +17,11 @@ Route::get('contact', function () {
     return Inertia::render('Web/Contact');
 })->name('contact');
 
-Route::prefix('web')->group(function () {
-    Route::get('/events', [EventController::class, 'index'])->name('web.event.index');
-    Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
-});
+Route::prefix('web')
+    ->name('web.')
+    ->group(function () {
+        Route::resource('events', EventController::class);
+    });
 
 Route::resource('contacts', ContactController::class);
 
@@ -29,7 +31,6 @@ Route::get('dashboard', function () {
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::resource('events', EventController::class);
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
 require __DIR__ . '/console.php';

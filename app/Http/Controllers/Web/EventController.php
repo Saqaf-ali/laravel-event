@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        return Inertia('Web/events/Index');
+        $events = Event::with('eventImages')->latest('updated_at')->get();
+        return Inertia('Web/events/Index', ['events' => $events]);
     }
 
     /**
@@ -37,7 +39,7 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-        //
+        dd('sss');
     }
 
     /**

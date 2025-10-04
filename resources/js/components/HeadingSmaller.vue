@@ -2,13 +2,14 @@
 interface Props {
     title: string;
     description?: string;
+    class?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 </script>
 
 <template>
-    <header>
+    <header :class="props.class">
         <h4 class="mb-0.5 text-base font-medium">{{ title }}</h4>
         <p v-if="description" class="text-sm text-muted-foreground">
             {{ description }}
