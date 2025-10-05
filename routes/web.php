@@ -21,6 +21,9 @@ Route::prefix('web')
     ->name('web.')
     ->group(function () {
         Route::resource('events', EventController::class);
+        Route::get('shopping', function () {
+            return Inertia::render('Web/carts/Shopping');
+        })->name('shopping');
     });
 
 Route::resource('contacts', ContactController::class);

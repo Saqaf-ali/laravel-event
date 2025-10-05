@@ -12,9 +12,11 @@ import TextLink from '../TextLink.vue';
 
 const page = usePage();
 
+import { useCart } from '@/composables/useCart';
 import WebNav from './WebNav.vue';
 
 const isOpen = ref(false);
+const { totalItems } = useCart();
 
 const mainNav: NavItem[] = [
     // For desktop text links
@@ -24,19 +26,18 @@ const mainNav: NavItem[] = [
     { title: 'Events', href: '/web/events', icon: TentTree },
 ];
 
-const mobileNav: NavItem[] = [
+const mobileNav = [
     // For mobile-only icon links
-    { title: 'Orders', href: '/orders', icon: ClockArrowDown },
-    { title: 'Cart', href: '/cart', icon: ShoppingCart },
-    { title: 'Notifications', href: '/notifications', icon: Bell },
-    { title: 'Profile', href: '/profile', icon: User },
+    { title: 'Orders', href: '/web/orders', icon: ClockArrowDown },
+    { title: 'Cart', href: '/web/carts/shopping', icon: ShoppingCart, badge: totalItems },
+    { title: 'Notifications', href: '/web/notifications', icon: Bell },
+    { title: 'Profile', href: '/web/profile', icon: User },
 ];
 
 const buttonTap = [
     { tip: 'Search', icon: 'Search', href: '/search' },
-    // { tip: 'Orders', icon: ClockArrowDown, href: '/orders' },
-    { tip: 'Cart', icon: 'ShoppingCart', href: '/cart' },
-    { tip: 'Notifications', icon: 'Bell', href: '/notifications' },
+    { tip: 'Cart', icon: 'ShoppingCart', href: '/web/carts/shopping', badge: totalItems },
+    { tip: 'Notifications', icon: 'Bell', href: '/web/notifications' },
     { tip: 'Profile', icon: 'User', href: '/profile' },
 ];
 const allNav = [...mainNav, ...mobileNav];
@@ -75,6 +76,12 @@ const allNav = [...mainNav, ...mobileNav];
             <div class="flex items-center gap-4">
                 <ButtonTip v-for="(item, index) in buttonTap" :key="index" :tip="item.tip">
                     <template #icon>
+                        <div v-if="item.tip === 'Cart' && totalItems > 0" class="absolute">
+                            <Icon :name="item.icon" size="20" />
+                            <div class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                                {{ totalItems }}
+                            </div>
+                        </div>
                         <Icon :name="item.icon" size="20" />
                     </template>
                 </ButtonTip>
