@@ -37,9 +37,10 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Event $event)
     {
-        dd('sss');
+        $event->load(['eventImages', 'tickets']);
+        return Inertia('Web/events/Show', ['event' => $event]);
     }
 
     /**
