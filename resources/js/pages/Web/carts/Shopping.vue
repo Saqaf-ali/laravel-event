@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import Heading from '@/components/Heading.vue';
+import HeadingSmall from '@/components/HeadingSmall.vue';
+import HeadingSmaller from '@/components/HeadingSmaller.vue';
 import Icon from '@/components/Icon.vue';
 import Paragraph from '@/components/Paragraph.vue';
 import { Button } from '@/components/ui/button';
@@ -7,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { useCart } from '@/composables/useCart';
 import AppLayout from '@/layouts/web/AppLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const { items, updateItemQuantity, removeItem, totalPrice, totalItems } = useCart();
@@ -31,9 +33,9 @@ const hasItems = computed(() => items.value.length > 0);
                             <div v-for="item in items" :key="item.id" class="flex items-center gap-4 rounded-lg border bg-card p-4 shadow-sm">
                                 <img :src="item.image" alt="Event Image" class="h-20 w-20 rounded-md object-cover" />
                                 <div class="flex-grow flex-col justify-center">
-                                    <h3 class="text-lg font-semibold">{{ item.name }}</h3>
-                                    <p class="text-sm text-muted-foreground">${{ item.price }}</p>
+                                    <HeadingSmall :title="item.name" :description="'$' + item.price" />
                                 </div>
+
                                 <div class="flex items-center gap-2">
                                     <Input
                                         type="number"
@@ -52,34 +54,35 @@ const hasItems = computed(() => items.value.length > 0);
                     <!-- Order Summary -->
                     <div class="md:col-span-1">
                         <div class="rounded-lg border bg-card p-6 shadow-sm">
-                            <h2 class="mb-4 text-xl font-semibold">Order Summary</h2>
+                            <HeadingSmaller title="Order Summary" class="mb-4" />
+
                             <div class="space-y-2">
                                 <div class="flex justify-between">
-                                    <span>Subtotal ({{ totalItems }} items)</span>
-                                    <span>${{ totalPrice.toFixed(2) }}</span>
+                                    <Paragraph :text="`Subtotal (${totalItems}) items`" />
+                                    <Paragraph :text="'$' + totalPrice" />
                                 </div>
                                 <div class="flex justify-between">
-                                    <span>Shipping</span>
-                                    <span>Free</span>
+                                    <Paragraph text="Shipping" />
+                                    <Paragraph text="Free" />
+                                </div>
+                                <div class="flex justify-between">
+                                    <Paragraph text="Tax" />
+                                    <Paragraph text="$0.00" />
                                 </div>
                                 <Separator class="my-4" />
                                 <div class="flex justify-between text-lg font-bold">
-                                    <span>Total</span>
-                                    <span>${{ totalPrice.toFixed(2) }}</span>
+                                    <HeadingSmaller title="Total" />
+                                    <Paragraph :text="'$' + totalPrice" />
                                 </div>
                             </div>
-                            <Button class="mt-6 w-full" as-child>
-                                <a href="/web/checkout">Proceed to Checkout</a>
-                            </Button>
+                            <Button class="mt-6"> Go to Checkout </Button>
                         </div>
                     </div>
                 </div>
 
                 <div v-else class="flex flex-col items-center justify-center space-y-6 text-center">
                     <Paragraph text="Your cart is currently empty. Please add tickets to proceed with checkout." />
-                    <Button as-child>
-                        <a href="/web/events">Browse Events</a>
-                    </Button>
+                    <Link as-child href="/web/events"> <Button> Browse Events </Button></Link>
                 </div>
             </div>
         </section>
