@@ -7,7 +7,7 @@ interface Props {
     tip: string;
     asChild?: boolean;
     class?: string;
-    href: string;
+    href?: string;
 }
 
 const props = defineProps<Props>();

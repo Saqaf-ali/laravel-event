@@ -37,13 +37,12 @@ const hasItems = computed(() => items.value.length > 0);
                                 <div class="flex items-center gap-2">
                                     <Input
                                         type="number"
-                                        :value="item.quantity"
-                                        min="1"
+                                        :model-value="item.quantity"
                                         class="w-16 text-center"
-                                        @input="updateItemQuantity(item.id, parseInt($event.target.value))"
+                                        @input="updateItemQuantity(item.id, $event.target.value)"
                                     />
-                                    <Button variant="ghost" size="icon" @click="removeItem(item.id)">
-                                        <Icon name="TrashIcon" class="h-5 w-5 text-red-500" />
+                                    <Button @click="removeItem(item.id)" variant="ghost" size="icon">
+                                        <Icon name="TrashIcon" class="text-destructive" />
                                     </Button>
                                 </div>
                             </div>
@@ -57,7 +56,7 @@ const hasItems = computed(() => items.value.length > 0);
                             <div class="space-y-2">
                                 <div class="flex justify-between">
                                     <span>Subtotal ({{ totalItems }} items)</span>
-                                    <span>${{ totalPrice }}</span>
+                                    <span>${{ totalPrice.toFixed(2) }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span>Shipping</span>
@@ -66,7 +65,7 @@ const hasItems = computed(() => items.value.length > 0);
                                 <Separator class="my-4" />
                                 <div class="flex justify-between text-lg font-bold">
                                     <span>Total</span>
-                                    <span>${{ useCart().totalPrice }}</span>
+                                    <span>${{ totalPrice.toFixed(2) }}</span>
                                 </div>
                             </div>
                             <Button class="mt-6 w-full" as-child>

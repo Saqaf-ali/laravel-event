@@ -18,7 +18,7 @@ export const useCartStore = defineStore('cart', () => {
     });
 
     const totalPrice = computed(() => {
-        return items.value.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        return  items.value.reduce((acc, item) => acc + item.price * item.quantity, 0);
     });
 
     const addItem = (item: CartItem) => {
@@ -40,7 +40,7 @@ export const useCartStore = defineStore('cart', () => {
             return;
         }
         if (typeof quantity === 'string') {
-            quantity = parseInt(quantity, 10);
+            quantity = parseInt(quantity,10);
         }
 
         if (isNaN(quantity)) {
