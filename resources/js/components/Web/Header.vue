@@ -29,14 +29,14 @@ const mainNav: NavItem[] = [
 const mobileNav = [
     // For mobile-only icon links
     { title: 'Orders', href: '/web/orders', icon: ClockArrowDown },
-    { title: 'Cart', href: '/web/carts/shopping', icon: ShoppingCart, badge: totalItems },
+    { title: 'Cart', href: '/web/shopping', icon: ShoppingCart, badge: totalItems },
     { title: 'Notifications', href: '/web/notifications', icon: Bell },
     { title: 'Profile', href: '/web/profile', icon: User },
 ];
 
 const buttonTap = [
     { tip: 'Search', icon: 'Search', href: '/search' },
-    { tip: 'Cart', icon: 'ShoppingCart', href: '/web/carts/shopping', badge: totalItems },
+    { tip: 'Cart', icon: 'ShoppingCart', href: '/web/shopping', badge: totalItems },
     { tip: 'Notifications', icon: 'Bell', href: '/web/notifications' },
     { tip: 'Profile', icon: 'User', href: '/profile' },
 ];
@@ -74,7 +74,7 @@ const allNav = [...mainNav, ...mobileNav];
             </nav>
 
             <div class="flex items-center gap-4">
-                <ButtonTip v-for="(item, index) in buttonTap" :key="index" :tip="item.tip">
+                <ButtonTip v-for="(item, index) in buttonTap" :key="index" :tip="item.tip" :href="item.href">
                     <template #icon>
                         <div v-if="item.tip === 'Cart' && totalItems > 0" class="absolute">
                             <Icon :name="item.icon" size="20" />
