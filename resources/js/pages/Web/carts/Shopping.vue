@@ -75,14 +75,14 @@ const hasItems = computed(() => items.value.length > 0);
                                     <Paragraph :text="'$' + totalPrice" />
                                 </div>
                             </div>
-                            <Button class="mt-6"> Go to Checkout </Button>
+                            <Link href=""> <Button class="mt-6 w-full"> Go to Checkout </Button></Link>
                         </div>
                     </div>
                 </div>
 
                 <div v-else class="flex flex-col items-center justify-center space-y-6 text-center">
                     <Paragraph text="Your cart is currently empty. Please add tickets to proceed with checkout." />
-                    <Link as-child href="/web/events"> <Button> Browse Events </Button></Link>
+                    <Link href="/web/events"> <Button> Browse Events </Button></Link>
                 </div>
             </div>
         </section>
