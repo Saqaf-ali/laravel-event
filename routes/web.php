@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\EventController;
+use App\Http\Controllers\Web\OrderController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Pest\Collision\Events;
@@ -24,6 +25,11 @@ Route::prefix('web')
         Route::get('shopping', function () {
             return Inertia::render('Web/carts/Shopping');
         })->name('shopping');
+        Route::get('checkout', function () {
+            return Inertia::render('Web/carts/Checkout');
+        })->name('checkout');
+        //    orders store
+        Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
     });
 
 Route::resource('contacts', ContactController::class);

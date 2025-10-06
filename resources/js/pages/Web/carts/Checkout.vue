@@ -1,57 +1,41 @@
 <script setup lang="ts">
 import Heading from '@/components/Heading.vue';
-import HeadingSmall from '@/components/HeadingSmall.vue';
 import HeadingSmaller from '@/components/HeadingSmaller.vue';
-import Icon from '@/components/Icon.vue';
 import Paragraph from '@/components/Paragraph.vue';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { useCart } from '@/composables/useCart';
 import AppLayout from '@/layouts/web/AppLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import web from '@/routes/web';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
-const { items, updateItemQuantity, removeItem, totalPrice, totalItems } = useCart();
+const { items, totalPrice, totalItems } = useCart();
 
 const hasItems = computed(() => items.value.length > 0);
-console.log('items222222', items.value);
+const form = useForm({
+    items: items.value,
+    total_price: totalPrice.value,
+    total_items: totalItems.value,
+});
+const submit = () => {
+    form.post(web.orders.store().url);
+};
 </script>
 
 <template>
-    <Head title="Shopping Cart" />
+    <Head title="Checkout" />
     <AppLayout>
         <section class="py-16">
             <div class="container mx-auto p-4">
                 <div class="mb-8 text-center">
-                    <Heading title="Shopping Cart" description="Review your selected tickets before checkout" />
+                    <Heading title="Checkout" description="Complete your purchase" />
                 </div>
 
                 <div v-if="hasItems" class="grid grid-cols-1 gap-8 md:grid-cols-3">
-                    <!-- Cart Items List -->
-                    <div class="md:col-span-2">
-                        <div class="space-y-4">
-                            <div v-for="item in items" :key="item.id" class="flex items-center gap-4 rounded-lg border bg-card p-4 shadow-sm">
-                                <img :src="item.image" alt="Event Image" class="h-20 w-20 rounded-md object-cover" />
-                                <div class="flex-grow flex-col justify-center">
-                                    <HeadingSmall :title="item.name" :description="'$' + item.price" />
-                                </div>
-
-                                <div class="flex items-center gap-2">
-                                    <Input
-                                        type="number"
-                                        :model-value="item.quantity"
-                                        class="w-16 text-center"
-                                        @input="updateItemQuantity(item.id, $event.target.value)"
-                                    />
-                                    <Button @click="removeItem(item.id)" variant="ghost" size="icon">
-                                        <Icon name="TrashIcon" class="text-destructive" />
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <form>
+                        <Button @click="submit"> Send Payment</Button>
+                    </form>
                     <!-- Order Summary -->
                     <div class="md:col-span-1">
                         <div class="rounded-lg border bg-card p-6 shadow-sm">
@@ -76,7 +60,7 @@ console.log('items222222', items.value);
                                     <Paragraph :text="'$' + totalPrice" />
                                 </div>
                             </div>
-                            <Link href="/web/checkout"> <Button class="mt-6 w-full"> Go to Checkout </Button></Link>
+                            <Button class="mt-6 w-full"> Place Order </Button>
                         </div>
                     </div>
                 </div>
