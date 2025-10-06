@@ -22,9 +22,7 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'items' => 'required|array',
-            'total_price' => 'required|decimal|min:1',
-            'total_items' => 'required|decimal|min:1',
+           
         ];
     }
 }

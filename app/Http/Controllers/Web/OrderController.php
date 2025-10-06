@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use Auth;
+use Illuminate\Container\Attributes\Auth as AttributesAuth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class OrderController extends Controller
 {
@@ -31,7 +34,25 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        // get user
+
+        dd();
+        foreach ($request->items as $key => $item) {
+            $order = Order::create([
+                'attendee_id' => Auth::user()->attendee->id,
+                'event_id' => $item['event_id'],
+                'total_price' => $item['total_price'],
+                'status' => 'pending',
+            ]);
+            $order->save();
+            foreach ($item['tickets'] as $ticket) {
+                $order->orderItems()->create([
+                    'ticket_id' => $ticket['ticket_id'],
+                    'quantity' => $ticket['quantity'],
+                    'price' => $ticket['price'],
+                ]);
+            }
+        }
     }
 
     /**
@@ -39,7 +60,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        // AttributesAuth
     }
 
     /**

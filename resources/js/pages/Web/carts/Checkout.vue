@@ -19,6 +19,8 @@ const form = useForm({
     total_items: totalItems.value,
 });
 const submit = () => {
+    console.log('submitting form',items.value);
+
     form.post(web.orders.store().url);
 };
 </script>
@@ -33,8 +35,8 @@ const submit = () => {
                 </div>
 
                 <div v-if="hasItems" class="grid grid-cols-1 gap-8 md:grid-cols-3">
-                    <form>
-                        <Button @click="submit"> Send Payment</Button>
+                    <form @submit.prevent="submit" class="md:col-span-2">
+                        <Button type="submit" @click="submit"> Send Payment</Button>
                     </form>
                     <!-- Order Summary -->
                     <div class="md:col-span-1">

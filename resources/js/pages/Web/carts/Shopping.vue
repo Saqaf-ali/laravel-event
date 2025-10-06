@@ -15,7 +15,6 @@ import { computed } from 'vue';
 const { items, updateItemQuantity, removeItem, totalPrice, totalItems } = useCart();
 
 const hasItems = computed(() => items.value.length > 0);
-console.log('items222222', items.value);
 </script>
 
 <template>
