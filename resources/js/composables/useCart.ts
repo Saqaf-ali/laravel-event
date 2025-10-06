@@ -13,7 +13,7 @@ export function useCart() {
         cartStore.removeItem(itemId);
     };
 
-    const updateItemQuantity = (itemId: number, quantity: number) => {
+    const updateItemQuantity = (itemId: number, quantity: any) => {
         cartStore.updateItemQuantity(itemId, quantity);
     };
 
