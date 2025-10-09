@@ -29,7 +29,7 @@ Route::prefix('web')
             return Inertia::render('Web/carts/Checkout');
         })->name('checkout');
         //    orders store
-        Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+        Route::resource('orders', OrderController::class)->middleware('auth');
     });
 
 Route::resource('contacts', ContactController::class);

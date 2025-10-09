@@ -34,7 +34,7 @@ const submit = () => {
                     <Heading title="Checkout" description="Complete your purchase" />
                 </div>
 
-                <div v-if="hasItems" class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
                     <form @submit.prevent="submit" class="md:col-span-2">
                         <Button type="submit" @click="submit"> Send Payment</Button>
                     </form>
@@ -67,10 +67,10 @@ const submit = () => {
                     </div>
                 </div>
 
-                <div v-else class="flex flex-col items-center justify-center space-y-6 text-center">
+                <!-- <div v-else class="flex flex-col items-center justify-center space-y-6 text-center">
                     <Paragraph text="Your cart is currently empty. Please add tickets to proceed with checkout." />
                     <Link href="/web/events"> <Button> Browse Events </Button></Link>
-                </div>
+                </div> -->
             </div>
         </section>
     </AppLayout>
