@@ -39,7 +39,7 @@ class OrderController extends Controller
         dd();
         foreach ($request->items as $key => $item) {
             $order = Order::create([
-            
+
                 'event_id' => $item['event_id'],
                 'total_price' => $item['total_price'],
                 'status' => 'pending',
