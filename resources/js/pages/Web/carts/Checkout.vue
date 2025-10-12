@@ -29,7 +29,7 @@ const submit = () => {
     <Head title="Checkout" />
     <AppLayout>
         <section class="py-16">
-            <div class="container mx-auto max-w-1/2 p-4">
+            <div class="container mx-auto p-4 md:max-w-1/2">
                 <div class="mb-8 text-center">
                     <Heading title="Checkout" description="Complete your purchase" />
                 </div>
