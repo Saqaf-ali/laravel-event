@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Event;
 use App\Models\Order;
 use App\Models\Ticket;
 use Illuminate\Database\Migrations\Migration;
@@ -16,9 +17,11 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(Order::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Ticket::class)->constrained()->onDelete('cascade');
-            $table->integer('quantity');
+            $table->foreignIdFor(Event::class)->constrained()->onDelete('cascade');
+            $table->integer('quantity')->default(1);
+
             //the price of the ticket
-            $table->decimal('price', 10, 2)->comment('the price of the ticket');
+            $table->decimal('line_total', 10, 2)->comment('the price of the ticket');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -21,7 +21,6 @@ class OrderSeeder extends Seeder
         Order::factory(20)
             ->sequence(
                 fn($sequence) => [
-                    'event_id' => $eventIds->random(),
                     'attendee_id' => $attendeeIds->random(),
                     'total_price' => fake()->randomFloat(2, 10, 1000),
                     'status' => OrderStatus::cases()[array_rand(OrderStatus::cases())],

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\OrderStatus;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -32,22 +33,28 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        // get user
-        $user = Auth::user();
+        // get attendeeId
+        $attendeeId = Auth::user()->attendee['id'];
 
-        dd($user);
-        foreach ($request->items as $key => $item) {
-            $order = Order::create([
+        // dd($request);
+
+        $order = Order::create([
+            'attendee_id' => Auth::user()->attendee['id'],
+            'total_price' => $request->total_price,
+            'status' => OrderStatus::Completed,
+        ]);
+
+        foreach ($request->items as $item) {
+            $orderItem = $order->orderItems()->create([
+                'ticket_id' => $item['id'],
                 'event_id' => $item['event_id'],
-                'total_price' => $item['total_price'],
-                'status' => 'pending',
+                'quantity' => $item['quantity'],
+                'line_total' => $item['price'] * $item['quantity'],
             ]);
-            $order->save();
-            foreach ($item['tickets'] as $ticket) {
-                $order->orderItems()->create([
-                    'ticket_id' => $ticket['ticket_id'],
-                    'quantity' => $ticket['quantity'],
-                    'price' => $ticket['price'],
+            for ($i = 0; $i < $orderItem->quantity; $i++) {
+                $orderItem->purchasedTickets()->create([
+                    'ticket_code' => 'TICKET-' . uniqid() . '_' . ($i + 1),
+                    'is_used' => false,
                 ]);
             }
         }

@@ -13,7 +13,7 @@ class Order extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['event_id', 'attendee_id', 'total_price', 'status'];
+    protected $fillable = ['attendee_id', 'total_price', 'status'];
     protected $casts = [
         'total_price' => 'decimal:2',
         'status' => OrderStatus::class,
@@ -30,21 +30,16 @@ class Order extends Model
         return $this->status->statusColor();
     }
 
-    public function event()
-    {
-        return $this->belongsTo(Event::class);
-    }
+   
 
     public function attendee()
     {
         return $this->belongsTo(Attendee::class);
     }
+
+    // order orderItems
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
-    }
-    public function purchasedTickets()
-    {
-        return $this->hasMany(PurchasedTicket::class);
     }
 }
