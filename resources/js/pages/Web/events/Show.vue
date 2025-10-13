@@ -126,7 +126,7 @@ const addToCart = (ticket: Ticket) => {
                     </div>
 
                     <div>
-                        <CarouselImages :images="event.event_images" class="h-96 w-full object-cover" />
+                        <CarouselImages :images="event.event_images" class=" w-full object-cover" />
                     </div>
                 </div>
             </div>
