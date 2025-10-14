@@ -17,5 +17,3 @@ class AttendeeController extends Controller
         return Inertia('Web/Attendees/Index', ['orders' => AttendeeResource::collection($orders)]);
     }
 }
-
-

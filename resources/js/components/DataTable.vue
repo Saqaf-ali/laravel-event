@@ -17,6 +17,7 @@ const props = withDefaults(
         columns: ColumnDef<any>[];
         columnFilter: number | string;
         laravelPagination: boolean;
+        pagination: any;
     }>(),
     {
         columnFilter: 'name',
@@ -48,7 +49,7 @@ const table = useVueTable({
     // ⬇️⬇️⬇️ السطر الذي يحدد عدد العناصر في الصفحة (10 صفوف) ⬇️⬇️⬇️
     initialState: {
         pagination: {
-            pageSize: 1,
+            pageSize: props.pagination?.per_page || 4,
         },
     },
     // ⬆️⬆️⬆️ السطر الذي يحدد عدد العناصر في الصفحة (10 صفوف) ⬆️⬆️⬆️
@@ -131,8 +132,18 @@ const table = useVueTable({
                 {{ table.getFilteredSelectedRowModel().rows.length }} of {{ table.getFilteredRowModel().rows.length }} row(s) selected.
             </div>
             <div class="space-x-2" v-if="laravelPagination">
-                <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()" @click="table.previousPage()"> Previous </Button>
-                <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()"> Next </Button>
+                <Button
+                    v-for="link in pagination.links"
+                    :key="link.url"
+                    :disabled="link.url === null"
+                    @click="$inertia.visit(link.url)"
+                    :variant="link.active ? 'default' : 'outline'"
+                    size="sm"
+                >
+                    <span v-if="link.label.includes('Previous')">Previous</span>
+                    <span v-else-if="link.label.includes('Next')">Next</span>
+                    <span v-else>{{ link.label }}</span>
+                </Button>
             </div>
             <div class="space-x-2" v-else>
                 <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()" @click="table.previousPage()"> Previous </Button>

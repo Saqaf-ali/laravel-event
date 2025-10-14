@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import DataTable from '@/components/DataTable.vue';
 import Heading from '@/components/Heading.vue';
-import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/web/AppLayout.vue';
-import { Link } from '@inertiajs/vue3';
 
 const { orders } = defineProps<{
     orders: {
@@ -29,7 +27,7 @@ const columns = [
     {
         accessorKey: 'id',
         header: 'ID',
-        cell: ({ row }) => row.getValue('id'),
+        cell: ({ row }) => row.index + 1,
     },
     {
         accessorKey: 'total_price',
@@ -53,8 +51,7 @@ console.log('orders1111111111111', orders);
                 <div class="mb-8 text-center">
                     <Heading title="Checkout" description="Complete your purchase" />
                 </div>
-                <DataTable :data="orders.data" :columns="columns" columnFilter="statusLabel" />
-              
+                <DataTable :data="orders.data" :columns="columns" columnFilter="" :pagination="orders.meta" :laravelPagination="true" />
             </div>
         </section>
     </AppLayout>
