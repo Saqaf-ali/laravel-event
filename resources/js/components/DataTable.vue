@@ -10,24 +10,27 @@ import { ref } from 'vue';
 import NoData from './message/NoData.vue';
 import { valueUpdater } from './ui/table/utils';
 
+// تعريف الواجهة (لحل مشكلة التجميع وتوفير النوع)
+interface DataTableProps {
+    data: any[];
+    columns: ColumnDef<any>[];
+    columnFilter: number | string;
+    pagination?: any;
+}
+
 // الخصائص التي يستقبلها المكون
-const props = withDefaults(
-    defineProps<{
-        data: any[];
-        columns: ColumnDef<any>[];
-        columnFilter: number | string;
-        pagination?: any;
-    }>(),
-    {
-        columnFilter: 'name',
-    },
-);
+const props = withDefaults(defineProps<DataTableProps>(), {
+    columnFilter: 'name',
+});
 
 // حالة الجدول
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
 const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
+
+// الحالة الجديدة: تعريف الفلتر الشامل (Global Filter)
+const globalFilter = ref('');
 
 // إعداد محرك TanStack Table
 const table = useVueTable({
@@ -39,18 +42,19 @@ const table = useVueTable({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+
+    // ربط الفلتر الشامل بإعدادات الجدول
     onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
     onColumnFiltersChange: (updaterOrValue) => valueUpdater(updaterOrValue, columnFilters),
     onColumnVisibilityChange: (updaterOrValue) => valueUpdater(updaterOrValue, columnVisibility),
     onRowSelectionChange: (updaterOrValue) => valueUpdater(updaterOrValue, rowSelection),
+    onGlobalFilterChange: (updaterOrValue) => valueUpdater(updaterOrValue, globalFilter), // 👈 الربط بالفلتر الشامل
 
-    // ⬇️⬇️⬇️ السطر الذي يحدد عدد العناصر في الصفحة (10 صفوف) ⬇️⬇️⬇️
     initialState: {
         pagination: {
             pageSize: props.pagination?.per_page || 6,
         },
     },
-    // ⬆️⬆️⬆️ السطر الذي يحدد عدد العناصر في الصفحة (10 صفوف) ⬆️⬆️⬆️
 
     state: {
         get sorting() {
@@ -65,6 +69,10 @@ const table = useVueTable({
         get rowSelection() {
             return rowSelection.value;
         },
+        // إضافة حالة الفلتر الشامل إلى حالة الجدول
+        get globalFilter() {
+            return globalFilter.value;
+        },
     },
 });
 </script>
@@ -72,12 +80,7 @@ const table = useVueTable({
 <template>
     <div class="w-full" v-if="props.data.length">
         <div class="flex items-center py-4">
-            <Input
-                class="max-w-sm"
-                :placeholder="`Filter ${props.columnFilter}...`"
-                :model-value="(table.getColumn(props.columnFilter)?.getFilterValue() as string) ?? ''"
-                @update:model-value="table.getColumn(props.columnFilter)?.setFilterValue($event)"
-            />
+            <Input class="max-w-sm" placeholder="Search here..." :model-value="globalFilter" @update:model-value="globalFilter = $event" />
             <div class="ml-auto flex items-center space-x-2">
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>

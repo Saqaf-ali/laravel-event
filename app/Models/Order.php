@@ -17,6 +17,8 @@ class Order extends Model
     protected $casts = [
         'total_price' => 'decimal:2',
         'status' => OrderStatus::class,
+        'id' => 'string',
+        'attendee_id' => 'string',
     ];
 
     protected $appends = ['statusLabel', 'statusColor'];
@@ -29,8 +31,6 @@ class Order extends Model
     {
         return $this->status->statusColor();
     }
-
-   
 
     public function attendee()
     {

@@ -35,6 +35,7 @@ const columns = [
         header: 'ID',
         cell: ({ row }) => row.getValue('id'),
     },
+
     {
         accessorKey: 'total_price',
         header: 'Total Price',
