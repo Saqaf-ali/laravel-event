@@ -20,6 +20,7 @@ const props = withDefaults(
     }>(),
     {
         columnFilter: 'name',
+        laravelPagination: false,
     },
 );
 
