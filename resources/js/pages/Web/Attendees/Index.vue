@@ -2,6 +2,7 @@
 import DataTable from '@/components/DataTable.vue';
 import Heading from '@/components/Heading.vue';
 import AppLayout from '@/layouts/web/AppLayout.vue';
+import { h } from 'vue';
 
 const { orders } = defineProps<{
     orders: {
@@ -44,7 +45,7 @@ const columns = [
     {
         accessorKey: 'statusLabel',
         header: 'Status',
-        cell: ({ row }) => row.getValue('statusLabel'),
+        cell: ({ row }) => h('div', { class: `capitalize ${row.original.statusColor}` }, row.getValue('statusLabel')),
     },
 ];
 
@@ -58,7 +59,7 @@ console.log('orders1111111111111', orders);
                 <div class="mb-8 text-center">
                     <Heading title="Checkout" description="Complete your purchase" />
                 </div>
-                <DataTable :data="orders.data" :columns="columns" columnFilter="id" :pagination="orders.meta" />
+                <DataTable :data="orders.data" :columns="columns" :pagination="orders.meta" />
             </div>
         </section>
     </AppLayout>

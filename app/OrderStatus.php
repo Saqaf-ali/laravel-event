@@ -14,7 +14,7 @@ enum OrderStatus: int
     {
         return match ($this) {
             self::Pending => 'text-orange-500',
-            self::Completed => 'text-primary',
+            self::Completed => 'text-green-500/70',
             self::Cancelled, self::Failed => 'text-destructive',
             self::Refunded => 'text-blue-500/70',
         };

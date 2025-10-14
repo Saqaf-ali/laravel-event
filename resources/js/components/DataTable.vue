@@ -14,7 +14,7 @@ import { valueUpdater } from './ui/table/utils';
 interface DataTableProps {
     data: any[];
     columns: ColumnDef<any>[];
-    columnFilter: number | string;
+    columnFilter?: number | string;
     pagination?: any;
 }
 
@@ -80,7 +80,13 @@ const table = useVueTable({
 <template>
     <div class="w-full" v-if="props.data.length">
         <div class="flex items-center py-4">
-            <Input class="max-w-sm" placeholder="Search here..." :model-value="globalFilter" @update:model-value="globalFilter = $event" />
+            <Input
+                class="max-w-sm"
+                placeholder="Search here..."
+                :model-value="globalFilter"
+                @update:model-value="globalFilter = $event"
+                aria-label="search"
+            />
             <div class="ml-auto flex items-center space-x-2">
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
