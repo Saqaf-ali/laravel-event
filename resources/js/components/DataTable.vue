@@ -16,6 +16,7 @@ const props = withDefaults(
         data: any[];
         columns: ColumnDef<any>[];
         columnFilter: number | string;
+        laravelPagination: boolean;
     }>(),
     {
         columnFilter: 'name',
@@ -46,7 +47,7 @@ const table = useVueTable({
     // ⬇️⬇️⬇️ السطر الذي يحدد عدد العناصر في الصفحة (10 صفوف) ⬇️⬇️⬇️
     initialState: {
         pagination: {
-            pageSize: 6,
+            pageSize: 1,
         },
     },
     // ⬆️⬆️⬆️ السطر الذي يحدد عدد العناصر في الصفحة (10 صفوف) ⬆️⬆️⬆️
@@ -128,7 +129,11 @@ const table = useVueTable({
             <div class="flex-1 text-sm text-muted-foreground">
                 {{ table.getFilteredSelectedRowModel().rows.length }} of {{ table.getFilteredRowModel().rows.length }} row(s) selected.
             </div>
-            <div class="space-x-2">
+            <div class="space-x-2" v-if="laravelPagination">
+                <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()" @click="table.previousPage()"> Previous </Button>
+                <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()"> Next </Button>
+            </div>
+            <div class="space-x-2" v-else>
                 <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()" @click="table.previousPage()"> Previous </Button>
                 <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()"> Next </Button>
             </div>
