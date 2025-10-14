@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\AttendeeController;
 use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\EventController;
 use App\Http\Controllers\Web\OrderController;
@@ -29,7 +30,14 @@ Route::prefix('web')
             return Inertia::render('Web/carts/Checkout');
         })->name('checkout');
         //    orders store
-        Route::resource('orders', OrderController::class)->middleware('auth');
+        Route::resource('orders', OrderController::class)
+            ->only(['store'])
+            ->middleware('auth');
+
+        // attendees index
+        Route::resource('attendees', AttendeeController::class)
+            ->only(['index'])
+            ->middleware('auth');
     });
 
 Route::resource('contacts', ContactController::class);

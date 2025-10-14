@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Attendee;
+use App\Models\PurchasedTicket;
 use App\OrderStatus;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,17 +18,14 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('attendee.user', 'event')->latest('updated_at')->get();
-        return Inertia('Admin/orders/Index', ['orders' => $orders]);
+        $orders = Order::where('attendee_id', Auth::user()->attendee['id'])->get();
+        return Inertia('Web/orders/Index', ['orders' => $orders]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return Inertia('Admin/orders/Create');
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -34,7 +33,7 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request)
     {
         // get attendeeId
-        $attendeeId = Auth::user()->attendee['id'];
+        // $attendeeId = Auth::user()->attendee['id'];
 
         // dd($request);
 
@@ -58,7 +57,8 @@ class OrderController extends Controller
                 ]);
             }
         }
-
+        session()->flash('success', 'Order created successfully.');
+        return redirect()->route('web.attendees.index');
     }
 
     /**
@@ -84,7 +84,4 @@ class OrderController extends Controller
     {
         //
     }
-
-  
-
 }

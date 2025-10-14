@@ -26,8 +26,5 @@ class Attendee extends Model
     {
         return $this->hasMany(Order::class);
     }
-    public function purchasedTickets()
-    {
-        return $this->hasMany(PurchasedTicket::class);
-    }
+   
 }
