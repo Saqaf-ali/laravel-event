@@ -36,7 +36,7 @@ Route::prefix('web')
 
         // attendees index
         Route::resource('attendees', AttendeeController::class)
-            ->only(['index'])
+            ->only(['index', 'show'])
             ->middleware('auth');
     });
 

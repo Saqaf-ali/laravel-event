@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import ButtonTip from '@/components/ButtonTip.vue';
 import DataTable from '@/components/DataTable.vue';
 import Heading from '@/components/Heading.vue';
 import AppLayout from '@/layouts/web/AppLayout.vue';
+import web from '@/routes/web';
 import { h } from 'vue';
 
 const { orders } = defineProps<{
@@ -11,6 +13,7 @@ const { orders } = defineProps<{
             total_price: number;
             statusLabel: string;
             statusColor: string;
+            updated_at: string;
         }[];
 
         meta: {
@@ -46,6 +49,21 @@ const columns = [
         accessorKey: 'statusLabel',
         header: 'Status',
         cell: ({ row }) => h('div', { class: `capitalize ${row.original.statusColor}` }, row.getValue('statusLabel')),
+    },
+    {
+        accessorKey: 'updated_at',
+        header: 'create at',
+        cell: ({ row }) => row.getValue('updated_at'),
+    },
+    {
+        id: 'actions',
+        enableHiding: false,
+        cell: ({ row }) =>
+            h(ButtonTip, {
+                tip: 'View Order', 
+                href: web.attendees.show(row.original.id).url,
+                icon: 'Ellipsis',
+            }),
     },
 ];
 
