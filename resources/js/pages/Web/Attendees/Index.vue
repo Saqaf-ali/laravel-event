@@ -25,9 +25,15 @@ const { orders } = defineProps<{
 // data table
 const columns = [
     {
+        accessorKey: 'index_number', // مفتاح وهمي، لا يحتاج لبيانات من Laravel
+        header: '#', // رأس عمود بسيط
+        cell: ({ row }) => row.index + 1, // يعرض: 1, 2, 3, ...
+        size: 50, // عمود صغير ومرتب
+    },
+    {
         accessorKey: 'id',
         header: 'ID',
-        cell: ({ row }) => row.index + 1,
+        cell: ({ row }) => row.getValue('id'),
     },
     {
         accessorKey: 'total_price',
@@ -51,7 +57,7 @@ console.log('orders1111111111111', orders);
                 <div class="mb-8 text-center">
                     <Heading title="Checkout" description="Complete your purchase" />
                 </div>
-                <DataTable :data="orders.data" :columns="columns" columnFilter="" :pagination="orders.meta" :laravelPagination="true" />
+                <DataTable :data="orders.data" :columns="columns" columnFilter="id" :pagination="orders.meta" />
             </div>
         </section>
     </AppLayout>

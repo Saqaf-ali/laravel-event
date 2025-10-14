@@ -13,7 +13,7 @@ class AttendeeController extends Controller
     // show all orders of an attendee
     public function index()
     {
-        $orders = Auth::user()->attendee->orders()->latest('updated_at')->paginate(2);
+        $orders = Auth::user()->attendee->orders()->latest('updated_at')->paginate(8);
         return Inertia('Web/Attendees/Index', ['orders' => AttendeeResource::collection($orders)]);
     }
 }

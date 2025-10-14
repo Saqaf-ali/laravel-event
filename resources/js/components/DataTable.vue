@@ -16,12 +16,10 @@ const props = withDefaults(
         data: any[];
         columns: ColumnDef<any>[];
         columnFilter: number | string;
-        laravelPagination: boolean;
-        pagination: any;
+        pagination?: any;
     }>(),
     {
         columnFilter: 'name',
-        laravelPagination: false,
     },
 );
 
@@ -49,7 +47,7 @@ const table = useVueTable({
     // ⬇️⬇️⬇️ السطر الذي يحدد عدد العناصر في الصفحة (10 صفوف) ⬇️⬇️⬇️
     initialState: {
         pagination: {
-            pageSize: props.pagination?.per_page || 4,
+            pageSize: props.pagination?.per_page || 6,
         },
     },
     // ⬆️⬆️⬆️ السطر الذي يحدد عدد العناصر في الصفحة (10 صفوف) ⬆️⬆️⬆️
@@ -131,7 +129,7 @@ const table = useVueTable({
             <div class="flex-1 text-sm text-muted-foreground">
                 {{ table.getFilteredSelectedRowModel().rows.length }} of {{ table.getFilteredRowModel().rows.length }} row(s) selected.
             </div>
-            <div class="space-x-2" v-if="laravelPagination">
+            <div class="space-x-2" v-if="pagination?.links?.length && data.length > pagination.per_page">
                 <Button
                     v-for="link in pagination.links"
                     :key="link.url"
