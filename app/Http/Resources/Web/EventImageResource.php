@@ -5,7 +5,7 @@ namespace App\Http\Resources\Web;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrderItemResource extends JsonResource
+class EventImageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,8 @@ class OrderItemResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'quantity' => $this->quantity,
-            'line_total' => $this->line_total,
-            'ticket' => new TicketResource($this->whenLoaded('ticket')),
+            'url' => $this->url,
+            'event_id' => $this->event_id,
         ];
     }
 }

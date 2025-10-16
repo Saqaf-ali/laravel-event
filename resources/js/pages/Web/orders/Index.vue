@@ -62,7 +62,7 @@ const columns = [
         cell: ({ row }) =>
             h(ButtonTip, {
                 tip: 'View Order items',
-                href: web.attendees.show(row.original.id).url,
+                href: web.orders.show(row.original.id).url,
                 icon: 'Eye',
             }),
     },

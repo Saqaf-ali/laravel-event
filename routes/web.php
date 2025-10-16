@@ -31,12 +31,7 @@ Route::prefix('web')
         })->name('checkout');
         //    orders store
         Route::resource('orders', OrderController::class)
-            ->only(['store'])
-            ->middleware('auth');
-
-        // attendees index
-        Route::resource('attendees', AttendeeController::class)
-            ->only(['index', 'show'])
+            ->only(['store', 'index', 'show'])
             ->middleware('auth');
     });
 

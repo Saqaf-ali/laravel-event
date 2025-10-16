@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Web\OrderResource;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -18,8 +19,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('attendee_id', Auth::user()->attendee['id'])->get();
-        return Inertia('Web/orders/Index', ['orders' => $orders]);
+        $orders = Auth::user()->attendee->orders()->latest('updated_at')->paginate(8);
+        return Inertia('Web/orders/Index', ['orders' => OrderResource::collection($orders)]);
     }
 
     /**
@@ -66,7 +67,8 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        // AttributesAuth
+        $orderItems = $order->orderItems()->latest('updated_at')->paginate(8);
+        dd($orderItems);
     }
 
     /**
