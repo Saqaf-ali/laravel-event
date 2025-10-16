@@ -6,14 +6,12 @@ import AppLayout from '@/layouts/web/AppLayout.vue';
 import web from '@/routes/web';
 import { h } from 'vue';
 
-const { orders } = defineProps<{
-    orders: {
+const { orderItems } = defineProps<{
+    orderItems: {
         data: {
             id: number;
-            total_price: number;
-            statusLabel: string;
-            statusColor: string;
-            updated_at: string;
+            quantity: number;
+            line_total: number;
         }[];
 
         meta: {
@@ -25,6 +23,7 @@ const { orders } = defineProps<{
         };
     };
 }>();
+console.log('dddddddd',orderItems);
 
 // data table
 const columns = [
@@ -57,18 +56,15 @@ const columns = [
     },
     {
         id: 'actions',
-        header: 'Details',
         enableHiding: false,
         cell: ({ row }) =>
             h(ButtonTip, {
-                tip: 'View Order items',
+                tip: 'View Order',
                 href: web.attendees.show(row.original.id).url,
-                icon: 'Eye',
+                icon: 'Ellipsis',
             }),
     },
 ];
-
-console.log('orders1111111111111', orders);
 </script>
 <template>
     <Head title="Checkout" />
@@ -76,9 +72,9 @@ console.log('orders1111111111111', orders);
         <section class="py-16">
             <div class="container mx-auto p-4 md:max-w-1/2">
                 <div class="mb-8 text-center">
-                    <Heading title="Checkout" description="Complete your purchase" />
+                    <Heading title="Order Details" description="Review the details of your order" />
                 </div>
-                <DataTable :data="orders.data" :columns="columns" :pagination="orders.meta" />
+                <DataTable :data="orderItems.data" :columns="columns" :pagination="orderItems.meta" />
             </div>
         </section>
     </AppLayout>
