@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import ButtonTip from '@/components/ButtonTip.vue';
 import DataTable from '@/components/DataTable.vue';
 import Heading from '@/components/Heading.vue';
 import SmartAvatar from '@/components/SmartAvatar.vue';
 import AppLayout from '@/layouts/web/AppLayout.vue';
+import web from '@/routes/web';
 import { Head } from '@inertiajs/vue3';
 import { h } from 'vue';
 
@@ -34,15 +36,10 @@ const columns = [
         accessorKey: 'id',
         header: 'ID',
     },
-    {
-        accessorKey: 'ticket_code',
-        header: 'Ticket Code',
-    },
-
-    {
-        accessorKey: 'order_item.ticket.type',
-        header: 'Ticket Type',
-    },
+    // {
+    //     accessorKey: 'ticket_code',
+    //     header: 'Ticket Code',
+    // },
 
     {
         accessorKey: 'qr_code',
@@ -54,9 +51,25 @@ const columns = [
                 name: row.getValue('ticket_code'),
             }),
     },
+
+    {
+        accessorKey: 'order_item.ticket.type',
+        header: 'Ticket Type',
+    },
     {
         accessorKey: 'order_item.ticket.price',
         header: 'Ticket Price',
+    },
+     {
+        id: 'actions',
+        header: 'Details',
+        enableHiding: false,
+        cell: ({ row }: { row: any }) =>
+            h(ButtonTip, {
+                tip: 'View Order items',
+                href: web.orders.show(row.original.id).url,
+                icon: 'Eye',
+            }),
     },
 ];
 
