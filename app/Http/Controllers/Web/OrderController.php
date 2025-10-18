@@ -7,6 +7,7 @@ use App\Http\Resources\Web\OrderResource;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Resources\Web\OrderItemResource;
 use App\Models\Attendee;
 use App\Models\PurchasedTicket;
 use App\OrderStatus;
@@ -68,7 +69,8 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $orderItems = $order->orderItems()->latest('updated_at')->paginate(8);
-        dd($orderItems);
+
+        return Inertia('Web/order_items/Index', ['orderItems' => OrderItemResource::collection($orderItems)]);
     }
 
     /**

@@ -4,6 +4,8 @@ use App\Http\Controllers\Web\AttendeeController;
 use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\EventController;
 use App\Http\Controllers\Web\OrderController;
+use App\Http\Controllers\Web\OrderItemController;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Pest\Collision\Events;
@@ -32,6 +34,9 @@ Route::prefix('web')
         //    orders store
         Route::resource('orders', OrderController::class)
             ->only(['store', 'index', 'show'])
+            ->middleware('auth');
+        Route::resource('order_items', OrderItemController::class)
+            ->only(['index'])
             ->middleware('auth');
     });
 

@@ -19,8 +19,8 @@ class AttendeeController extends Controller
     }
     public function show(Order $order)
     {
-          dd($order);
         $orderItems = $order->orderItems()->latest('updated_at')->paginate(8);
+        dd(OrderItemResource::collection($orderItems));
 
         return Inertia('Web/Attendees/Show', ['orderItems' => OrderItemResource::collection($orderItems)]);
     }
