@@ -17,6 +17,7 @@ class PurchasedTicketResource extends JsonResource
         return [
             'id' => $this->id,
             'ticket_code' => $this->ticket_code,
+            'order_item' => new OrderItemResource($this->whenLoaded('orderItem')),
         ];
     }
 }

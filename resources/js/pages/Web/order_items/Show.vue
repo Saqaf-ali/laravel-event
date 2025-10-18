@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DataTable from '@/components/DataTable.vue';
 import Heading from '@/components/Heading.vue';
 import AppLayout from '@/layouts/web/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
@@ -8,9 +9,11 @@ const { purchasedTickets } = defineProps<{
         data: {
             id: number;
             ticket_code: string;
-            ticket: {
-                type: string;
-                price: number;
+            order_item: {
+                ticket: {
+                    type: string;
+                    price: number;
+                };
             };
         }[];
         meta: {
@@ -22,6 +25,25 @@ const { purchasedTickets } = defineProps<{
         };
     };
 }>();
+
+const columns = [
+    {
+        accessorKey: 'id',
+        header: 'ID',
+    },
+    {
+        accessorKey: 'ticket_code',
+        header: 'Ticket Code',
+    },
+    {
+        accessorKey: 'order_item.ticket.type',
+        header: 'Ticket Type',
+    },
+    {
+        accessorKey: 'order_item.ticket.price',
+        header: 'Ticket Price',
+    },
+];
 console.log('purchasedTickets', purchasedTickets);
 </script>
 <template>
@@ -32,6 +54,7 @@ console.log('purchasedTickets', purchasedTickets);
                 <div class="mb-8 text-center">
                     <Heading title="Purchased Tickets" description="Review your purchased tickets and event details." />
                 </div>
+                <DataTable :data="purchasedTickets.data" :columns="columns" :pagination="purchasedTickets.meta" />
             </div>
         </section>
     </AppLayout>

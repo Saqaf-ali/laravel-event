@@ -20,51 +20,11 @@ class OrderItemController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreOrderItemRequest $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(OrderItem $orderItem)
     {
-        $purchasedTickets = $orderItem->purchasedTickets()->with('orderItem.ticket.event')->latest('updated_at')->paginate(8);
-        return Inertia('Web/purchased_tickets/Index', ['purchasedTickets' => PurchasedTicketResource::collection($purchasedTickets)]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(OrderItem $orderItem)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateOrderItemRequest $request, OrderItem $orderItem)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(OrderItem $orderItem)
-    {
-        //
+        $purchasedTickets = $orderItem->purchasedTickets()->with('orderItem.ticket')->latest('updated_at')->paginate(8);
+        return Inertia('Web/order_items/Show', ['purchasedTickets' => PurchasedTicketResource::collection($purchasedTickets)]);
     }
 }
