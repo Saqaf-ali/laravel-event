@@ -39,7 +39,9 @@ class OrderItemController extends Controller
      */
     public function show(OrderItem $orderItem)
     {
-        //
+        $purchasedTickets = $orderItem->purchasedTickets()->with('orderItem.ticket.event')->latest('updated_at')->paginate(8);
+        dd($purchasedTickets);
+        return inertia('Web/PurchasedTickets/Index', ['purchasedTickets' => $purchasedTickets]);
     }
 
     /**

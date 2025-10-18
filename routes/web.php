@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\ContactController;
 use App\Http\Controllers\Web\EventController;
 use App\Http\Controllers\Web\OrderController;
 use App\Http\Controllers\Web\OrderItemController;
+use App\Http\Controllers\Web\PurchasedTicketController;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,13 +32,16 @@ Route::prefix('web')
         Route::get('checkout', function () {
             return Inertia::render('Web/carts/Checkout');
         })->name('checkout');
-        //    orders store
-        Route::resource('orders', OrderController::class)
-            ->only(['store', 'index', 'show'])
-            ->middleware('auth');
-        Route::resource('order_items', OrderItemController::class)
-            ->only(['index'])
-            ->middleware('auth');
+
+        //
+        Route::middleware('auth')->group(function () {
+            //    orders
+            Route::resource('orders', OrderController::class)->only(['store', 'index', 'show']);
+            //    order items
+            Route::resource('order_items', OrderItemController::class)->only(['index', 'show']);
+            //    purchased tickets
+            Route::resource('purchased_tickets', PurchasedTicketController::class)->only(['index']);
+        });
     });
 
 Route::resource('contacts', ContactController::class);

@@ -56,10 +56,10 @@ const columns = [
         id: 'actions',
         header: 'Details',
         enableHiding: false,
-        cell: ({ row }) =>
+        cell: ({ row }: { row: any }) =>
             h(ButtonTip, {
                 tip: 'View Tickets',
-                href: web.,
+                href: web.order_items.show(row.original.id).url,
                 icon: 'Eye',
             }),
     },
