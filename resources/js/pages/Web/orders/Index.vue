@@ -29,37 +29,28 @@ const { orders } = defineProps<{
 // data table
 const columns = [
     {
-        accessorKey: 'index_number', // مفتاح وهمي، لا يحتاج لبيانات من Laravel
-        header: '#', // رأس عمود بسيط
-        cell: ({ row }) => row.index + 1, // يعرض: 1, 2, 3, ...
-        size: 50, // عمود صغير ومرتب
-    },
-    {
         accessorKey: 'id',
         header: 'ID',
-        cell: ({ row }) => row.getValue('id'),
     },
 
     {
         accessorKey: 'total_price',
         header: 'Total Price',
-        cell: ({ row }) => row.getValue('total_price'),
     },
     {
         accessorKey: 'statusLabel',
         header: 'Status',
-        cell: ({ row }) => h('div', { class: `capitalize ${row.original.statusColor}` }, row.getValue('statusLabel')),
+        cell: ({ row }: { row: any }) => h('div', { class: `capitalize ${row.original.statusColor}` }, row.getValue('statusLabel')),
     },
     {
         accessorKey: 'updated_at',
         header: 'create at',
-        cell: ({ row }) => row.getValue('updated_at'),
     },
     {
         id: 'actions',
         header: 'Details',
         enableHiding: false,
-        cell: ({ row }) =>
+        cell: ({ row }: { row: any }) =>
             h(ButtonTip, {
                 tip: 'View Order items',
                 href: web.orders.show(row.original.id).url,

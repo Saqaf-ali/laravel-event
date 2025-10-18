@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\OrderItem;
 use App\Http\Requests\StoreOrderItemRequest;
 use App\Http\Requests\UpdateOrderItemRequest;
+use App\Http\Resources\Web\PurchasedTicketResource;
 
 class OrderItemController extends Controller
 {
@@ -40,8 +41,7 @@ class OrderItemController extends Controller
     public function show(OrderItem $orderItem)
     {
         $purchasedTickets = $orderItem->purchasedTickets()->with('orderItem.ticket.event')->latest('updated_at')->paginate(8);
-        dd($purchasedTickets);
-        return inertia('Web/PurchasedTickets/Index', ['purchasedTickets' => $purchasedTickets]);
+        return Inertia('Web/purchased_tickets/Index', ['purchasedTickets' => PurchasedTicketResource::collection($purchasedTickets)]);
     }
 
     /**
