@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import DataTable from '@/components/DataTable.vue';
 import Heading from '@/components/Heading.vue';
+import SmartAvatar from '@/components/SmartAvatar.vue';
 import AppLayout from '@/layouts/web/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { h } from 'vue';
 
 const { purchasedTickets } = defineProps<{
     purchasedTickets: {
         data: {
             id: number;
             ticket_code: string;
+            qr_code: string;
             order_item: {
                 ticket: {
                     type: string;
@@ -35,15 +38,28 @@ const columns = [
         accessorKey: 'ticket_code',
         header: 'Ticket Code',
     },
+
     {
         accessorKey: 'order_item.ticket.type',
         header: 'Ticket Type',
+    },
+
+    {
+        accessorKey: 'qr_code',
+        header: 'QR Code',
+        cell: ({ row }: { row: any }) =>
+            h(SmartAvatar, {
+                src: row.getValue('qr_code'),
+                alt: 'QR Code' + row.getValue('ticket_code'),
+                name: row.getValue('ticket_code'),
+            }),
     },
     {
         accessorKey: 'order_item.ticket.price',
         header: 'Ticket Price',
     },
 ];
+
 console.log('purchasedTickets', purchasedTickets);
 </script>
 <template>
@@ -57,5 +73,6 @@ console.log('purchasedTickets', purchasedTickets);
                 <DataTable :data="purchasedTickets.data" :columns="columns" :pagination="purchasedTickets.meta" />
             </div>
         </section>
+        <img src="" alt="" />
     </AppLayout>
 </template>
