@@ -14,6 +14,9 @@ class Ticket extends Model
     use SoftDeletes;
 
     protected $fillable = ['type', 'price', 'quantity', 'event_id'];
+    protected $casts = [
+        'price' => 'decimal:2',
+    ];
 
     public function event(): BelongsTo
     {

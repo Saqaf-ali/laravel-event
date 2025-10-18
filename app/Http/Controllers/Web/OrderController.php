@@ -60,7 +60,7 @@ class OrderController extends Controller
             }
         }
         session()->flash('success', 'Order created successfully.');
-        return redirect()->route('web.attendees.index');
+        return redirect()->route('web.orders.index');
     }
 
     /**
@@ -68,7 +68,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $orderItems = $order->orderItems()->latest('updated_at')->paginate(8);
+        $orderItems = $order->orderItems()->with('ticket')->latest('updated_at')->paginate(8);
 
         return Inertia('Web/order_items/Index', ['orderItems' => OrderItemResource::collection($orderItems)]);
     }

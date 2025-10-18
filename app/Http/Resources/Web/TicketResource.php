@@ -16,7 +16,7 @@ class TicketResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'type' => $this->type,
             'price' => $this->price,
             'event'=> new EventResource($this->whenLoaded('event')),
 
