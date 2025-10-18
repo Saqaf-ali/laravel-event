@@ -36,10 +36,6 @@ const columns = [
         accessorKey: 'id',
         header: 'ID',
     },
-    // {
-    //     accessorKey: 'ticket_code',
-    //     header: 'Ticket Code',
-    // },
 
     {
         accessorKey: 'qr_code',
@@ -60,14 +56,14 @@ const columns = [
         accessorKey: 'order_item.ticket.price',
         header: 'Ticket Price',
     },
-     {
+    {
         id: 'actions',
         header: 'Details',
         enableHiding: false,
         cell: ({ row }: { row: any }) =>
             h(ButtonTip, {
-                tip: 'View Order items',
-                href: web.orders.show(row.original.id).url,
+                tip: 'View Ticket',
+                href: web.purchased_tickets.show(row.original.id).url,
                 icon: 'Eye',
             }),
     },

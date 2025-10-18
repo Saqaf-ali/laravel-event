@@ -40,7 +40,7 @@ Route::prefix('web')
             //    order items
             Route::resource('order_items', OrderItemController::class)->only(['index', 'show']);
             //    purchased tickets
-            Route::resource('purchased_tickets', PurchasedTicketController::class)->only(['index']);
+            Route::resource('purchased_tickets', PurchasedTicketController::class)->only(['index','show']);
         });
     });
 
