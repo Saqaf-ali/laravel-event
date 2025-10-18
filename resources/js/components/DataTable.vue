@@ -2,26 +2,22 @@
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import type { ColumnDef, ColumnFiltersState, SortingState, VisibilityState } from '@tanstack/vue-table';
+import { Table, TableBody, TableCell, TableEmpty, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import type { ColumnDef, ColumnFiltersState, SortingState, Table as TanstackTable, VisibilityState } from '@tanstack/vue-table';
 import { FlexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table';
 import { ChevronDown } from 'lucide-vue-next';
 import { ref } from 'vue';
 import NoData from './message/NoData.vue';
 import { valueUpdater } from './ui/table/utils';
 
-// تعريف الواجهة (لحل مشكلة التجميع وتوفير النوع)
 interface DataTableProps {
-    data: any[];
-    columns: ColumnDef<any>[];
-    columnFilter?: number | string;
+    data: TData[];
+    columns: ColumnDef<TData, TValue>[];
     pagination?: any;
 }
 
 // الخصائص التي يستقبلها المكون
-const props = withDefaults(defineProps<DataTableProps>(), {
-    columnFilter: 'name',
-});
+const props = defineProps<DataTableProps>();
 
 // حالة الجدول
 const sorting = ref<SortingState>([]);
@@ -33,7 +29,7 @@ const rowSelection = ref({});
 const globalFilter = ref('');
 
 // إعداد محرك TanStack Table
-const table = useVueTable({
+const table: TanstackTable<TData> = useVueTable({
     get data() {
         return props.data;
     },
@@ -83,8 +79,8 @@ const table = useVueTable({
             <Input
                 class="max-w-sm"
                 placeholder="Search here..."
-                :model-value="globalFilter"
-                @update:model-value="globalFilter = $event"
+                :model-value="globalFilter ?? ''"
+                @update:model-value="(value: any) => (globalFilter = value)"
                 aria-label="search"
             />
             <div class="ml-auto flex items-center space-x-2">
@@ -127,9 +123,7 @@ const table = useVueTable({
                             </TableCell>
                         </TableRow>
                     </template>
-                    <TableRow v-else>
-                        <TableCell :colspan="columns.length" class="h-24 text-center"> No data found. </TableCell>
-                    </TableRow>
+                    <TableEmpty v-else :colspan="columns.length"> No results. </TableEmpty>
                 </TableBody>
             </Table>
         </div>

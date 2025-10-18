@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Web\OrderResource;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
-use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\Web\OrderItemResource;
-use App\Models\Attendee;
-use App\Models\PurchasedTicket;
 use App\OrderStatus;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,20 +22,12 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create() {}
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreOrderRequest $request)
     {
         // get attendeeId
         // $attendeeId = Auth::user()->attendee['id'];
-
-        // dd($request);
-
         $order = Order::create([
             'attendee_id' => Auth::user()->attendee['id'],
             'total_price' => $request->total_price,
@@ -71,21 +60,5 @@ class OrderController extends Controller
         $orderItems = $order->orderItems()->with('ticket')->latest('updated_at')->paginate(8);
 
         return Inertia('Web/order_items/Index', ['orderItems' => OrderItemResource::collection($orderItems)]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Order $order)
-    {
-        return Inertia('Admin/orders/Edit', ['order' => $order]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateOrderRequest $request, Order $order)
-    {
-        //
     }
 }
