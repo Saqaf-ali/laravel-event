@@ -3,32 +3,11 @@ import Heading from '@/components/Heading.vue';
 import AppLayout from '@/layouts/web/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
-const { purchasedTickets } = defineProps<{
-    purchasedTickets: {
-        data: {
-            id: number;
-            ticket_code: string;
-            qr_code: string;
-            order_item: {
-                ticket: {
-                    type: string;
-                    price: number;
-                };
-            };
-        }[];
-        meta: {
-            links: {
-                label: string;
-                url: string;
-                active: boolean;
-            }[];
-        };
-    };
-}>();
+const props = defineProps(['purchasedTicket']);
 
 // console.log('pu22222222',);
 
-console.log('purchasedTickets', purchasedTickets.data);
+console.log('purchasedTicket111111111', props.purchasedTicket);
 </script>
 <template>
     <Head title="Checkout" />

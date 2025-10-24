@@ -10,16 +10,17 @@ use Endroid\QrCode\Writer\PngWriter;
 
 class QrCodeGeneratorService
 {
-    public function generate(string $text, int $size = 400, ?string $logoPath = null): ResultInterface
+    public function generate($text, int $size = 400, ?string $logoPath = null)
     {
         // Set default logo path if not provided
         if ($logoPath === null) {
             $logoPath = public_path('logo.png');
         }
-
+        $text = 'dddd';
         $builder = new Builder(
             writer: new PngWriter(),
             data: $text,
+
             encoding: new Encoding('UTF-8'),
             errorCorrectionLevel: ErrorCorrectionLevel::High,
             size: $size,

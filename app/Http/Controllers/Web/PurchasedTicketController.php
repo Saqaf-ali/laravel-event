@@ -14,7 +14,7 @@ class PurchasedTicketController extends Controller
     }
     public function show(PurchasedTicket $purchasedTicket)
     {
-        $purchasedTicket = $purchasedTicket->orderItem()->with('ticket.event')->first();
-        return inertia('Web/PurchasedTickets/Show', ['purchasedTicket' => new PurchasedTicketResource($purchasedTicket)]);
+        $purchasedTicket = $purchasedTicket->load('orderItem.ticket.event');
+        return inertia('Web/purchased_tickets/Show', ['purchasedTicket' => new PurchasedTicketResource($purchasedTicket)]);
     }
 }
