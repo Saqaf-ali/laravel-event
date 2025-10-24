@@ -14,10 +14,7 @@ class PurchasedTicketController extends Controller
     }
     public function show(PurchasedTicket $purchasedTicket)
     {
-        $purchasedTicket = $purchasedTicket->orderItem()->latest('updated_at')->paginate(8);
-        dd($purchasedTicket);
-
-        return inertia('Web/purchased_tickets/Show', ['purchasedTickets' => PurchasedTicketResource::collection($purchasedTicket)]);
+        $purchasedTicket = $purchasedTicket->orderItem()->with('ticket.event')->first();
+        return inertia('Web/PurchasedTickets/Show', ['purchasedTicket' => new PurchasedTicketResource($purchasedTicket)]);
     }
 }
-
