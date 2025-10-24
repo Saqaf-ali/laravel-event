@@ -48,7 +48,7 @@ const columns = [
     },
     {
         id: 'actions',
-        header: 'Details',
+        header: 'Order Items',
         enableHiding: false,
         cell: ({ row }: { row: any }) =>
             h(ButtonTip, {

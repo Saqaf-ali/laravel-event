@@ -54,7 +54,7 @@ const columns = [
     },
     {
         id: 'actions',
-        header: 'Details',
+        header: 'Tickets',
         enableHiding: false,
         cell: ({ row }: { row: any }) =>
             h(ButtonTip, {
