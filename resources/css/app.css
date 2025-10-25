@@ -141,3 +141,67 @@
         color: var(--color-muted-foreground);
     }
 }
+@media print {
+    html,
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #fff !important;
+        color: #000 !important;
+    }
+    .dark {
+        --background: 0 0% 100%;
+        --foreground: 240 10% 10%;
+        --card: 0 0% 100%;
+        --card-foreground: 240 10% 10%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 240 10% 10%;
+        --primary: 330 90% 55%;
+        --primary-foreground: 0 0% 98%;
+        --secondary: 240 10% 96%;
+        --secondary-foreground: 240 5.9% 10%;
+        --accent: 220 80% 55%;
+        --accent-foreground: 0 0% 98%;
+        --muted: 240 4.8% 95.9%;
+        --muted-foreground: 240 3.8% 46.1%;
+        --border: 240 5% 90%;
+        --input: 240 5% 90%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --ring: 330 90% 55%;
+    }
+    /* Hide elements that should not be printed */
+    .no-print {
+        display: none !important;
+    }
+    /* Ensure text is black for readability */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    div,
+    a,
+    li,
+    td,
+    th {
+        color: #000 !important;
+    }
+    /* Ensure backgrounds are white for readability and to save ink */
+    .bg-background,
+    .bg-card,
+    .bg-popover,
+    .bg-primary,
+    .bg-secondary,
+    .bg-accent,
+    .bg-muted,
+    .bg-border,
+    .bg-input,
+    .bg-destructive,
+    .bg-ring {
+        background: #fff !important;
+    }
+}

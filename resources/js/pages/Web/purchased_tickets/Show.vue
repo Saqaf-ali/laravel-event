@@ -3,9 +3,12 @@ import Heading from '@/components/Heading.vue';
 import HeadingSmaller from '@/components/HeadingSmaller.vue';
 import Paragraph from '@/components/Paragraph.vue';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ButtonGroup, ButtonGroupSeparator } from '@/components/ui/button-group';
 import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/web/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { Share } from 'lucide-vue-next';
 import { computed } from 'vue';
 
 interface Event {
@@ -41,6 +44,27 @@ const props = defineProps<{
 
 const ticketData = computed(() => props.purchasedTicket.data);
 const eventData = computed(() => ticketData.value.order_item.ticket.event);
+const handlePrint = () => {
+    window.print();
+};
+const shareTicket = () => {
+    // Check if the Web Share API is supported
+    const ticketUrl = window.location.href; //store url in variable
+
+    if (navigator.share) {
+        navigator
+            .share({
+                title: 'My Event Ticket', // title of the share
+                text: 'Check out my purchased ticket for the event!', // description of the share
+                url: ticketUrl, // URL to share
+            })
+            .then(() => console.log('Successful share'))
+            .catch((error) => console.log('Error sharing', error));
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        alert(`Web Share API not supported. You can manually copy this link: ${ticketUrl}`);
+    }
+};
 </script>
 <template>
     <Head title="purchased Tickets" />
@@ -48,9 +72,13 @@ const eventData = computed(() => ticketData.value.order_item.ticket.event);
         <section class="py-16">
             <div class="container mx-auto p-4 md:max-w-xl">
                 <div class="mb-8 text-center">
-                    <Heading title="Purchased Ticket" />
+                    <Heading title="Purchased Ticket" class="no-print" />
                 </div>
-
+                <ButtonGroup class="no-print mb-8 justify-center">
+                    <Button variant="secondary" size="sm" @click="handlePrint"> Print Ticket </Button>
+                    <ButtonGroupSeparator />
+                    <Button variant="secondary" size="sm" @click="shareTicket"> <Share /> </Button>
+                </ButtonGroup>
                 <Card class="w-full max-w-xl p-6">
                     <div class="mb-6 text-center">
                         <HeadingSmaller title="Ticket Details" class="mb-4 text-primary" />
@@ -69,7 +97,7 @@ const eventData = computed(() => ticketData.value.order_item.ticket.event);
                         <div class="flex-grow space-y-3">
                             <div class="flex items-center justify-between border-b border-dashed border-border pb-2">
                                 <HeadingSmaller :title="ticketData.ticket_code" />
-                                <Badge :variant="ticketData.order_item.ticket.type === 'VIP' ? 'default' : 'secondary'" class="py-0.5 tracking-wide">
+                                <Badge variant="secondary" class="py-0.5 tracking-wide">
                                     {{ ticketData.order_item.ticket.type }}
                                 </Badge>
                             </div>

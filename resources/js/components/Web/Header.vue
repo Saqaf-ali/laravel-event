@@ -44,7 +44,7 @@ const allNav = [...mainNav, ...mobileNav];
 </script>
 
 <template>
-    <header class="sticky top-0 z-40 w-full border-b bg-background">
+    <header class="no-print sticky top-0 z-40 w-full border-b bg-background">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center gap-4">
                 <Sheet v-model:open="isOpen">

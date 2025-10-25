@@ -22,7 +22,7 @@ const socialNav: NavItem[] = [
 </script>
 
 <template>
-    <footer class="border-t bg-background py-8">
+    <footer class="no-print border-t bg-background py-8">
         <div class="container mx-auto grid grid-cols-1 gap-8 px-4 md:grid-cols-3">
             <div class="flex flex-col items-start gap-4">
                 <Link :href="dashboard()" class="flex items-center gap-x-2">
