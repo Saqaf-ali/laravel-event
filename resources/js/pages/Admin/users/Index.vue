@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ActionUser from '@/components/ActionUser.vue';
-import DataTable from '@/components/DataTable.vue'; 
+import DataTable from '@/components/DataTable.vue';
 import SmartAvatar from '@/components/SmartAvatar.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -36,7 +36,7 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    image: string;
+    image_url: string;
 }
 
 const data = computed<User[]>(() => {
@@ -44,7 +44,7 @@ const data = computed<User[]>(() => {
         id: user.id,
         name: user.name,
         email: user.email,
-        image: user.image,
+        image_url: user.image_url,
     }));
 });
 
@@ -69,25 +69,24 @@ const userColumns: ColumnDef<User>[] = [
     {
         accessorKey: 'id',
         header: 'ID',
-        cell: ({ row }) => h('div', row.getValue('id')),
     },
     {
         accessorKey: 'name',
         header: 'Name',
-        cell: ({ row }) => h('div', row.getValue('name')),
     },
     {
         accessorKey: 'email',
         header: 'Email',
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('email')),
     },
     {
-        accessorKey: 'image',
+        accessorKey: 'image_url',
         header: 'Image',
         cell: ({ row }) =>
-            h('div', { class: 'flex justify-center' }, [
-                h(SmartAvatar, { src: row.getValue('image') as string, alt: row.getValue('name') as string, name: row.getValue('name') as string }),
-            ]),
+            h(SmartAvatar, {
+                src: row.getValue('image_url') as string,
+                alt: row.getValue('name') as string,
+                name: row.getValue('name') as string,
+            }),
     },
     {
         id: 'actions',
