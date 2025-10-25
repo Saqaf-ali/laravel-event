@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 class EventImage extends Model
 {
     protected $fillable = ['event_id', 'url'];
-    protected $hidden = [];
     protected $appends = ['image_url'];
 
     /** @use HasFactory<\Database\Factories\EventImageFactory> */

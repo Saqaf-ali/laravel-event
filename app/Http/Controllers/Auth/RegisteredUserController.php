@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('profile-pictures', 'public');
+            $imagePath = $request->file('image')->store('profile_pictures', 'public');
         }
 
         $user = User::create([
