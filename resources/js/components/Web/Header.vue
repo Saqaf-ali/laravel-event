@@ -13,6 +13,7 @@ import TextLink from '../TextLink.vue';
 const page = usePage();
 
 import { useCart } from '@/composables/useCart';
+import SmartAvatar from '../SmartAvatar.vue';
 import WebNav from './WebNav.vue';
 
 const isOpen = ref(false);
@@ -31,14 +32,14 @@ const mobileNav = [
     { title: 'Orders', href: '/web/orders', icon: ClockArrowDown },
     { title: 'Cart', href: '/web/shopping', icon: ShoppingCart, badge: totalItems },
     { title: 'Notifications', href: '/web/notifications', icon: Bell },
-    { title: 'Profile', href: '', icon: User },
+    { title: 'Profile', href: '/login', icon: User },
 ];
 
 const buttonTap = [
     { tip: 'Search', icon: 'Search', href: '/search' },
     { tip: 'Cart', icon: 'ShoppingCart', href: '/web/shopping', badge: totalItems },
     { tip: 'Notifications', icon: 'Bell', href: '/web/notifications' },
-    { tip: 'Profile', icon: 'User', href: '/profile' },
+    { tip: 'Profile', icon: 'User', href: '/login' },
 ];
 const allNav = [...mainNav, ...mobileNav];
 </script>
@@ -74,17 +75,30 @@ const allNav = [...mainNav, ...mobileNav];
             </nav>
 
             <div class="flex items-center gap-4">
-                <ButtonTip v-for="(item, index) in buttonTap" :key="index" :tip="item.tip" :href="item.href">
-                    <template #icon>
-                        <div v-if="item.tip === 'Cart' && totalItems > 0" class="absolute">
-                            <Icon :name="item.icon" size="20" />
-                            <div class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                                {{ totalItems }}
+                <div v-for="(item, index) in buttonTap" :key="index">
+                    <div v-if="item.tip == 'Profile' && page.props.auth.user">
+                        <SmartAvatar
+                            :src="page.props.auth.user.image_url"
+                            :name="page.props.auth.user.name"
+                            :alt="page.props.auth.user.name"
+                            class="h-7 w-7"
+                        />
+                    </div>
+                    <ButtonTip :tip="item.tip" :href="item.href" v-else>
+                        <template #icon>
+                            <div v-if="item.tip === 'Cart' && totalItems > 0" class="absolute">
+                                <Icon :name="item.icon" size="20" />
+                                <div
+                                    class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white"
+                                >
+                                    {{ totalItems }}
+                                </div>
                             </div>
-                        </div>
-                        <Icon :name="item.icon" size="20" />
-                    </template>
-                </ButtonTip>
+
+                            <Icon :name="item.icon" size="20" />
+                        </template>
+                    </ButtonTip>
+                </div>
             </div>
         </div>
     </header>

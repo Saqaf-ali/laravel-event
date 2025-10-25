@@ -25,8 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //    log out
-        Auth::logout();
+        Auth::logout(); // log out
         return Inertia::render('auth/Register');
     }
     /**
