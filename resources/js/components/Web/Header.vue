@@ -31,7 +31,7 @@ const mobileNav = [
     { title: 'Orders', href: '/web/orders', icon: ClockArrowDown },
     { title: 'Cart', href: '/web/shopping', icon: ShoppingCart, badge: totalItems },
     { title: 'Notifications', href: '/web/notifications', icon: Bell },
-    { title: 'Profile', href: '/web/profile', icon: User },
+    { title: 'Profile', href: '', icon: User },
 ];
 
 const buttonTap = [
@@ -44,7 +44,7 @@ const allNav = [...mainNav, ...mobileNav];
 </script>
 
 <template>
-    <header class="no-print sticky top-0 z-40 w-full border-b bg-background">
+    <header class="no-print sticky top-0 z-40 w-full border-b bg-background px-4">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center gap-4">
                 <Sheet v-model:open="isOpen">
