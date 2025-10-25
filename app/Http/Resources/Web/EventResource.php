@@ -18,8 +18,8 @@ class EventResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'start_date' => $this->start_date->format('d-m-Y'),
-            'end_date' => $this->end_date->format('d-m-Y'),
+            'start_date' => $this->start_date->format('d-M-Y'),
+            'end_date' => $this->end_date->format('d-M-Y'),
             'location' => $this->location,
             'event_images' => EventImageResource::collection($this->whenLoaded('eventImages')),
         ];

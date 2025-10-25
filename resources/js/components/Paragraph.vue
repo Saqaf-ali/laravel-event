@@ -1,13 +1,18 @@
 <script setup lang="ts">
 interface Props {
-    text: string;
+    text: any;
+    class?: string;
+    as?: string;
 }
 
-defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+    class: 'text-muted-foreground',
+    as: 'p',
+});
 </script>
 
 <template>
-    <p class="text-xs text-muted-foreground">
+    <as class="text-xs" :class="props.class">
         {{ text }}
-    </p>
+    </as>
 </template>
