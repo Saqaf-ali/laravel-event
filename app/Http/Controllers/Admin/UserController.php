@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -24,7 +25,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return dd('saqaf');
+        //    log out
+        Auth::logout();
+        return Inertia::render('auth/Register');
     }
     /**
      * Store a newly created resource in storage.
