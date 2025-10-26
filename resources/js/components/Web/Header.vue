@@ -32,7 +32,7 @@ const rightNavItems = computed<NavItem[]>(() => [
     { title: 'Cart', href: '/web/shopping', icon: 'ShoppingCart', badge: totalItems.value },
     { title: 'Notifications', href: '/web/notifications', icon: 'Bell' },
     {
-        title: 'Profile',
+        title: page.props.auth.user ? page.props.auth.user.name : 'Login',
         href: page.props.auth.user ? '/profile' : '/login',
         icon: 'User',
         auth: true,
@@ -46,7 +46,7 @@ const allNav = computed(() => [...mainNav, ...mobileOnlyNav, ...rightNavItems.va
 
 <template>
     <header class="no-print sticky top-0 z-40 w-full border-b bg-background">
-        <div class="flex h-16 items-center mx-4">
+        <div class="mx-4 flex h-16 items-center">
             <div class="flex flex-1 items-center justify-start gap-4">
                 <Sheet v-model:open="isOpen">
                     <SheetTrigger as-child>
@@ -88,7 +88,7 @@ const allNav = computed(() => [...mainNav, ...mobileOnlyNav, ...rightNavItems.va
                             </Button>
                         </Link>
                     </div>
-                    <ButtonTip v-else-if="!item.auth" :tip="item.title" :href="item.href">
+                    <ButtonTip v-else :tip="item.title" :href="item.href">
                         <template #icon>
                             <div v-if="item.title === 'Cart' && totalItems > 0" class="relative">
                                 <Icon :name="item.icon!" size="20" />
