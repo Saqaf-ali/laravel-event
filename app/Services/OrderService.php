@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
 use App\OrderStatus;
 use Illuminate\Support\Facades\Auth;
@@ -13,20 +12,20 @@ class OrderService
     /**
      * Create a new order with its items and purchased tickets.
      *
-     * @param StoreOrderRequest $request
+     * @param array $data
      * @return Order
      * @throws \Throwable
      */
-    public function create(StoreOrderRequest $request): Order
+    public function create(array $data): Order
     {
-        return DB::transaction(function () use ($request) {
+        return DB::transaction(function () use ($data) {
             $order = Order::create([
                 'attendee_id' => Auth::user()->attendee->id,
-                'total_price' => $request->total_price,
+                'total_price' => $data['total_price'],
                 'status' => OrderStatus::Completed,
             ]);
 
-            foreach ($request->items as $item) {
+            foreach ($data['items'] as $item) {
                 $orderItem = $order->orderItems()->create([
                     'ticket_id' => $item['id'],
                     'event_id' => $item['event_id'],

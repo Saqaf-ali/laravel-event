@@ -8,7 +8,6 @@ use App\Models\Order;
 use App\Services\OrderService;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Resources\Web\OrderItemResource;
-use App\OrderStatus;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -34,7 +33,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        $this->orderService->create($request);
+        $this->orderService->create($request->validated());
 
         // Clear the cart after successful order
         $request->session()->forget('cart');
