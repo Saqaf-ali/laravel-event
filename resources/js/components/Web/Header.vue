@@ -30,7 +30,7 @@ const mainNav: NavItem[] = [
 const rightNavItems = computed<NavItem[]>(() => [
     { title: 'Search', href: '/search', icon: 'Search' },
     ...(totalItems.value > 0 ? [{ title: 'Cart', href: '/web/shopping', icon: 'ShoppingCart', badge: totalItems.value }] : []),
-    { title: 'Notifications', href: '/web/notifications', icon: 'Bell' },
+    { title: 'Orders', href: '/web/orders', icon: 'ClockArrowDown' },
     {
         title: page.props.auth.user ? page.props.auth.user.name : 'Login',
         href: page.props.auth.user ? '/profile' : '/login',
