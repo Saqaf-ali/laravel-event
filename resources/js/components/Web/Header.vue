@@ -14,6 +14,7 @@ import TextLink from '../TextLink.vue';
 
 const page = usePage();
 
+import ThemeToggleButton from './ThemeToggleButton.vue';
 import WebNav from './WebNav.vue';
 
 const isOpen = ref(false);
@@ -26,10 +27,12 @@ const mainNav: NavItem[] = [
     { title: 'Contact', href: '/contact', icon: Bell },
     { title: 'Events', href: '/web/events', icon: TentTree },
 ];
+// mood
 
 const rightNavItems = computed<NavItem[]>(() => [
     { title: 'Search', href: '/search', icon: 'Search' },
     ...(totalItems.value > 0 ? [{ title: 'Cart', href: '/web/shopping', icon: 'ShoppingCart', badge: totalItems.value }] : []),
+
     { title: 'Orders', href: '/web/orders', icon: 'ClockArrowDown' },
     {
         title: page.props.auth.user ? page.props.auth.user.name : 'Login',
@@ -75,6 +78,8 @@ const allNav = computed(() => [...mainNav, ...mobileOnlyNav, ...rightNavItems.va
             </nav>
 
             <div class="flex flex-1 items-center justify-end gap-4">
+                <!-- mood -->
+                <ThemeToggleButton />
                 <template v-for="(item, index) in rightNavItems" :key="index">
                     <ButtonTip v-if="item.auth && page.props.auth.user" :tip="item.title" :href="item.href">
                         <template #icon>
