@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useCart } from '@/composables/useCart';
 import type { NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { Bell, ClockArrowDown, Home, Menu, ShoppingCart, TentTree, User } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { Bell, ClockArrowDown, Home, Menu, TentTree, User } from 'lucide-vue-next'; // Assuming TentTree is for Events
+import { computed, ref } from 'vue';
 import AppLogo from '../AppLogo.vue';
 import ButtonTip from '../ButtonTip.vue';
 import Icon from '../Icon.vue';
+import SmartAvatar from '../SmartAvatar.vue';
 import TextLink from '../TextLink.vue';
 
 const page = usePage();
 
-import { useCart } from '@/composables/useCart';
-import SmartAvatar from '../SmartAvatar.vue';
 import WebNav from './WebNav.vue';
 
 const isOpen = ref(false);
@@ -27,27 +27,27 @@ const mainNav: NavItem[] = [
     { title: 'Events', href: '/web/events', icon: TentTree },
 ];
 
-const mobileNav = [
-    // For mobile-only icon links
-    { title: 'Orders', href: '/web/orders', icon: ClockArrowDown },
-    { title: 'Cart', href: '/web/shopping', icon: ShoppingCart, badge: totalItems },
-    { title: 'Notifications', href: '/web/notifications', icon: Bell },
-    { title: 'Profile', href: '/login', icon: User },
-];
+const rightNavItems = computed<NavItem[]>(() => [
+    { title: 'Search', href: '/search', icon: 'Search' },
+    { title: 'Cart', href: '/web/shopping', icon: 'ShoppingCart', badge: totalItems.value },
+    { title: 'Notifications', href: '/web/notifications', icon: 'Bell' },
+    {
+        title: 'Profile',
+        href: page.props.auth.user ? '/profile' : '/login',
+        icon: 'User',
+        auth: true,
+    },
+]);
 
-const buttonTap = [
-    { tip: 'Search', icon: 'Search', href: '/search' },
-    { tip: 'Cart', icon: 'ShoppingCart', href: '/web/shopping', badge: totalItems },
-    { tip: 'Notifications', icon: 'Bell', href: '/web/notifications' },
-    { tip: 'Profile', icon: 'User', href: '/login' },
-];
-const allNav = [...mainNav, ...mobileNav];
+const mobileOnlyNav: NavItem[] = [{ title: 'Orders', href: '/web/orders', icon: ClockArrowDown }];
+
+const allNav = computed(() => [...mainNav, ...mobileOnlyNav, ...rightNavItems.value.filter((item) => item.title !== 'Search')]);
 </script>
 
 <template>
-    <header class="no-print sticky top-0 z-40 w-full border-b bg-background px-4">
-        <div class="flex h-16 items-center justify-between">
-            <div class="flex items-center gap-4">
+    <header class="no-print sticky top-0 z-40 w-full border-b bg-background">
+        <div class="flex h-16 items-center mx-4">
+            <div class="flex flex-1 items-center justify-start gap-4">
                 <Sheet v-model:open="isOpen">
                     <SheetTrigger as-child>
                         <Button size="icon" variant="outline" class="lg:hidden">
@@ -64,7 +64,7 @@ const allNav = [...mainNav, ...mobileNav];
                 </Sheet>
 
                 <Link :href="'/'" class="hidden lg:flex lg:items-center">
-                    <AppLogo class="block h-9 w-auto fill-current text-gray-800" />
+                    <AppLogo />
                 </Link>
             </div>
 
@@ -74,31 +74,34 @@ const allNav = [...mainNav, ...mobileNav];
                 </TextLink>
             </nav>
 
-            <div class="flex items-center gap-4">
-                <div v-for="(item, index) in buttonTap" :key="index">
-                    <div v-if="item.tip == 'Profile' && page.props.auth.user">
-                        <SmartAvatar
-                            :src="page.props.auth.user.image_url"
-                            :name="page.props.auth.user.name"
-                            :alt="page.props.auth.user.name"
-                            class="h-7 w-7"
-                        />
+            <div class="flex flex-1 items-center justify-end gap-4">
+                <template v-for="(item, index) in rightNavItems" :key="index">
+                    <div v-if="item.auth && page.props.auth.user">
+                        <Link :href="item.href">
+                            <Button size="icon" variant="ghost" class="h-9 w-9 rounded-full">
+                                <SmartAvatar
+                                    :src="page.props.auth.user.image_url"
+                                    :name="page.props.auth.user.name"
+                                    :alt="page.props.auth.user.name"
+                                    class="h-8 w-8"
+                                />
+                            </Button>
+                        </Link>
                     </div>
-                    <ButtonTip :tip="item.tip" :href="item.href" v-else>
+                    <ButtonTip v-else-if="!item.auth" :tip="item.title" :href="item.href">
                         <template #icon>
-                            <div v-if="item.tip === 'Cart' && totalItems > 0" class="absolute">
-                                <Icon :name="item.icon" size="20" />
+                            <div v-if="item.title === 'Cart' && totalItems > 0" class="relative">
+                                <Icon :name="item.icon!" size="20" />
                                 <div
                                     class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white"
                                 >
                                     {{ totalItems }}
                                 </div>
                             </div>
-
-                            <Icon :name="item.icon" size="20" />
+                            <Icon v-else :name="item.icon!" size="20" />
                         </template>
                     </ButtonTip>
-                </div>
+                </template>
             </div>
         </div>
     </header>
