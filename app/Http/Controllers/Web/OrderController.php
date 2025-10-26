@@ -48,6 +48,9 @@ class OrderController extends Controller
                 ]);
             }
         }
+        // Clear the cart after successful order
+        $request->session()->forget('cart');
+
         session()->flash('success', 'Order created successfully.');
         return redirect()->route('web.orders.index');
     }

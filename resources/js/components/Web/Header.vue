@@ -29,7 +29,7 @@ const mainNav: NavItem[] = [
 
 const rightNavItems = computed<NavItem[]>(() => [
     { title: 'Search', href: '/search', icon: 'Search' },
-    { title: 'Cart', href: '/web/shopping', icon: 'ShoppingCart', badge: totalItems.value },
+    ...(totalItems.value > 0 ? [{ title: 'Cart', href: '/web/shopping', icon: 'ShoppingCart', badge: totalItems.value }] : []),
     { title: 'Notifications', href: '/web/notifications', icon: 'Bell' },
     {
         title: page.props.auth.user ? page.props.auth.user.name : 'Login',
@@ -41,7 +41,7 @@ const rightNavItems = computed<NavItem[]>(() => [
 
 const mobileOnlyNav: NavItem[] = [{ title: 'Orders', href: '/web/orders', icon: ClockArrowDown }];
 
-const allNav = computed(() => [...mainNav, ...mobileOnlyNav, ...rightNavItems.value.filter((item) => item.title !== 'Search')]);
+const allNav = computed(() => [...mainNav, ...mobileOnlyNav, ...rightNavItems.value.filter((item) => item.title !== 'Search' && item !== null)]);
 </script>
 
 <template>
@@ -76,18 +76,16 @@ const allNav = computed(() => [...mainNav, ...mobileOnlyNav, ...rightNavItems.va
 
             <div class="flex flex-1 items-center justify-end gap-4">
                 <template v-for="(item, index) in rightNavItems" :key="index">
-                    <div v-if="item.auth && page.props.auth.user">
-                        <Link :href="item.href">
-                            <Button size="icon" variant="ghost" class="h-9 w-9 rounded-full">
-                                <SmartAvatar
-                                    :src="page.props.auth.user.image_url"
-                                    :name="page.props.auth.user.name"
-                                    :alt="page.props.auth.user.name"
-                                    class="h-8 w-8"
-                                />
-                            </Button>
-                        </Link>
-                    </div>
+                    <ButtonTip v-if="item.auth && page.props.auth.user" :tip="item.title" :href="item.href">
+                        <template #icon>
+                            <SmartAvatar
+                                :src="page.props.auth.user.image_url"
+                                :name="page.props.auth.user.name"
+                                :alt="page.props.auth.user.name"
+                                class="h-8 w-8"
+                            />
+                        </template>
+                    </ButtonTip>
                     <ButtonTip v-else :tip="item.title" :href="item.href">
                         <template #icon>
                             <div v-if="item.title === 'Cart' && totalItems > 0" class="relative">
