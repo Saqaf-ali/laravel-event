@@ -39,8 +39,6 @@ class OrderService
                     $purchasedTickets[] = [
                         'ticket_code' => 'TICKET-' . uniqid() . '_' . ($i + 1),
                         'is_used' => false,
-                        'created_at' => now(),
-                        'updated_at' => now(),
                     ];
                 }
                 $orderItem->purchasedTickets()->insert($purchasedTickets);
