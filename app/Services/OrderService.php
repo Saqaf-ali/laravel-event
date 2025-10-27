@@ -40,7 +40,7 @@ class OrderService
                         'is_used' => false,
                     ];
                 }
-                $orderItem->purchasedTickets()->createMany($purchasedTickets);
+                $orderItem->purchasedTickets()->createMany ($purchasedTickets);
             }
 
             return $order;
