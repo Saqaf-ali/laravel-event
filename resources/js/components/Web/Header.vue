@@ -4,47 +4,55 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/composables/useCart';
 import type { NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { Bell, ClockArrowDown, Home, Menu, TentTree, User } from 'lucide-vue-next'; // Assuming TentTree is for Events
+import { Bell, ClockArrowDown, Home, Menu, TentTree, User } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
 import AppLogo from '../AppLogo.vue';
 import ButtonTip from '../ButtonTip.vue';
 import Icon from '../Icon.vue';
 import SmartAvatar from '../SmartAvatar.vue';
 import TextLink from '../TextLink.vue';
-
-const page = usePage();
-
 import ThemeToggleButton from './ThemeToggleButton.vue';
 import WebNav from './WebNav.vue';
 
+const page = usePage();
 const isOpen = ref(false);
 const { totalItems } = useCart();
 
 const mainNav: NavItem[] = [
-    // For desktop text links
     { title: 'Home', href: '/', icon: Home },
     { title: 'About', href: '/about', icon: User },
     { title: 'Contact', href: '/contact', icon: Bell },
     { title: 'Events', href: '/web/events', icon: TentTree },
 ];
-// mood
 
-const rightNavItems = computed<NavItem[]>(() => [
-    { title: 'Search', href: '/search', icon: 'Search' },
-    ...(totalItems.value > 0 ? [{ title: 'Cart', href: '/web/shopping', icon: 'ShoppingCart', badge: totalItems.value }] : []),
+const mobileOnlyNav: NavItem[] = [{ title: 'Orders', href: '/web/orders', icon: ClockArrowDown }];
 
-    { title: 'Orders', href: '/web/orders', icon: 'ClockArrowDown' },
-    {
+const rightNavItems = computed<NavItem[]>(() => {
+    const items: NavItem[] = [];
+
+    if (totalItems.value > 0) {
+        items.push({ title: 'Cart', href: '/web/shopping', icon: 'ShoppingCart', badge: totalItems.value });
+    }
+
+    if (page.props.hasOrders === true) {
+        items.push({ title: 'Orders', href: '/web/orders', icon: 'ClockArrowDown' });
+    }
+
+    items.push({
         title: page.props.auth.user ? page.props.auth.user.name : 'Login',
         href: page.props.auth.user ? '/profile' : '/login',
         icon: 'User',
         auth: true,
-    },
-]);
+    });
 
-const mobileOnlyNav: NavItem[] = [{ title: 'Orders', href: '/web/orders', icon: ClockArrowDown }];
+    return items;
+});
 
-const allNav = computed(() => [...mainNav, ...mobileOnlyNav, ...rightNavItems.value.filter((item) => item.title !== 'Search' && item !== null)]);
+const desktopRightNav = computed(() =>
+    rightNavItems.value.filter((item) => (page.props.auth.user ? item.title !== 'Orders' : item.title !== 'Orders')),
+);
+
+const allNav = computed(() => [...mainNav, ...mobileOnlyNav, ...rightNavItems.value.filter((item) => item !== null)]);
 </script>
 
 <template>
@@ -78,33 +86,26 @@ const allNav = computed(() => [...mainNav, ...mobileOnlyNav, ...rightNavItems.va
             </nav>
 
             <div class="flex flex-1 items-center justify-end gap-4">
-                <!-- mood -->
                 <ThemeToggleButton />
-                <template v-for="(item, index) in rightNavItems" :key="index">
-                    <ButtonTip v-if="item.auth && page.props.auth.user" :tip="item.title" :href="item.href">
-                        <template #icon>
-                            <SmartAvatar
-                                :src="page.props.auth.user.image_url"
-                                :name="page.props.auth.user.name"
-                                :alt="page.props.auth.user.name"
-                                class="h-8 w-8"
-                            />
-                        </template>
-                    </ButtonTip>
-                    <ButtonTip v-else :tip="item.title" :href="item.href">
-                        <template #icon>
-                            <div v-if="item.title === 'Cart' && totalItems > 0" class="relative">
-                                <Icon :name="item.icon!" size="20" />
-                                <div
-                                    class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white"
-                                >
-                                    {{ totalItems }}
-                                </div>
+
+                <ButtonTip v-for="(item, index) in desktopRightNav" :key="index" :tip="item.title" :href="item.href">
+                    <template #icon>
+                        <SmartAvatar
+                            v-if="item.auth && page.props.auth.user"
+                            :src="page.props.auth.user.image_url"
+                            :name="page.props.auth.user.name"
+                            :alt="page.props.auth.user.name"
+                            class="h-8 w-8"
+                        />
+                        <div v-else-if="item.title === 'Cart'" class="relative">
+                            <Icon :name="item.icon!" :size="20" />
+                            <div class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                                {{ totalItems }}
                             </div>
-                            <Icon v-else :name="item.icon!" size="20" />
-                        </template>
-                    </ButtonTip>
-                </template>
+                        </div>
+                        <Icon v-else :name="item.icon!" :size="20" />
+                    </template>
+                </ButtonTip>
             </div>
         </div>
     </header>

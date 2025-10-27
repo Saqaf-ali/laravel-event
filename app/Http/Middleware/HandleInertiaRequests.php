@@ -51,7 +51,7 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn() => $request->session()->get('success'),
                 'error' => fn() => $request->session()->get('error'),
             ],
-            'hasOrder' => function () {
+            'hasOrders' => function () {
                 if (Auth::check() && Auth::user()->attendee) {
                     return Auth::user()->attendee->orders()->exists();
                 }

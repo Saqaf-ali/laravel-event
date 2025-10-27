@@ -12,11 +12,11 @@ class OrderService
     /**
      * Create a new order with its items and purchased tickets.
      *
-     * @param array $data
+     * @param  $data
      * @return Order
      * @throws \Throwable
      */
-    public function create(array $data): Order
+    public function create($data): Order
     {
         return DB::transaction(function () use ($data) {
             $order = Order::create([
@@ -40,7 +40,7 @@ class OrderService
                         'is_used' => false,
                     ];
                 }
-                $orderItem->purchasedTickets()->insert($purchasedTickets);
+                $orderItem->purchasedTickets()->createMany($purchasedTickets);
             }
 
             return $order;

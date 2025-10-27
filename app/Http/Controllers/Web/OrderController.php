@@ -33,7 +33,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        $this->orderService->create($request->validated());
+        $this->orderService->create($request);
 
         // Clear the cart after successful order
         $request->session()->forget('cart');
