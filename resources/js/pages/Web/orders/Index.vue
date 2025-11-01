@@ -59,7 +59,10 @@ const columns = [
     },
 ];
 
-console.log('orders1111111111111', orders);
+// --- CLEAR CART LOGIC ---
+import { useCart } from '@/composables/useCart';
+const { clearCart } = useCart();
+clearCart();
 </script>
 <template>
     <Head title="Checkout" />

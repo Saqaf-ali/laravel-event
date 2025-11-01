@@ -19,16 +19,16 @@ import WebNav from './WebNav.vue';
 const page = usePage();
 const isOpen = ref(false);
 const { totalItems } = useCart();
+console.log('total itemssssssssss:', totalItems.value);
+
 const user = computed(() => page.props.auth.user);
 const hasOrders = computed(() => page.props.hasOrders === true);
 
 const mainNavItems = computed<NavItem[]>(() => [
     { title: 'Home', href: '/' },
-    { title: 'Events', href: '/events' },
+    { title: 'Events', href: '/web/events' },
     { title: 'About', href: '/about' },
     { title: 'Contact', href: '/contact' },
-    { title: 'Blog', href: '/blog' },
-    { title: 'Pricing', href: '/pricing' },
 ]);
 
 const cartNavItem = computed<NavItem | null>(() =>
@@ -104,9 +104,9 @@ const mobileNavItems = computed<NavItem[]>(
         </nav>
 
         <!-- 3. Right Side -->
+
         <div class="flex items-center justify-end gap-2">
             <ThemeToggleButton />
-
             <Button v-for="item in iconNavItems" :key="item.title" as-child variant="ghost" size="icon">
                 <Link :href="item.href">
                     <span class="sr-only">{{ item.title }}</span>
