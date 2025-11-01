@@ -21,12 +21,31 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
     public function definition(): array
     {
+        // Define the directory to store images.
+        $storagePath = storage_path('app/public/profile_pictures');
+
+        // Ensure the directory exists.
+        if (!is_dir($storagePath)) {
+            mkdir($storagePath, 0755, true);
+        }
+
+        // Generate a unique filename.
+        $imageName = fake()->uuid() . '.jpg';
+        $imagePath = $storagePath . '/' . $imageName;
+        $imageUrl = 'https://i.pravatar.cc/150?img=' . fake()->numberBetween(1, 70);
+        file_put_contents($imagePath, file_get_contents($imageUrl));
+
+        if (!$imagePath) {
+            return []; // Or handle the error appropriately
+        }
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'image' => 'https://i.pravatar.cc/150?img=' . fake()->numberBetween(1, 70),
+            'image' => 'profile_pictures/' . $imageName,
             'email_verified_at' => now(),
             'password' => (static::$password ??= Hash::make('password')),
             'remember_token' => Str::random(10),

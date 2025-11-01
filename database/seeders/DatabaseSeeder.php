@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
     {
         Storage::disk('public')->deleteDirectory('event_images');
         Storage::disk('public')->makeDirectory('event_images');
+        Storage::disk('public')->deleteDirectory('profile_pictures');
+        Storage::disk('public')->makeDirectory('profile_pictures');
+
         $this->call([UserSeeder::class, OrganizerSeeder::class, EventSeeder::class, OrderSeeder::class]);
     }
 }
