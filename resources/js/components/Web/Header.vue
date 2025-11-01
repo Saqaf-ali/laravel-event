@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useAppearance } from '@/composables/useAppearance';
 import { useCart } from '@/composables/useCart';
 import { dashboard, login } from '@/routes';
 import { shopping } from '@/routes/web';
@@ -18,8 +17,6 @@ import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import ThemeToggleButton from './ThemeToggleButton.vue';
 import WebNav from './WebNav.vue';
 
-// theme
-const { appearance, updateAppearance } = useAppearance();
 const page = usePage();
 const isOpen = ref(false);
 const { totalItems } = useCart();
