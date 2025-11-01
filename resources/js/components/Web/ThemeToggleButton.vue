@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
 import { useAppearance } from '@/composables/useAppearance';
 import { computed } from 'vue';
+import ButtonTip from '../ButtonTip.vue';
 import Icon from '../Icon.vue';
 
 const { appearance, updateAppearance } = useAppearance();
@@ -36,8 +36,9 @@ const toggleAppearance = () => {
 </script>
 
 <template>
-    <Button variant="ghost" size="icon" @click="toggleAppearance" aria-label="Toggle theme mode">
-        <Icon :name="isCurrentlyDark ? 'SunMedium' : 'Moon'" size="30" class="text-red-900" />
-        <span class="sr-only">Toggle theme mode</span>
-    </Button>
+    <ButtonTip :tip="isCurrentlyDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'" :click="toggleAppearance">
+        <template #icon>
+            <Icon :name="isCurrentlyDark ? 'SunMedium' : 'Moon'" size="20" />
+        </template>
+    </ButtonTip>
 </template>

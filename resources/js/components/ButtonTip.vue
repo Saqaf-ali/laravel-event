@@ -10,21 +10,25 @@ interface Props {
     class?: string;
     href?: any;
     icon?: string;
+    click?: () => void;
 }
 
 const props = defineProps<Props>();
-
 </script>
 
 <template>
     <TooltipProvider>
         <Tooltip>
             <TooltipTrigger as-child>
-                <Link :href="props.href" as="button">
+                <Link :href="props.href" as="button" v-if="!props.click">
                     <Button size="icon" variant="ghost" :aria-label="props.tip">
                         <Icon v-if="props.icon" :name="props.icon" />
                         <slot name="icon" v-else> </slot></Button
                 ></Link>
+                <Button v-else size="icon" variant="ghost" :aria-label="props.tip" @click="props.click">
+                    <Icon v-if="props.icon" :name="props.icon" />
+                    <slot name="icon" v-else></slot>
+                </Button>
             </TooltipTrigger>
 
             <TooltipContent>

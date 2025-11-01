@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useAppearance } from '@/composables/useAppearance';
 import { useCart } from '@/composables/useCart';
 import { dashboard, login } from '@/routes';
 import { shopping } from '@/routes/web';
@@ -14,8 +15,11 @@ import SmartAvatar from '../SmartAvatar.vue';
 import TextLink from '../TextLink.vue';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
+import ThemeToggleButton from './ThemeToggleButton.vue';
 import WebNav from './WebNav.vue';
 
+// theme
+const { appearance, updateAppearance } = useAppearance();
 const page = usePage();
 const isOpen = ref(false);
 const { totalItems } = useCart();
@@ -91,7 +95,7 @@ const mobileNavItems = computed<NavItem[]>(
         </div>
 
         <!-- 2. Center (Desktop Navigation) -->
-        <nav class="justify-content-center hidden items-center gap-6 lg:flex">
+        <nav class="justify-content-center hidden items-center justify-center gap-8 lg:flex">
             <TextLink v-for="item in mainNavItems" :key="item.title" :href="item.href">
                 {{ item.title }}
             </TextLink>
@@ -100,7 +104,6 @@ const mobileNavItems = computed<NavItem[]>(
         <!-- 3. Right Side -->
 
         <div class="justify-content-center flex items-center justify-center gap-2">
-            <!-- <ThemeToggleButton /> -->
             <ButtonTip v-for="item in iconNavItems" :key="item.title" :tip="item.title" :href="item.href">
                 <template #icon>
                     <div v-if="item.badge && item.badge > 0" class="relative">
@@ -114,11 +117,11 @@ const mobileNavItems = computed<NavItem[]>(
                     <Icon v-else :name="item.icon!" size="20" />
                 </template>
             </ButtonTip>
-
+            <ThemeToggleButton />
             <ButtonTip :tip="authNavItem.title" :href="authNavItem.href">
                 <template #icon>
                     <SmartAvatar v-if="user" :src="user.image_url" :alt="user.name" :name="user.name" />
-                    <Icon v-else :name="authNavItem.icon as string" />
+                    <Icon v-else :name="authNavItem.icon!" size="20" />
                 </template>
             </ButtonTip>
         </div>
