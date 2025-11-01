@@ -1,25 +1,24 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/composables/useCart';
 import { dashboard, login } from '@/routes';
 import { shopping } from '@/routes/web';
 import { index } from '@/routes/web/orders';
 import type { NavItem } from '@/types';
-import { Link, usePage } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import { Menu } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
 import AppLogo from '../AppLogo.vue';
+import ButtonTip from '../ButtonTip.vue';
 import Icon from '../Icon.vue';
 import SmartAvatar from '../SmartAvatar.vue';
 import TextLink from '../TextLink.vue';
-import ThemeToggleButton from './ThemeToggleButton.vue';
+import { Button } from '../ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import WebNav from './WebNav.vue';
 
 const page = usePage();
 const isOpen = ref(false);
 const { totalItems } = useCart();
-console.log('total itemssssssssss:', totalItems.value);
 
 const user = computed(() => page.props.auth.user);
 const hasOrders = computed(() => page.props.hasOrders === true);
@@ -74,30 +73,25 @@ const mobileNavItems = computed<NavItem[]>(
 </script>
 
 <template>
-    <header class="no-print sticky top-0 z-40 mx-auto flex h-16 w-full items-center justify-between border-b bg-background px-4">
+    <header class="no-print justify-content-center sticky top-0 z-40 flex items-center justify-between border-b bg-background p-4">
         <!-- 1. Left Side -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
             <Sheet v-model:open="isOpen">
                 <SheetTrigger as-child>
-                    <Button size="icon" variant="outline" class="lg:hidden">
-                        <Menu class="h-5 w-5" />
+                    <Button class="lg:hidden" size="icon" variant="ghost">
+                        <Menu class="size-5" />
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="left">
-                    <div class="flex flex-col gap-4">
-                        <AppLogo />
-                        <WebNav :items="mobileNavItems" />
-                    </div>
+                <SheetContent class="w-[300px] sm:w-[400px]" side="left">
+                    <WebNav :items="mobileNavItems" @click="isOpen = false" />
                 </SheetContent>
             </Sheet>
 
-            <Link class="flex items-center">
-                <AppLogo />
-            </Link>
+            <AppLogo />
         </div>
 
         <!-- 2. Center (Desktop Navigation) -->
-        <nav class="hidden flex-shrink-0 items-center gap-6 lg:flex">
+        <nav class="justify-content-center hidden items-center gap-6 lg:flex">
             <TextLink v-for="item in mainNavItems" :key="item.title" :href="item.href">
                 {{ item.title }}
             </TextLink>
@@ -105,28 +99,28 @@ const mobileNavItems = computed<NavItem[]>(
 
         <!-- 3. Right Side -->
 
-        <div class="flex items-center justify-end gap-2">
-            <ThemeToggleButton />
-            <Button v-for="item in iconNavItems" :key="item.title" as-child variant="ghost" size="icon">
-                <Link :href="item.href">
-                    <span class="sr-only">{{ item.title }}</span>
+        <div class="justify-content-center flex items-center justify-center gap-2">
+            <!-- <ThemeToggleButton /> -->
+            <ButtonTip v-for="item in iconNavItems" :key="item.title" :tip="item.title" :href="item.href">
+                <template #icon>
                     <div v-if="item.badge && item.badge > 0" class="relative">
                         <Icon :name="item.icon!" size="20" />
-                        <div class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                        <div
+                            class="justify-content-center absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white"
+                        >
                             {{ item.badge }}
                         </div>
                     </div>
                     <Icon v-else :name="item.icon!" size="20" />
-                </Link>
-            </Button>
+                </template>
+            </ButtonTip>
 
-            <Button as-child variant="ghost" size="icon">
-                <Link :href="authNavItem.href">
-                    <span class="sr-only">{{ authNavItem.title }}</span>
-                    <SmartAvatar v-if="user" :src="user.image_url" :name="user.name" :alt="user.name" class="size-8" />
-                    <Icon v-else :name="authNavItem.icon!" size="20" />
-                </Link>
-            </Button>
+            <ButtonTip :tip="authNavItem.title" :href="authNavItem.href">
+                <template #icon>
+                    <SmartAvatar v-if="user" :src="user.image_url" :alt="user.name" :name="user.name" />
+                    <Icon v-else :name="authNavItem.icon as string" />
+                </template>
+            </ButtonTip>
         </div>
     </header>
 </template>

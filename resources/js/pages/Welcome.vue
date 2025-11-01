@@ -13,7 +13,7 @@ const images = [{ image_url: '/pexels-chi-n-ba-3626645-33765242.jpg' }];
     <AppLayout>
         <!-- hero -->
         <section class="relative">
-            <CarouselImages :images="images" class=" " />
+            <CarouselImages :images="images" class="" />
 
             <div class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/50">
                 <h1 class="text-white">Welcome to Event Wave</h1>

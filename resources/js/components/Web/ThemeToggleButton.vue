@@ -37,8 +37,7 @@ const toggleAppearance = () => {
 
 <template>
     <Button variant="ghost" size="icon" @click="toggleAppearance" aria-label="Toggle theme mode">
-        <Icon :name="isCurrentlyDark ? 'SunMedium' : 'Moon'" size="20" />
+        <Icon :name="isCurrentlyDark ? 'SunMedium' : 'Moon'" size="30" class="text-red-900" />
         <span class="sr-only">Toggle theme mode</span>
     </Button>
 </template>
-<SunMedium />
