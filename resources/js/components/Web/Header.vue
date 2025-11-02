@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useCart } from '@/composables/useCart';
+import { getInitials } from '@/composables/useInitials';
 import { dashboard, login } from '@/routes';
 import { shopping } from '@/routes/web';
 import { index } from '@/routes/web/orders';
@@ -10,9 +11,11 @@ import { computed, ref } from 'vue';
 import AppLogo from '../AppLogo.vue';
 import ButtonTip from '../ButtonTip.vue';
 import Icon from '../Icon.vue';
-import SmartAvatar from '../SmartAvatar.vue';
 import TextLink from '../TextLink.vue';
+import UserMenuContent from '../UserMenuContent.vue';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import ThemeToggleButton from './ThemeToggleButton.vue';
 import WebNav from './WebNav.vue';
@@ -115,12 +118,39 @@ const mobileNavItems = computed<NavItem[]>(
                 </template>
             </ButtonTip>
             <ThemeToggleButton />
-            <ButtonTip :tip="authNavItem.title" :href="authNavItem.href">
+            <DropdownMenu v-if="user">
+                <DropdownMenuTrigger :as-child="true">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        class="relative size-10 w-auto rounded-full p-1 focus-within:ring-2 focus-within:ring-primary"
+                    >
+                        <Avatar class="size-8 overflow-hidden rounded-full">
+                            <AvatarImage v-if="user.image_url" :src="user.image_url" :alt="user.name" />
+                            <AvatarFallback class="rounded-lg bg-neutral-200 font-semibold text-black dark:bg-neutral-700 dark:text-white">
+                                {{ getInitials(user?.name) }}
+                            </AvatarFallback>
+                        </Avatar>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" class="w-56">
+                    <UserMenuContent :user="user" />
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            <ButtonTip v-else :tip="authNavItem.title" :href="authNavItem.href">
                 <template #icon>
-                    <SmartAvatar v-if="user" :src="user.image_url" :alt="user.name" :name="user.name" />
-                    <Icon v-else :name="authNavItem.icon!" size="20" />
+                    <Icon :name="authNavItem.icon!" size="20" />
                 </template>
             </ButtonTip>
+
+            <!-- <ButtonTip :tip="authNavItem.title" :href="authNavItem.href">
+                <template #icon>
+                    <UserInfo v-if="user" :user="user" />
+
+                    <Icon v-else :name="authNavItem.icon!" size="20" />
+                </template>
+            </ButtonTip> -->
         </div>
     </header>
 </template>
