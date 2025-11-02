@@ -58,7 +58,10 @@ const deleteItem = () => {
                 <span>Edit</span></Link
             >
         </DropdownMenuItem>
-        <DropdownMenuItem class="text-destructive focus:bg-destructive/10 focus:text-destructive" @select="openAlert"> Delete </DropdownMenuItem>
+        <DropdownMenuItem class="text-destructive focus:bg-destructive/10 focus:text-destructive" @select="openAlert">
+            <Icon name="trash" class="text-destructive"/>
+            <span>Delete</span>
+        </DropdownMenuItem>
     </Actions>
 
     <AlertDialog :open="isAlertOpen" @update:open="isAlertOpen = $event">
@@ -69,7 +72,7 @@ const deleteItem = () => {
             </AlertDialogHeader>
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction @click="deleteItem">Delete</AlertDialogAction>
+                <AlertDialogAction @click="deleteItem">Continue</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>
